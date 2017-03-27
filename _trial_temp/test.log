@@ -1,0 +1,40 @@
+2017-03-22 17:40:37+0500 [-] Log opened.
+2017-03-22 17:40:37+0500 [-] --> test-twist-client.TestPoetryCase.test_client <--
+2017-03-22 17:40:37+0500 [-] PoetryServerFactory starting on 41113
+2017-03-22 17:40:37+0500 [-] Starting factory <test-twist-client.PoetryServerFactory instance at 0xb675234c>
+2017-03-22 17:40:37+0500 [-] Starting factory <test-twist-client.PoetryClientFactory instance at 0xb675268c>
+2017-03-22 17:40:37+0500 [PoetryClientProtocol,client] Unhandled Error
+	Traceback (most recent call last):
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/python/log.py", line 103, in callWithLogger
+	    return callWithContext({"system": lp}, func, *args, **kw)
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/python/log.py", line 86, in callWithContext
+	    return context.call({ILogContext: newCtx}, func, *args, **kw)
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/python/context.py", line 122, in callWithContext
+	    return self.currentContext().callWithContext(ctx, func, *args, **kw)
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/python/context.py", line 85, in callWithContext
+	    return func(*args,**kw)
+	--- <exception caught here> ---
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/internet/posixbase.py", line 597, in _doReadOrWrite
+	    why = selectable.doRead()
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/internet/tcp.py", line 208, in doRead
+	    return self._dataReceived(data)
+	  File "/home/vpalex99/.local/lib/python2.7/site-packages/twisted/internet/tcp.py", line 214, in _dataReceived
+	    rval = self.protocol.dataReceived(data)
+	  File "/home/vpalex99/SI3000/twisted-client/test-twist-client.py", line 35, in dataReceived
+	    status = eb.from_hdlc(data)
+	  File "/home/vpalex99/SI3000/twisted-client/sources/ebilockcmain.py", line 24, in from_hdlc
+	    telegramm.append("{:02x}".format(int(item, 2)).upper())
+	exceptions.ValueError: invalid literal for int() with base 2: '\x10'
+	
+2017-03-22 17:40:37+0500 [-] Stopping factory <test-twist-client.PoetryClientFactory instance at 0xb675268c>
+2017-03-22 17:40:37+0500 [-] (TCP Port 41113 Closed)
+2017-03-22 17:40:37+0500 [-] Stopping factory <test-twist-client.PoetryServerFactory instance at 0xb675234c>
+2017-03-22 17:40:37+0500 [-] Main loop terminated.
+2017-03-22 17:40:37+0500 [-] --> test-twist-client.TestPoetryCase.test_failure <--
+2017-03-22 17:40:37+0500 [-] PoetryServerFactory starting on 42805
+2017-03-22 17:40:37+0500 [-] Starting factory <test-twist-client.PoetryServerFactory instance at 0xb671514c>
+2017-03-22 17:40:37+0500 [-] Starting factory <test-twist-client.PoetryClientFactory instance at 0xb671518c>
+2017-03-22 17:40:37+0500 [-] Stopping factory <test-twist-client.PoetryClientFactory instance at 0xb671518c>
+2017-03-22 17:40:37+0500 [-] (TCP Port 42805 Closed)
+2017-03-22 17:40:37+0500 [-] Stopping factory <test-twist-client.PoetryServerFactory instance at 0xb671514c>
+2017-03-22 17:40:37+0500 [-] Main loop terminated.
