@@ -3,17 +3,13 @@ from sources.crc8 import check_crc_8 as crc8
 from sources.error import EbException
 import binascii
 
-class Ebilock_order(object):
-    """ class Ebilock
+class Ebilock_status(object):
+    """ class Ebilock status
     """
     STATUS_TLG = "OK"
 
-    def __init__(self, telegramm, *args):
-        self.arg = args
-        if "hdlc" not in args:
-            self.telegramm = telegramm.split(' ')
-        else:
-            self.telegramm = telegramm
+    def __init__(self, telegramm_dict):
+            self.telegramm_dict = telegramm_dict
         #if not self._check_byte_flow():
         #   raise EbException("Error check flow")
 

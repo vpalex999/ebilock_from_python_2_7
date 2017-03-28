@@ -4,7 +4,8 @@
 # It uses low-level Twisted APIs as a learning exercise.
 import datetime
 import time
-from sources.ebilockorder import Ebilock_order as eb
+from sources.ebilockorder import Ebilock_order as ord
+from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
 
 from twisted.internet.protocol import Protocol
@@ -62,7 +63,7 @@ class EbilockClientFactory(ClientFactory):
             "Err_Count": 0,
             "order": "",
         }
-    
+
     def check_count_ok(self):
         """ check counters good Telegram """
         status = False
@@ -78,8 +79,6 @@ class EbilockClientFactory(ClientFactory):
         self.work_data["Count_A"] = self.work_data["order"]["PACKET_COUNT_A"]
         self.work_data["Count_B"] = self.work_data["order"]["PACKET_COUNT_B"]
         return status
-        
-        
 
     def switching_to_work(self):
         """ system to switch to the operating mode """
@@ -89,8 +88,9 @@ class EbilockClientFactory(ClientFactory):
         self.work_data["System_Status"] = "WORK"
         #print("System status: Work!!!")
         
-
-
+    def send_status(self):
+        status = stat(self.work_data)
+        
     #def buildProtocol(self, address):
     #    proto = EbilockClientFactory.buildProtocol(self, address)
     #    return proto
@@ -121,7 +121,7 @@ class EbilockClientFactory(ClientFactory):
 
         source_hdlc = read_hdlc(self.receive_data["hdlc"])
 
-        order = eb.from_hdlc(source_hdlc).check_telegramm()
+        order = ord.from_hdlc(source_hdlc).check_telegramm()
         self.work_data["status_order"] = order["status"]
         self.work_data["order"] = order["order"]
         self.work_order()
@@ -132,6 +132,7 @@ class EbilockClientFactory(ClientFactory):
         elif self.work_data["status_order"] == "OK":
             if self.check_count_ok():
                 self.switching_to_work()
+                self.send_status()
                 
         else:
             #wrong telegram
