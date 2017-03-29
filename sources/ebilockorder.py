@@ -15,8 +15,39 @@ class Ebilock_order(object):
             self.telegramm = telegramm.split(' ')
         else:
             self.telegramm = telegramm
-        #if not self._check_byte_flow():
-        #   raise EbException("Error check flow")
+
+        self.telegramm_decode = {
+            "CODE_ALARM": 0,
+            "DESC_ALARM": "OK",
+            "PACKET": "",
+            "ID_SOURCE": "",
+            "ID_DEST": "",
+            "TYPE_PACKET": "",
+            "LENGTH_PACKET": "",
+            "PACKET_COUNT_A": "",
+            "PACKET_COUNT_B": "",
+            "SIZE_AB": "",
+            "TELEGRAMM_AB": "",
+            "RC": "",
+            "TLG_A": {
+                "BODY_TLG": "",
+                "ADDR_OK": "",
+                "LOOP_OK": "",
+                "AREA_OK": "",
+                "HUB_OK": "",
+                "NUMBER_OK": "",
+                "ML_CO": "",
+                "SIZE": "",
+                "type_co": "",
+                "COUNT": "",
+                "DATA": "",
+                "RC": ""
+            },
+            "TLG_B": {},
+            "STATUS_ZONE": ""
+        }
+
+
 
     @classmethod
     def from_hdlc(cls, object):
@@ -72,37 +103,7 @@ class Ebilock_order(object):
         "pass": ""
     }
 
-    telegramm_decode = {
-            "CODE_ALARM": 0,
-            "DESC_ALARM": "OK",
-            "PACKET": "",
-            "ID_SOURCE": "",
-            "ID_DEST": "",
-            "TYPE_PACKET": "",
-            "LENGTH_PACKET": "",
-            "PACKET_COUNT_A": "",
-            "PACKET_COUNT_B": "",
-            "SIZE_AB": "",
-            "TELEGRAMM_AB": "",
-            "RC": "",
-            "TLG_A": {
-                "BODY_TLG": "",
-                "ADDR_OK": "",
-                "LOOP_OK": "",
-                "AREA_OK": "",
-                "HUB_OK": "",
-                "NUMBER_OK": "",
-                "ML_CO": "",
-                "SIZE": "",
-                "type_co": "",
-                "COUNT": "",
-                "DATA": "",
-                "RC": ""
-            },
-            "TLG_B": {},
-            "STATUS_ZONE": ""
-        }
-
+    
     def _check_byte_flow(self):
         """ Verifying bytes in the packet stream\
         and writing a package to a dictionary.\n
