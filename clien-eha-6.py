@@ -4,6 +4,7 @@
 # It uses low-level Twisted APIs as a learning exercise.
 import datetime
 import time
+import threading
 from sources.ebilockorder import Ebilock_order as ord
 from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
@@ -16,7 +17,6 @@ from twisted.application import service
 
 
 class EbilockProtocol(Protocol):
-    
 
     def delta_time(self, receive_time):
         self.factory.receive_data["time_delta"] = receive_time - self.factory.start_time
@@ -52,45 +52,116 @@ class EbilockClientFactory(ClientFactory):
     def __init__(self, defered):
         self.defered = defered
         self.clientprotocol = EbilockProtocol()
-        self.order = ""
-        self.start_time = time.time()
-        self.receive_data = {"hdlc": "", "time_delta": "",}
-        self.work_data = {
+
+        self.system_data = {
             "System_Status": "PASSIVE",
-            "status_order": "",
+            "Number_OK": 3,
+            "FIRST_START": True,
             "Count_A": 1,
             "Count_B": 254,
             "Err_Count": 0,
-            "order": "",
+            "Err_timer_status": False,
+            "order": ""
         }
+
+        self.start_time = time.time()
+        self.receive_data = {"hdlc": "", "time_delta": ""}
+        self.timer_err = threading.Timer(1.5, self.work_timer_err())
+
+    def check_err_first_stage(self):
+        if self.system_data["order"]["CODE_ALARM"] == 10 or\
+        self.system_data["order"]["CODE_ALARM"] == 11 or\
+        self.system_data["order"]["CODE_ALARM"] == 12 or\
+        self.system_data["order"]["CODE_ALARM"] == 21 or\
+        self.system_data["order"]["CODE_ALARM"] == 22 or\
+        self.system_data["order"]["CODE_ALARM"] == 23 or\
+        self.system_data["order"]["CODE_ALARM"] == 51 or\
+        self.system_data["order"]["CODE_ALARM"] == 62 or\
+        self.system_data["order"]["CODE_ALARM"] == 63 or\
+        self.system_data["order"]["CODE_ALARM"] == 64 or\
+        self.system_data["order"]["CODE_ALARM"] == 65 or\
+        self.system_data["order"]["CODE_ALARM"] == 66 or\
+        self.system_data["order"]["CODE_ALARM"] == 81:
+            print("The telegram is not taken into account. code: {}, desc: {}".format(self.system_data["order"]["CODE_ALARM"], self.system_data["order"]["DESC_ALARM"]))
+            return False
+        else:
+            return True
+
+    def check_err_second_stage(self):
+        print("into secong stage")
+        if self.system_data["order"]["CODE_ALARM"] == 31 or\
+            self.system_data["order"]["CODE_ALARM"] == 32 or\
+            self.system_data["order"]["CODE_ALARM"] == 33 or\
+            self.system_data["order"]["CODE_ALARM"] == 34 or\
+            self.system_data["order"]["CODE_ALARM"] == 35 or\
+            self.system_data["order"]["CODE_ALARM"] == 36 or\
+            self.system_data["order"]["CODE_ALARM"] == 37 or\
+            self.system_data["order"]["CODE_ALARM"] == 38 or\
+                self.system_data["order"]["CODE_ALARM"] == 39:
+            print("order alarm: {}".format(self.system_data["order"]["CODE_ALARM"]))
+            return False
+        else:
+            print("True second stage")
+            return True
+
+    def work_timer_err(self):
+        self.switch_to_pass()
+        pass
+
+    def timer_err_start(self):
+        if not self.timer_err.is_alive():
+            self.timer_err.start()
+        print("timer Error START!!!")
+        self.system_data["Err_timer_status"] = True
+
+    def checking_number_ok(self):
+        """ Checking the OK number """
+        tlg_a = self.system_data["order"]["TLG_A"]
+        if self.system_data["Number_OK"] == tlg_a["NUMBER_OK"]:
+            return True
+        else:
+            print("Number OK {} in not equal to the received {}".format(self.system_data["Number_OK"], tlg_a["NUMBER_OK"]))
+            return False
 
     def check_count_ok(self):
         """ check counters good Telegram """
         status = False
-        order_a = self.work_data["order"]["PACKET_COUNT_A"]
-        order_b = self.work_data["order"]["PACKET_COUNT_B"]
-        global_a = self.work_data["Count_A"]
-        global_b = self.work_data["Count_B"]
-        if order_a - global_a <= 2 and order_b - global_b <= 2:
-            status = True
-        else:
-            pass
-            #send status from old counts
-        self.work_data["Count_A"] = self.work_data["order"]["PACKET_COUNT_A"]
-        self.work_data["Count_B"] = self.work_data["order"]["PACKET_COUNT_B"]
+        print("into_check_count")
+        if self.check_err_second_stage():
+            print("second stage OK")
+            if self.system_data["FIRST_START"]:
+                self.system_data["Count_A"] = self.system_data["order"]["PACKET_COUNT_A"]
+                self.system_data["Count_B"] = self.system_data["order"]["PACKET_COUNT_B"]
+                self.system_data["FIRST_START"] = False
+                status = True
+                print("First Start!!!")
+            else:
+                order_a = self.system_data["order"]["PACKET_COUNT_A"]
+                order_b = self.system_data["order"]["PACKET_COUNT_B"]
+                global_a = self.system_data["Count_A"]
+                global_b = self.system_data["Count_B"]
+
+                if order_a - global_a <= 2 and global_b - order_b <= 2:
+                    self.system_data["Count_A"] = self.system_data["order"]["PACKET_COUNT_A"]
+                    self.system_data["Count_B"] = self.system_data["order"]["PACKET_COUNT_B"]
+                    status = True
         return status
 
-    def switching_to_work(self):
-        """ system to switch to the operating mode """
+    def switch_to_pass(self):
+        """ system to switch to the safe mode """
+        self.system_data["System_Status"] = "SAFE"
+        self.system_data["FIRST_START"] = True
 
-        self.work_data["Err_Count"] = 0
+    def switching_to_work(self):
+        """system to switch to the operating mode"""
+        self.system_data["Err_Count"] = 0
         #timer_error = stop
-        self.work_data["System_Status"] = "WORK"
-        #print("System status: Work!!!")
-        
+        self.system_data["System_Status"] = "WORK"
+
     def send_status(self):
-        status = stat(self.work_data)
-        
+        #status = stat(self.system_data)
+        print("Send status OK")
+
     #def buildProtocol(self, address):
     #    proto = EbilockClientFactory.buildProtocol(self, address)
     #    return proto
@@ -118,31 +189,42 @@ class EbilockClientFactory(ClientFactory):
             self.defered = None
         #    d.callback(data)
         #self.callback(data, receive_count, delta_time)
-
         source_hdlc = read_hdlc(self.receive_data["hdlc"])
 
         order = ord.from_hdlc(source_hdlc).check_telegramm()
-        self.work_data["status_order"] = order["status"]
-        self.work_data["order"] = order["order"]
+        self.system_data["order"] = order
         self.work_order()
 
     def work_order(self):
-        if self.work_data["status_order"] == "This send status":
+        if self.system_data["order"]["DESC_ALARM"] == "This send status":
             print("Send status")
-        elif self.work_data["status_order"] == "OK":
-            if self.check_count_ok():
-                self.switching_to_work()
-                self.send_status()
-                
         else:
-            #wrong telegram
-            self.work_data["Err_Count"] += 1
-            #print("order: {}, CountA: {}, CountB: {}, Err_count: {}".format(self.work_data["status_order"],\
-             #self.work_data["Count_A"], self.work_data["Count_B"], self.work_data["Err_Count"]))
+            if self.check_err_first_stage():
+                print("first stage")
+                if self.check_count_ok():
+                    print("check_count_OK")
+                    if self.system_data["order"]["CODE_ALARM"] == 0:
+                        print(self.system_data["order"]["DESC_ALARM"])
+                        if self.checking_number_ok():
+                            self.switching_to_work()
+                            self.send_status()
+                            print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}".format(self.system_data["System_Status"],\
+                                    self.system_data["order"]["DESC_ALARM"], self.receive_data["time_delta"],\
+                                     self.system_data["Count_A"], self.system_data["Count_B"])
+                        else:  # not self.checking_number_ok()
+                            pass
+                    else:  # status_order not OK
+                        if self.system_data["Err_Count"] == 0:
+                            self.timer_err_start()
+                        else:
+                            pass
+                        self.system_data["Err_Count"] += 1
+                else:  # not self.check_count_ok()
+                    print("Lost Communication\nTransfer status with old counters and Increase the counter\n")
+                    #
+            else:  # not check_err_first_stage
+                print("Discard a telegram")
 
-        print "status system: {0}, order: {1}, delta time: {2}, CountA: {3}, CountB: {4}".format(self.work_data["System_Status"],\
-                 self.work_data["status_order"], self.receive_data["time_delta"], self.work_data["Count_A"], self.work_data["Count_B"])
-        
 
     #def sendResult(self, data):
     #    print("Factory send over")
