@@ -8,10 +8,11 @@ import threading
 from sources.ebilockorder import Ebilock_order as ord
 from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
-from sources.work_order import work_order
-from sources.work_order import to_work_timer_err
-from sources.work_order import sys_data
-from sources.work_order import timer_err
+#from sources.work_order import work_order
+#from sources.work_order import to_work_timer_err
+#from sources.work_order import sys_data
+from sources.work_order import WorkTimer as wtimer
+from sources.work_order import WorkFlow as wf
 
 
 from twisted.internet.protocol import Protocol
@@ -24,12 +25,12 @@ from twisted.application import service
 class EbilockProtocol(Protocol):
 
     def delta_time(self, receive_time):
-        self.factory.receive_data["time_delta"] = receive_time - self.factory.start_time
+        self.factory.system_data["time_delta"] = receive_time - self.factory.start_time
         self.factory.start_time = time.time()
 
     def dataReceived(self, data):
         self.delta_time(time.time())
-        self.factory.receive_data["hdlc"] = data
+        self.factory.system_data["hdlc"] = data
         self.factory.order_received()
 
 
@@ -54,13 +55,32 @@ class EbilockClientFactory(ClientFactory):
     result = ""
     protocol = EbilockProtocol
     
-
     def __init__(self, defered):
         self.defered = defered
         self.start_time = time.time()
-        self.receive_data = {"hdlc": "", "time_delta": ""}
-        self.system_data = sys_data
+        #self.receive_data = {"hdlc": "", "time_delta": ""}
+        # self.system_data = sys_data
         self.work_order = work_order
+        self.system_data = {
+            "hdlc": "",
+            "time_delta": "",
+            "System_Status": "PASSIVE",
+            "Number_OK": 3,
+            "FIRST_START": True,
+            "Count_A": 1,
+            "Count_B": 254,
+            "Err_Count": 0,
+            "Err_timer_status": False,
+            "order": ""
+        }
+
+        self.wtimer = wtimer(self.system_data)
+
+    def switch_to_pass(self):
+        """ system to switch to the safe mode """
+        self.system_data["System_Status"] = "SAFE"
+        self.system_data["FIRST_START"] = True
+        print("switch to pass. time out!!!")
 
 
     #def buildProtocol(self, address):
@@ -90,11 +110,11 @@ class EbilockClientFactory(ClientFactory):
             self.defered = None
         #    d.callback(data)
         #self.callback(data, receive_count, delta_time)
-        source_hdlc = read_hdlc(self.receive_data["hdlc"])
+        source_hdlc = read_hdlc(self.system_data["hdlc"])
         order = ord.from_hdlc(source_hdlc).check_telegramm()
         self.system_data["order"] = ""
         self.system_data["order"] = order
-        self.work_order(self.receive_data)
+        wf(self.system_data, self.wtimer)
         #print(self.system_data)
  
 def get_order(host, port):
