@@ -201,7 +201,22 @@ class Ebilock_order(object):
             status = False
         return status
 
-    def _check_global_count_order(self):
+    def _check_global_count(self):
+        ct_A = self.telegramm_decode["PACKET_COUNT_A"]
+        if ct_A == 0 or ct_A == 255:
+            self.telegramm_decode["CODE_ALARM"] = 31
+            self.telegramm_decode["DESC_ALARM"] = "The value global_ctA can not be 0 or 255:'{}'".format(ct_A)
+            # self.STATUS_TLG = "The value can not be 0 or 255:'{}'".format(ct_A)
+            return False
+        ct_B = self.telegramm_decode["PACKET_COUNT_B"]
+        if ct_B == 0 or ct_B == 255:
+            self.telegramm_decode["CODE_ALARM"] = 32
+            self.telegramm_decode["DESC_ALARM"] = "The value global_ctB can not be 0 or 255:'{}'".format(ct_B)
+        if ct_A + ct_B == 255:
+            return True
+
+
+    def _check_count_order(self):
         """ Reading and checking the consistency\
         of counters A / B order package\n
         check_count_ab_packet()\n
@@ -445,6 +460,8 @@ class Ebilock_order(object):
         type_packet = self.telegramm_decode["TYPE_PACKET"]
         source_id = self.telegramm_decode["ID_SOURCE"]
         dest_id = self.telegramm_decode["ID_DEST"]
+        self.telegramm_decode["PACKET_COUNT_A"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_A_IND"]], 16)
+        self.telegramm_decode["PACKET_COUNT_B"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_B_IND"]], 16)
 
         if (type_packet == 2 and type_co == 4 or type_packet == 2 and type_co == 6):
             if source_id != 0:
@@ -517,7 +534,7 @@ class Ebilock_order(object):
                         self.telegramm_decode["PACKET_COUNT_B"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_B_IND"]], 16)
                         return True
 
-        if (type_packet == 3 and type_co == 8 or type_packet == 3 and type_co == 8):
+        elif (type_packet == 3 and type_co == 8 or type_packet == 3 and type_co == 8):
             self.telegramm_decode["CODE_ALARM"] = 80
             self.telegramm_decode["DESC_ALARM"] = "This send status"
             # self.STATUS_TLG = "This send status"
@@ -536,6 +553,7 @@ class Ebilock_order(object):
                         if self._check_id_packet():
                             if self._check_type_packet():
                                 if self._check_decode_ab():
-                                    if self._check_global_count_order():
+                                    if self._check_count_order():
                                         self._decode_zone_status(''.join(self.telegramm_decode['TLG_A']['DATA']))
+        #print("{}\n".format(self.telegramm_decode))
         return self.telegramm_decode

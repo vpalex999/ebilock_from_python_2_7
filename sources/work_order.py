@@ -1,19 +1,32 @@
 """ Work orders """
+import threading
+import mu
+sys_data = {
+            "System_Status": "PASSIVE",
+            "Number_OK": 3,
+            "FIRST_START": True,
+            "Count_A": 1,
+            "Count_B": 254,
+            "Err_Count": 0,
+            "Err_timer_status": False,
+            "order": ""
+        }
 
-
-sys_data = {}
-sys_data1 ={}
 
 def timer_err_start():
-        if not timer_err.is_alive():
-            timer_err.start()
-        print("timer Error START!!!")
-        sys_data["Err_timer_status"] = True
+    global timer_err
+    print("timer err alive: {}".format(timer_err.is_alive()))
+    if not timer_err.is_alive():
+        timer_err.start()
+    sys_data["Err_timer_status"] = timer_err.is_alive()
+    print("timer err status: {}".format(sys_data["Err_timer_status"]))
 
 
-def work_timer_err():
+def to_work_timer_err():
         switch_to_pass()
-        pass
+        sys_data["Err_timer_status"] = timer_err.is_alive()
+
+timer_err = threading.Timer(1.5, to_work_timer_err)
 
 
 def check_err_first_stage():
@@ -56,7 +69,9 @@ def check_err_second_stage():
 
 def checking_number_ok():
         """ Checking the OK number """
+        print(sys_data)
         tlg_a = sys_data["order"]["TLG_A"]
+        print("TLG: {}".format(tlg_a["NUMBER_OK"]))
         if sys_data["Number_OK"] == tlg_a["NUMBER_OK"]:
             return True
         else:
@@ -81,8 +96,7 @@ def check_count_ok():
                 order_b = sys_data["order"]["PACKET_COUNT_B"]
                 global_a = sys_data["Count_A"]
                 global_b = sys_data["Count_B"]
-
-                if order_a - global_a <= 2 and global_b - order_b <= 2:
+                if (order_a) - (global_a) <= 2 and (global_b) - (order_b) <= 2:
                     sys_data["Count_A"] = sys_data["order"]["PACKET_COUNT_A"]
                     sys_data["Count_B"] = sys_data["order"]["PACKET_COUNT_B"]
                     status = True
@@ -93,10 +107,14 @@ def switch_to_pass():
         """ system to switch to the safe mode """
         sys_data["System_Status"] = "SAFE"
         sys_data["FIRST_START"] = True
+        print("switch to pass. time out!!!")
 
 
 def switching_to_work():
+    global timer_err
     """system to switch to the operating mode"""
+    if not timer_err.is_alive():
+        timer_err.cancel()
     sys_data["Err_Count"] = 0
     # timer_error = stop
     sys_data["System_Status"] = "WORK"
@@ -118,9 +136,9 @@ def increase_count():
             sys_data["Count_B"] = sys_data["Count_B"] - 1
 
 
-def work_order(system_data, receive_data):
-    global sys_data
-    sys_data = system_data
+def work_order(receive_data):
+    global timer_err
+    #print("Order: {}".format(sys_data))
     if sys_data["order"]["DESC_ALARM"] == "This send status":
         print("Send status")
     else:
@@ -133,13 +151,14 @@ def work_order(system_data, receive_data):
                     if checking_number_ok():
                         switching_to_work()
                         send_status()
-                        print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}\n".format(sys_data["System_Status"],\
-                                sys_data["order"]["DESC_ALARM"], receive_data["time_delta"],\
-                                    sys_data["Count_A"], sys_data["Count_B"])
+                        #print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}\n".format(sys_data["System_Status"],\
+                        #        sys_data["order"]["DESC_ALARM"], receive_data["time_delta"],\
+                        #            sys_data["Count_A"], sys_data["Count_B"])
                     else:  # not self.checking_number_ok()
                         pass
                 else:  # status_order not OK
                     if sys_data["Err_Count"] == 0:
+                        print("Timer_error_start!!!")
                         timer_err_start()
                     else:
                         pass
@@ -152,8 +171,11 @@ def work_order(system_data, receive_data):
                 # self.system_data["Count_B"] = self.system_data["Count_B"] - 1
                 print("Increase count A/B: {}, {}\n".format(sys_data["Count_A"], sys_data["Count_B"]))
                 #source_hdlc = ""
-                return
+                #return
                     #
         else:  # not check_err_first_stage
             print("Discard a telegram")
+        print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}\n".format(sys_data["System_Status"],\
+                sys_data["order"]["DESC_ALARM"], receive_data["time_delta"],\
+                 sys_data["Count_A"], sys_data["Count_B"])
 

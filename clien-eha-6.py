@@ -9,8 +9,9 @@ from sources.ebilockorder import Ebilock_order as ord
 from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
 from sources.work_order import work_order
-from sources.work_order import work_timer_err
+from sources.work_order import to_work_timer_err
 from sources.work_order import sys_data
+from sources.work_order import timer_err
 
 
 from twisted.internet.protocol import Protocol
@@ -52,24 +53,13 @@ class EbilockClientFactory(ClientFactory):
     task_num = 1
     result = ""
     protocol = EbilockProtocol
+    
 
     def __init__(self, defered):
         self.defered = defered
         self.start_time = time.time()
         self.receive_data = {"hdlc": "", "time_delta": ""}
-        self.system_data = {
-            "System_Status": "PASSIVE",
-            "Number_OK": 3,
-            "FIRST_START": True,
-            "Count_A": 1,
-            "Count_B": 254,
-            "Err_Count": 0,
-            "Err_timer_status": False,
-            "order": ""
-        }
-        
-        sys_data = self.system_data
-        self.timer_err = threading.Timer(1.5, work_timer_err())
+        self.system_data = sys_data
         self.work_order = work_order
 
 
@@ -101,12 +91,10 @@ class EbilockClientFactory(ClientFactory):
         #    d.callback(data)
         #self.callback(data, receive_count, delta_time)
         source_hdlc = read_hdlc(self.receive_data["hdlc"])
-        # print("hdlc receiced")
         order = ord.from_hdlc(source_hdlc).check_telegramm()
         self.system_data["order"] = ""
-        # print("Empty order: {}".format(self.system_data["order"]))
         self.system_data["order"] = order
-        self.work_order(self.system_data, self.receive_data)
+        self.work_order(self.receive_data)
         #print(self.system_data)
  
 def get_order(host, port):
