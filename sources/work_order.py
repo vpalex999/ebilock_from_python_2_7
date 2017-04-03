@@ -1,35 +1,68 @@
 """ Work orders """
 import threading
+import time
+from twisted.internet import defer
 
 
 class WorkTimer(object):
+
     def __init__(self, sys_data):
-        self.timer_err = threading.Timer(1.5, do_timer_err)
         self.sys_data = sys_data
+        self.timer_err = threading.Timer(1.5, self.do_timer_err)
+        self.timer_err.start()
+        if self.isalive():
+            self.sys_data["Err_timer_status"] = True
+            print"Safe timer start!!!"
+        #   print("System status: {}".format(self.sys_data["System_Status"]))
 
     def do_timer_err(self):
         self.switch_to_pass()
-        self.sys_data["Err_timer_status"] = self.timer_err.is_alive()
+        self.sys_data["Err_timer_status"] = False
+        print("Safe timer stop = 1.5sec.")
+        print("Safe timer status: {}".format(self.sys_data["Err_timer_status"]))
 
     def isalive(self):
         return self.timer_err.is_alive()
 
     def isstart(self):
-        self.timer_err.start()
+        self.timer_err.finished.cle
+        if not self.timer_err.is_alive():
+            self.timer_err.run()
+            print("Safe timer start (RUN)!!!, STATUS: {}".format(self.timer_err.is_alive()))
         return self.timer_err.is_alive()
 
     def isstop(self):
-        self.timer_err.cancel()
+        if self.timer_err.is_alive():
+            self.timer_err.cancel()
+            print("Safe timer stop")
         return self.timer_err.is_alive()
+
+    def switch_to_pass(self):
+        """ system to switch to the safe mode """
+        self.sys_data["System_Status"] = "SAFE"
+        self.sys_data["FIRST_START"] = True
+        print("System status: {}".format(self.sys_data["System_Status"]))
+
+    def check_timer(self):
+        print("Check timer status: {}".format(self.sys_data["Err_timer_status"]))
+        #print("Check timer: {}".format(self.timer_err.is_alive()))
+        if not self.sys_data["Err_timer_status"] and self.sys_data["System_Status"] == "WORK":
+            self.isstart()
+        else:
+            self.isstop()
+
+
+
+
 
 
 
 class WorkFlow(object):
 
-    def __init__(self, sys_data, work_timer):
+    def __init__(self, sys_data):
 
         self.sys_data = sys_data
-        self.work_timer = work_timer
+
 
     def timer_err_start(self):
         print("timer err alive: {}".format(self.work_timer.isalive()))
@@ -38,14 +71,9 @@ class WorkFlow(object):
         self.sys_data["Err_timer_status"] = self.work_timer.isalive()
         print("timer err status: {}".format(self.sys_data["Err_timer_status"]))
 
-    #def switch_to_pass():
-    #    """ system to switch to the safe mode """
-    #    sys_data["System_Status"] = "SAFE"
-    #    sys_data["FIRST_START"] = True
-    #    print("switch to pass. time out!!!")
 
     def check_err_first_stage(self):
-        if sys_data["order"]["CODE_ALARM"] == 10 or\
+        if self.sys_data["order"]["CODE_ALARM"] == 10 or\
         self.sys_data["order"]["CODE_ALARM"] == 11 or\
         self.sys_data["order"]["CODE_ALARM"] == 12 or\
         self.sys_data["order"]["CODE_ALARM"] == 21 or\
@@ -64,7 +92,7 @@ class WorkFlow(object):
             return True
 
     def check_err_second_stage(self):
-        print("into secong stage")
+        #print("into secong stage")
         if self.sys_data["order"]["CODE_ALARM"] == 31 or\
             self.sys_data["order"]["CODE_ALARM"] == 32 or\
             self.sys_data["order"]["CODE_ALARM"] == 33 or\
@@ -77,14 +105,13 @@ class WorkFlow(object):
             print("order alarm: {}, desc: {}".format(self.sys_data["order"]["CODE_ALARM"], self.sys_data["order"]["DESC_ALARM"]))
             return False
         else:
-            print("True second stage")
+            #print("True second stage")
             return True
 
     def checking_number_ok(self):
         """ Checking the OK number """
-        print(self.sys_data)
+        # print(self.sys_data)
         tlg_a = self.sys_data["order"]["TLG_A"]
-        print("TLG: {}".format(tlg_a["NUMBER_OK"]))
         if self.sys_data["Number_OK"] == tlg_a["NUMBER_OK"]:
             return True
         else:
@@ -94,9 +121,9 @@ class WorkFlow(object):
     def check_count_ok(self):
         """ check counters good Telegram """
         status = False
-        print("into_check_count")
+        #print("into_check_count")
         if self.check_err_second_stage():
-            print("second stage OK")
+            #print("second stage OK")
             if self.sys_data["FIRST_START"]:
                 self.sys_data["FIRST_START"] = False
                 self.sys_data["Count_A"] = self.sys_data["order"]["PACKET_COUNT_A"]
@@ -115,17 +142,14 @@ class WorkFlow(object):
         return status
 
     def switching_to_work(self):
-    """system to switch to the operating mode"""
-    if not self.work_timer.isalive():
-        self.work_timer.isstop()
-    self.sys_data["Err_Count"] = 0
-    # timer_error = stop
-    self.sys_data["System_Status"] = "WORK"
+        """system to switch to the operating mode"""
+        self.sys_data["Err_Count"] = 0
+        self.sys_data["Err_timer_status"] = False
+        self.sys_data["System_Status"] = "WORK"
 
     def send_status(self):
         # status = stat(self.system_data)
-    print("Send status OK")
-
+        print("Send status OK")
 
     def increase_count(self):
         count_a = self.sys_data["Count_A"]
@@ -134,8 +158,8 @@ class WorkFlow(object):
             self.sys_data["Count_A"] = 1
             self.sys_data["Count_B"] = 254
         else:
-            self.sys_data["Count_A"] = sys_data["Count_A"] + 1
-            self.sys_data["Count_B"] = sys_data["Count_B"] - 1
+            self.sys_data["Count_A"] = self.sys_data["Count_A"] + 1
+            self.sys_data["Count_B"] = self.sys_data["Count_B"] - 1
 
     def work_order(self):
         # print("Order: {}".format(sys_data))
@@ -143,9 +167,9 @@ class WorkFlow(object):
             print("Send status")
         else:
             if self.check_err_first_stage():
-                print("first stage")
+                #print("first stage")
                 if self.check_count_ok():
-                    print("check_count_OK")
+                    #print("check_count_OK")
                     if self.sys_data["order"]["CODE_ALARM"] == 0:
                         print(self.sys_data["order"]["DESC_ALARM"])
                         if self.checking_number_ok():
@@ -158,8 +182,8 @@ class WorkFlow(object):
                             pass
                     else:  # status_order not OK
                         if self.sys_data["Err_Count"] == 0:
-                            print("Timer_error_start!!!")
-                            self.timer_err_start()
+                            self.sys_data["Err_timer_status"] = True
+                            #print("Timer_error_start!!!")
                         else:
                             pass
                         self.sys_data["Err_Count"] += 1
@@ -178,6 +202,8 @@ class WorkFlow(object):
             print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}\n".format(self.sys_data["System_Status"],\
                     self.sys_data["order"]["DESC_ALARM"], self.sys_data["time_delta"],\
                      self.sys_data["Count_A"], self.sys_data["Count_B"])
+            #print("Return")
+            return
 
 
 

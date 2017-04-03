@@ -60,11 +60,11 @@ class EbilockClientFactory(ClientFactory):
         self.start_time = time.time()
         #self.receive_data = {"hdlc": "", "time_delta": ""}
         # self.system_data = sys_data
-        self.work_order = work_order
+        #self.work_order = work_order
         self.system_data = {
             "hdlc": "",
             "time_delta": "",
-            "System_Status": "PASSIVE",
+            "System_Status": "SAFE",
             "Number_OK": 3,
             "FIRST_START": True,
             "Count_A": 1,
@@ -75,13 +75,29 @@ class EbilockClientFactory(ClientFactory):
         }
 
         self.wtimer = wtimer(self.system_data)
+        self.wf = wf(self.system_data)
 
-    def switch_to_pass(self):
-        """ system to switch to the safe mode """
-        self.system_data["System_Status"] = "SAFE"
-        self.system_data["FIRST_START"] = True
-        print("switch to pass. time out!!!")
+    
+    
+    #def switch_to_pass(self):
+    #    """ system to switch to the safe mode """
+    #    self.system_data["System_Status"] = "SAFE"
+    #    self.system_data["FIRST_START"] = True
+    #    self.system_data["Err_timer_status"] = self.wtimer.status
+    #    print("System status: {}".format(self.system_data["System_Status"]))
 
+    #def check_timer(self):
+    #    print("Check timer status: {}".format(self.system_data["Err_timer_status"]))
+    #    print("Check timer: {}".format(self.wtimer.status))
+    #    if self.system_data["Err_timer_status"]:
+    #        self.wtimer.timer_start()
+    #    else:
+    #        self.wtimer.timer_stop()
+    
+    #def do_timer_err(self):
+        #self.switch_to_pass()
+        #self.sys_data["Err_timer_status"] = self.timer_err.is_alive()
+     #   print("Safe timer stop = 1.5sec.")
 
     #def buildProtocol(self, address):
     #    proto = EbilockClientFactory.buildProtocol(self, address)
@@ -111,12 +127,15 @@ class EbilockClientFactory(ClientFactory):
         #    d.callback(data)
         #self.callback(data, receive_count, delta_time)
         source_hdlc = read_hdlc(self.system_data["hdlc"])
+        #print("source_hdlc: {}".format(self.system_data["hdlc"]))
         order = ord.from_hdlc(source_hdlc).check_telegramm()
         self.system_data["order"] = ""
         self.system_data["order"] = order
-        wf(self.system_data, self.wtimer)
+        self.wf.work_order()
+        self.wtimer.check_timer()
         #print(self.system_data)
- 
+
+
 def get_order(host, port):
 
     d = defer.Deferred()
@@ -133,6 +152,7 @@ def client_main():
     """
 
     from twisted.internet import reactor
+    reactor.call
     start = datetime.datetime.now()
     port = 4016
     host = '192.168.101.100'
