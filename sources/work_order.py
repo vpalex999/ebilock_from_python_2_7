@@ -1,6 +1,7 @@
 """ Work orders """
 import threading
 import time
+import datetime
 from twisted.internet import defer
 
 
@@ -11,15 +12,15 @@ class WorkTimer(object):
         self.timer_err = threading.Timer(1.5, self.do_timer_err)
         self.timer_err.start()
         if self.isalive():
-            self.sys_data["Err_timer_status"] = True
+            self.sys_data["Timer_status"] = True
             print"Safe timer start!!!"
         #   print("System status: {}".format(self.sys_data["System_Status"]))
 
     def do_timer_err(self):
         self.switch_to_pass()
-        self.sys_data["Err_timer_status"] = False
+        self.sys_data["Timer_status"] = False
         print("Safe timer stop = 1.5sec.")
-        print("Safe timer status: {}".format(self.sys_data["Err_timer_status"]))
+        print("Safe timer status: {}".format(self.sys_data["Timer_status"]))
 
     def isalive(self):
         return self.timer_err.is_alive()
@@ -40,21 +41,16 @@ class WorkTimer(object):
     def switch_to_pass(self):
         """ system to switch to the safe mode """
         self.sys_data["System_Status"] = "SAFE"
-        self.sys_data["FIRST_START"] = True
+        #self.sys_data["FIRST_START"] = True
         print("System status: {}".format(self.sys_data["System_Status"]))
 
     def check_timer(self):
-        print("Check timer status: {}".format(self.sys_data["Err_timer_status"]))
+        print("Check timer status: {}".format(self.sys_data["Timer_status"]))
         #print("Check timer: {}".format(self.timer_err.is_alive()))
-        if not self.sys_data["Err_timer_status"] and self.sys_data["System_Status"] == "WORK":
+        if not self.sys_data["Timer_status"] and self.sys_data["System_Status"] == "WORK":
             self.isstart()
         else:
             self.isstop()
-
-
-
-
-
 
 
 class WorkFlow(object):
@@ -63,13 +59,12 @@ class WorkFlow(object):
 
         self.sys_data = sys_data
 
-
     def timer_err_start(self):
         print("timer err alive: {}".format(self.work_timer.isalive()))
         if not self.work_timer.isalive():
             self.work_timer.isstart()
-        self.sys_data["Err_timer_status"] = self.work_timer.isalive()
-        print("timer err status: {}".format(self.sys_data["Err_timer_status"]))
+        self.sys_data["Timer_status"] = self.work_timer.isalive()
+        print("timer err status: {}".format(self.sys_data["Timer_status"]))
 
 
     def check_err_first_stage(self):
@@ -144,12 +139,8 @@ class WorkFlow(object):
     def switching_to_work(self):
         """system to switch to the operating mode"""
         self.sys_data["Err_Count"] = 0
-        self.sys_data["Err_timer_status"] = False
+        self.sys_data["Timer_status"] = False
         self.sys_data["System_Status"] = "WORK"
-
-    def send_status(self):
-        # status = stat(self.system_data)
-        print("Send status OK")
 
     def increase_count(self):
         count_a = self.sys_data["Count_A"]
@@ -162,48 +153,42 @@ class WorkFlow(object):
             self.sys_data["Count_B"] = self.sys_data["Count_B"] - 1
 
     def work_order(self):
+        status = 100
         # print("Order: {}".format(sys_data))
         if self.sys_data["order"]["DESC_ALARM"] == "This send status":
-            print("Send status")
+            status = self.sys_data["order"]["CODE_ALARM"]  # return send status
         else:
             if self.check_err_first_stage():
-                #print("first stage")
+                # print("first stage")
                 if self.check_count_ok():
-                    #print("check_count_OK")
+                    # print("check_count_OK")
                     if self.sys_data["order"]["CODE_ALARM"] == 0:
-                        print(self.sys_data["order"]["DESC_ALARM"])
+                        # print(self.sys_data["order"]["DESC_ALARM"])
                         if self.checking_number_ok():
                             self.switching_to_work()
-                            self.send_status()
-                            #print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}\n".format(sys_data["System_Status"],\
-                            #        sys_data["order"]["DESC_ALARM"], receive_data["time_delta"],\
-                            #            sys_data["Count_A"], sys_data["Count_B"])
+                            status = 0
                         else:  # not self.checking_number_ok()
-                            pass
+                            self.sys_data["Timer_status"] = True
+                            self.sys_data["Err_Count"] += 1    
                     else:  # status_order not OK
-                        if self.sys_data["Err_Count"] == 0:
-                            self.sys_data["Err_timer_status"] = True
-                            #print("Timer_error_start!!!")
-                        else:
-                            pass
+                        self.sys_data["Timer_status"] = True
                         self.sys_data["Err_Count"] += 1
                 else:  # not self.check_count_ok()
                     print("Lost Communication\nTransfer status with old counters and Increase the counter")
                     # Increase by 1
+                    status = 110
                     self.increase_count()
-                    # self.system_data["Count_A"] = self.system_data["Count_A"] + 1
-                    # self.system_data["Count_B"] = self.system_data["Count_B"] - 1
                     print("Increase count A/B: {}, {}\n".format(self.sys_data["Count_A"], self.sys_data["Count_B"]))
-                    #source_hdlc = ""
-                    #return
-                    #
             else:  # not check_err_first_stage
                 print("Discard a telegram")
-            print "status system: {0}, order status: {1}, delta time: {2}, CountA: {3}, CountB: {4}\n".format(self.sys_data["System_Status"],\
-                    self.sys_data["order"]["DESC_ALARM"], self.sys_data["time_delta"],\
-                     self.sys_data["Count_A"], self.sys_data["Count_B"])
-            #print("Return")
-            return
+                self.sys_data["Timer_status"] = True
+                status = 50
+
+            #print "{} status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.sys_data["System_Status"],\
+            #        self.sys_data["order"]["DESC_ALARM"], self.sys_data["time_delta"],\
+            #         self.sys_data["Count_A"], self.sys_data["Count_B"], self.sys_data["order"]["STATUS_ZONE"])
+            # print("Return")
+            return status
 
 
 

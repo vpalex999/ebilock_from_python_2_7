@@ -304,7 +304,7 @@ class Ebilock_order(object):
         tlg_ab = sources[start_ab:end_ab]
         if not size_ab == len(tlg_ab):
             self.telegramm_decode["CODE_ALARM"] = 43
-            self.telegramm_decode["DESC_ALARM"] = "packet length '{0}' is not equal to the value size A/B '{}'".format(len(tlg_ab), size_ab)
+            self.telegramm_decode["DESC_ALARM"] = "telegramm length '{0}' is not equal to the size A/B '{}'".format(len(tlg_ab), size_ab)
             # self.STATUS_TLG = "packet length '{0}' is not equal to the value size A/B '{}'".format(len(tlg_ab), size_ab)
             return False
         else:
@@ -389,15 +389,18 @@ class Ebilock_order(object):
     def _decode_zone_status(self, data_list):
         status_zone = {}
         zon = data_list[::-1]
+        # print("zon {}".format(len(zon)))
         try:
             key_zone_ = 1
             for zone in zon:
-                bin_zones = "{:08b}".format(int(zone, 16))
+                bin_zones = "{:04b}".format(int(zone, 16))
+                # print(bin_zones)
                 zon_offset = -2
-                zon_offset_str = 8
-                print("")
-                for key in range(0, 4):
+                zon_offset_str = 4
+                # print("")
+                for key in range(0, 2):
                     status_zone[key_zone_+key] = int(bin_zones[zon_offset:zon_offset_str], 2)
+                    # if 1 == 1:
                     if "zone" in self.arg:
                         print("Zona_{} = {}".format(
                             key_zone_ + key, int(bin_zones[zon_offset:zon_offset_str], 2)))

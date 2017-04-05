@@ -41,8 +41,10 @@ class EbilockProtocol(Protocol):
     #def connectionMade(self):
     #    self.transport.write("Hello!")
 
-    def connectionLost(self, reason):
-        print("Connection Lost!!!")
+    #def connectionLost(self, reason):
+    #    print("Connection Lost!!! {}".format(reason))
+    #    self.factory.clientConnectionLost(connector, reason)
+        
         #self.order_finished(reason)
     
 
@@ -55,12 +57,12 @@ class EbilockClientFactory(ClientFactory):
     result = ""
     protocol = EbilockProtocol
     
+    _SAFE = "SAFE"
+    _WORK = "WORK"
+    
     def __init__(self, defered):
         self.defered = defered
         self.start_time = time.time()
-        #self.receive_data = {"hdlc": "", "time_delta": ""}
-        # self.system_data = sys_data
-        #self.work_order = work_order
         self.system_data = {
             "hdlc": "",
             "time_delta": "",
@@ -70,70 +72,125 @@ class EbilockClientFactory(ClientFactory):
             "Count_A": 1,
             "Count_B": 254,
             "Err_Count": 0,
-            "Err_timer_status": False,
-            "order": ""
+            "Timer_status": False,
+            "Start_timer": False,
+            "order": "",
+            "order_work": None,
         }
-
-        self.wtimer = wtimer(self.system_data)
+        
         self.wf = wf(self.system_data)
 
+        self.system_data["Start_timer"] = True
+        self.system_data["Timer_status"] = True
+
+        self.d = defer.Deferred()
+        self.d.addCallbacks(self.switch_to_pass, self.errorback_timer)
+        self.d.addBoth(self.errorback_timer)
+        from twisted.internet import reactor
+        reactor.callLater(1.5, self.d.callback, stat)
+        print("First start system. Activate CallLater 1.5c!!!")
+
+        print("Check timer status: {}".format(self.system_data["Timer_status"]))
+        print("Check timer start: {}".format(self.system_data["Start_timer"]))
+        print("Check system status: {}".format(format(self.system_data["System_Status"])))
+
+
+    def switch_to_pass(self, *args):
+        """ system to switch to the safe mode """
+        print("{} Time out worked!!!!!!!!!".format(time.ctime()))
+        self.system_data["Start_timer"] = False
+        #if self.system_data["System_Status"] == "WORK" and self.system_data["Timer_status"]:
+        self.system_data["System_Status"] = "SAFE"
+        self.system_data["Timer_status"] = False
+        print("{}  System switch to SAFE: {}".format(time.ctime(), self.system_data["System_Status"]))
+
+    def errorback_timer(self, *args):
+        return
+        #print("Timer stop")
     
     
-    #def switch_to_pass(self):
-    #    """ system to switch to the safe mode """
-    #    self.system_data["System_Status"] = "SAFE"
-    #    self.system_data["FIRST_START"] = True
-    #    self.system_data["Err_timer_status"] = self.wtimer.status
-    #    print("System status: {}".format(self.system_data["System_Status"]))
 
-    #def check_timer(self):
-    #    print("Check timer status: {}".format(self.system_data["Err_timer_status"]))
-    #    print("Check timer: {}".format(self.wtimer.status))
-    #    if self.system_data["Err_timer_status"]:
-    #        self.wtimer.timer_start()
-    #    else:
-    #        self.wtimer.timer_stop()
-    
-    #def do_timer_err(self):
-        #self.switch_to_pass()
-        #self.sys_data["Err_timer_status"] = self.timer_err.is_alive()
-     #   print("Safe timer stop = 1.5sec.")
+    def timer_restart(self):
+        from twisted.internet import reactor
+        reactor.callLater(0.0, self.d.cancel)
+        self.d = None
+        self.d = defer.Deferred()
+        self.d.addCallbacks(self.switch_to_pass, self.errorback_timer)
+        self.d.addBoth(self.errorback_timer)
+        reactor.callLater(1.5, self.d.callback, stat)
+        print("Timer Restart!!!")
 
-    #def buildProtocol(self, address):
-    #    proto = EbilockClientFactory.buildProtocol(self, address)
-    #    return proto
-    #def buildProtocol(self, address):
-    #    return EbilockProtocol(EbilockClientFactory)
+    def check_timer(self, *args):
+        print("Check timer status: {}".format(self.system_data["Timer_status"]))
+        print("Check timer start: {}".format(self.system_data["Start_timer"]))
+        print("Check system status: {}".format(format(self.system_data["System_Status"])))
+        print("Err_Count: {}".format(self.system_data["Err_Count"]))
 
-    def client_finished(self,reason):
-        if self.defered is not None:
-            d = self.defered
-            self.defered = None
-            d.errback(reason)
-        #self.errorback(reason)
+        if self.system_data["Timer_status"] and not self.system_data["Start_timer"] and self.system_data["System_Status"] == "WORK":
+            from twisted.internet import reactor
+            reactor.callLater(1.5, self.switch_to_pass, "SAFE")
+            self.system_data["Err_Count"] = 0
+            self.system_data["Start_timer"] = True
+            print("Activate CallLater 1.5c - 1!!!")
 
-    #def clientConnectionFailed(self, connector, reason):
-    #    print("Failed to connect to: {}".format(connector.getDestination()))
-    #    if self.defered is not None:
-    #        d = self.defered
-    #        self.defered = None
-    #       d.errback(reason)
+        else:
+            if not self.system_data["Timer_status"] and not self.system_data["Start_timer"] and self.system_data["System_Status"] == "WORK" or\
+             not self.system_data["Timer_status"] and self.system_data["Start_timer"] and self.system_data["System_Status"] == "WORK":
+                self.timer_restart()
+                self.system_data["Timer_status"] = False
+                self.system_data["Start_timer"] = True
 
+            else:
+                if not self.system_data["Timer_status"] and self.system_data["System_Status"] == self._SAFE and self.system_data["order"]["DESC_ALARM"] == "OK" :
+                    self.system_data["System_Status"] = self._WORK
+                    self.timer_restart()
+                else:
+                    pass
+
+        print("\nAfter check_timer")
+        print("Check timer status: {}".format(self.system_data["Timer_status"]))
+        print("Check timer start: {}".format(self.system_data["Start_timer"]))
+        print("Check system status: {}\n".format(format(self.system_data["System_Status"])))
+
+    def clientConnectionFailed(self, connector, reason):
+        print("Failed to connect to: {}".format(connector.getDestination()))
+        time.sleep(1)
+        connector.connect()
+
+    def clientConnectionLost(self, connector, reason):
+        print("Client connection Lost: {}".format(reason))
+        time.sleep(1)
+        connector.connect()
 
     def order_received(self):
-        if self.defered is not None:
-            d = self.defered
-            self.defered = None
-        #    d.callback(data)
-        #self.callback(data, receive_count, delta_time)
         source_hdlc = read_hdlc(self.system_data["hdlc"])
-        #print("source_hdlc: {}".format(self.system_data["hdlc"]))
-        order = ord.from_hdlc(source_hdlc).check_telegramm()
-        self.system_data["order"] = ""
-        self.system_data["order"] = order
-        self.wf.work_order()
-        self.wtimer.check_timer()
-        #print(self.system_data)
+        # print("hdlc {}".format(source_hdlc))
+        if source_hdlc:
+            self.system_data["order"] = None
+            self.system_data["order"] = ord.from_hdlc(source_hdlc).check_telegramm()
+            status = self.wf.work_order()
+            if status == 80:
+                pass
+            elif status == 110:
+                pass
+            else:
+                if status == 0:
+                    order_work = {}
+                    order_work = self.system_data["order"]
+                    self.system_data["order_work"] = None
+                    self.system_data["order_work"] = order_work.copy()
+                self.check_timer()
+
+            print "{} order: status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data["System_Status"],\
+                    self.system_data["order"]["DESC_ALARM"], self.system_data["time_delta"],\
+                     self.system_data["Count_A"], self.system_data["Count_B"], self.system_data["order"]["STATUS_ZONE"])
+            if not self.system_data["order_work"] is None:
+                print "{} order_work: status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data["System_Status"],\
+                        self.system_data["order_work"]["DESC_ALARM"], self.system_data["time_delta"],\
+                            self.system_data["Count_A"], self.system_data["Count_B"], self.system_data["order_work"]["STATUS_ZONE"])
+            print("#"*10)
+                
+        
 
 
 def get_order(host, port):
@@ -152,7 +209,6 @@ def client_main():
     """
 
     from twisted.internet import reactor
-    reactor.call
     start = datetime.datetime.now()
     port = 4016
     host = '192.168.101.100'

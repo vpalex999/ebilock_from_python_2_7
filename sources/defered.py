@@ -14,13 +14,24 @@ def dodo(stat):
         stat["status_tumer"] = False
     print"hello!"
 
+def dodo1(stat):
+    print("Hello2!")
+
+def errors(stat):
+    print("Error backs")
+
 d = defer.Deferred()
-d.addCallback(dodo)
+d.addCallbacks(dodo, errors)
 
 #d.callback(stat)
 reactor.callLater(10, d.callback, stat)
 d.cancel()
+reactor.callLater(0, d.cancel)
 print("cansel")
+d = None
+d = defer.Deferred()
+d.addCallback(dodo1)
+
 reactor.callLater(10, d.callback, stat)
 
 #def start_timer(systems, stat_timer, dodo):
