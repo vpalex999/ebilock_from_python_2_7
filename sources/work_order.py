@@ -81,14 +81,14 @@ class WorkFlow(object):
         self.sys_data["order"]["CODE_ALARM"] == 65 or\
         self.sys_data["order"]["CODE_ALARM"] == 66 or\
         self.sys_data["order"]["CODE_ALARM"] == 81:
-            print("The telegram is not taken into account. code: {}, desc: {}".format(self.sys_data["order"]["CODE_ALARM"], self.sys_data["order"]["DESC_ALARM"]))
             return False
         else:
             return True
 
     def check_err_second_stage(self):
         #print("into secong stage")
-        if self.sys_data["order"]["CODE_ALARM"] == 31 or\
+        if self.sys_data["order"]["CODE_ALARM"] == 30 or\
+            self.sys_data["order"]["CODE_ALARM"] == 31 or\
             self.sys_data["order"]["CODE_ALARM"] == 32 or\
             self.sys_data["order"]["CODE_ALARM"] == 33 or\
             self.sys_data["order"]["CODE_ALARM"] == 34 or\
@@ -96,8 +96,9 @@ class WorkFlow(object):
             self.sys_data["order"]["CODE_ALARM"] == 36 or\
             self.sys_data["order"]["CODE_ALARM"] == 37 or\
             self.sys_data["order"]["CODE_ALARM"] == 38 or\
-                self.sys_data["order"]["CODE_ALARM"] == 39:
-            print("order alarm: {}, desc: {}".format(self.sys_data["order"]["CODE_ALARM"], self.sys_data["order"]["DESC_ALARM"]))
+            self.sys_data["order"]["CODE_ALARM"] == 39 or\
+                self.sys_data["order"]["CODE_ALARM"] == 40:
+            #print("order alarm: {}, desc: {}".format(self.sys_data["order"]["CODE_ALARM"], self.sys_data["order"]["DESC_ALARM"]))
             return False
         else:
             #print("True second stage")
@@ -169,19 +170,19 @@ class WorkFlow(object):
                             status = 0
                         else:  # not self.checking_number_ok()
                             self.sys_data["Timer_status"] = True
-                            self.sys_data["Err_Count"] += 1    
+                            self.sys_data["Err_Count"] += 1
+                            # return 100    
                     else:  # status_order not OK
                         self.sys_data["Timer_status"] = True
                         self.sys_data["Err_Count"] += 1
+                        # return 100
                 else:  # not self.check_count_ok()
-                    print("Lost Communication\nTransfer status with old counters and Increase the counter")
+                    #print("Lost Communication\nTransfer status with old counters and Increase the counter")
                     # Increase by 1
                     status = 110
-                    self.increase_count()
-                    print("Increase count A/B: {}, {}\n".format(self.sys_data["Count_A"], self.sys_data["Count_B"]))
+                    #self.increase_count()
+                    #print("Increase count A/B: {}, {}\n".format(self.sys_data["Count_A"], self.sys_data["Count_B"]))
             else:  # not check_err_first_stage
-                print("Discard a telegram")
-                self.sys_data["Timer_status"] = True
                 status = 50
 
             #print "{} status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.sys_data["System_Status"],\

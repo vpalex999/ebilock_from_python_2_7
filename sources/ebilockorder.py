@@ -113,9 +113,9 @@ class Ebilock_order(object):
 
         status = True
         sources = self.telegramm
-        if len(sources) < 20:
+        if len(sources) < 14:
             self.telegramm_decode["CODE_ALARM"] = 10
-            self.telegramm_decode["DESC_ALARM"] = "Invalid package '{}' 2xByte, min = 20 2xByte".format(len(sources))
+            self.telegramm_decode["DESC_ALARM"] = "Invalid package '{}' 2xByte, min = 14 2xByte".format(len(sources))
             # self.STATUS_TLG = "Invalid package '{}' 2xByte, min = 20 2xByte".format(len(sources))
             status = False
 
@@ -199,22 +199,24 @@ class Ebilock_order(object):
             self.telegramm_decode["DESC_ALARM"] = "Invalid header structure, Zero byte value = '{}', must be 0".format(tmp)
             # self.STATUS_TLG = "Invalid header structure, Zero byte value = '{}', must be 0".format(tmp)
             status = False
-        return status
 
-    def _check_global_count(self):
+        self.telegramm_decode["PACKET_COUNT_A"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_A_IND"]], 16)
+        self.telegramm_decode["PACKET_COUNT_B"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_B_IND"]], 16)
+
         ct_A = self.telegramm_decode["PACKET_COUNT_A"]
         if ct_A == 0 or ct_A == 255:
             self.telegramm_decode["CODE_ALARM"] = 31
             self.telegramm_decode["DESC_ALARM"] = "The value global_ctA can not be 0 or 255:'{}'".format(ct_A)
             # self.STATUS_TLG = "The value can not be 0 or 255:'{}'".format(ct_A)
-            return False
+            status = False
+
         ct_B = self.telegramm_decode["PACKET_COUNT_B"]
         if ct_B == 0 or ct_B == 255:
             self.telegramm_decode["CODE_ALARM"] = 32
             self.telegramm_decode["DESC_ALARM"] = "The value global_ctB can not be 0 or 255:'{}'".format(ct_B)
-        if ct_A + ct_B == 255:
-            return True
+            status = False
 
+        return status
 
     def _check_count_order(self):
         """ Reading and checking the consistency\
@@ -222,6 +224,7 @@ class Ebilock_order(object):
         check_count_ab_packet()\n
         ARG: String of bytes in hex.
         """
+        status = True
 
         ct_A = self.telegramm_decode["PACKET_COUNT_A"]
         if ct_A == 0 or ct_A == 255:
@@ -246,6 +249,14 @@ class Ebilock_order(object):
             self.telegramm_decode["CODE_ALARM"] = 34
             self.telegramm_decode["DESC_ALARM"] = "The value ct_b can not be 0 or 255:'{}'".format(ct_b)
             self.STATUS_TLG = "The value can not be 0 or 255:'{}'".format(ct_b)
+            return False
+        if ct_A + ct_B != 255:
+            self.telegramm_decode["CODE_ALARM"] = 30
+            self.telegramm_decode["DESC_ALARM"] = "Err_ctab_gl: glA-'{}', glB- {}".format(ct_A, ct_B)
+            return False
+        if ct_a + ct_b != 255:
+            self.telegramm_decode["CODE_ALARM"] = 40
+            self.telegramm_decode["DESC_ALARM"] = "Err_ctab: a-'{}', b- {}".format(ct_a, ct_b)
             return False
         if ct_A + ct_B == 255:
             if ct_a + ct_b == 255:
@@ -278,6 +289,7 @@ class Ebilock_order(object):
                 self.telegramm_decode["DESC_ALARM"] = "Error_cta_gl"
                 # self.STATUS_TLG = "Error_cta_gl"
                 return False
+
 
     def _check_body_telegramm_ab(self):
         """ Check the length of the block of telegrams A / B\n
@@ -463,8 +475,8 @@ class Ebilock_order(object):
         type_packet = self.telegramm_decode["TYPE_PACKET"]
         source_id = self.telegramm_decode["ID_SOURCE"]
         dest_id = self.telegramm_decode["ID_DEST"]
-        self.telegramm_decode["PACKET_COUNT_A"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_A_IND"]], 16)
-        self.telegramm_decode["PACKET_COUNT_B"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_B_IND"]], 16)
+        # self.telegramm_decode["PACKET_COUNT_A"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_A_IND"]], 16)
+        # self.telegramm_decode["PACKET_COUNT_B"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_B_IND"]], 16)
 
         if (type_packet == 2 and type_co == 4 or type_packet == 2 and type_co == 6):
             if source_id != 0:
