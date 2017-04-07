@@ -15,6 +15,7 @@ from sources.work_order import WorkTimer as wtimer
 from sources.work_order import WorkFlow as wf
 
 
+
 from twisted.internet.protocol import Protocol
 from twisted.internet.protocol import ClientFactory
 from twisted.internet import defer
@@ -67,6 +68,7 @@ class EbilockClientFactory(ClientFactory):
             "hdlc": "",
             "time_delta": "",
             "System_Status": "SAFE",
+            "Lost_Connect": False,
             "Number_OK": 3,
             "FIRST_START": True,
             "Count_A": 1,
@@ -184,6 +186,9 @@ class EbilockClientFactory(ClientFactory):
                 order_work = self.system_data["order"]
                 self.system_data["order_work"] = None
                 self.system_data["order_work"] = order_work.copy()
+                stat_ok = stat.from_ok(self.system_data)
+                stat_ok.code_zone()
+
 
             elif status == 50:
                 print("Discard a telegram")

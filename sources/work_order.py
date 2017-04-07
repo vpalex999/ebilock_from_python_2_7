@@ -99,9 +99,11 @@ class WorkFlow(object):
             self.sys_data["order"]["CODE_ALARM"] == 39 or\
                 self.sys_data["order"]["CODE_ALARM"] == 40:
             #print("order alarm: {}, desc: {}".format(self.sys_data["order"]["CODE_ALARM"], self.sys_data["order"]["DESC_ALARM"]))
+            self.sys_data["Lost_Connect"] = True
             return False
         else:
             #print("True second stage")
+            self.sys_data["Lost_Connect"] = False
             return True
 
     def checking_number_ok(self):

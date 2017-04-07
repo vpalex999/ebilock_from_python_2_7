@@ -3,52 +3,65 @@ from sources.crc8 import check_crc_8 as crc8
 from sources.error import EbException
 import binascii
 
-desc_header_packet = {
-        "size": 8,
-        "ID_SOURCE_IND": 0,
-        "ID_DEST_IND": 1,
-        "TYPE_PACKET_IND": 2,
-        "START_DATA_IND": 3,
-        "END_DATA_IND": 6,
-        "NUL_BYTE_IND": 7,
-        "PACKET_COUNT_A_IND": 8,
-        "PACKET_COUNT_B_IND": 9,
-        "START_SIZE_AB_IND": 10,
-        "END_SIZE_AB_IND": 12,
-        "ID":
-        {"0": "IPU_GATE_RF",
-         "1": "EHA"
-        },
-        "TYPE_ID":
-        {2: "2 - order",
-         3: "3 - empty status",
-         4: "4 - empty order",
-         5: "5 - IPU_GATE_RF -> OK",
-         6: "6 - OK -> IPU_GATE_RF"
-        },
-        "TLG_AB":
-        {
-         "OK_START": 0,
-         "OK_END": 1,
-         "ML_CO": 2,
-         "COUNT_AB": 3,
-         "co":
-         {
-          4: "4 - order, telegramm A (source Ebilock950 R4)",
-          6: "6 - order, telegramm B (source Ebilock950 R4)",
-          8: "8 - status, telegramm A (source EHA)",
-          "C": "C - status, telegramm B (source EHA)"
-         },
-        },
-        }
-
 
 class Ebilock_status(object):
-    """ class Ebilock status
-    """
-    STATUS_TLG = "OK"
+    """ class Ebilock status """
 
-    def __init__(self, telegramm):
-            self.telegramm = telegramm.copy()
+    def __init__(self, system_data, count_a, count_b):
+        self.system_data = system_data
+        self.count_a = count_a
+        self.count_b = count_b
+        self.zone_hex = []
+        #print("count_a: {}, count_b: {}, CountA: {}, CountB: {}".format(count_a, count_b, self.system_data["Count_A"], self.system_data["Count_B"]))
+
+    @classmethod
+    def from_ok(cls, object):
+        count_a = object["Count_A"]
+        count_b = object["Count_B"]
+
+        if count_a == 1 and count_b == 254:
+            count_a = 255
+            count_b = 1
+        else:
+            count_a -= 1
+            count_b += 1
+        #print("count_a: {}, count_b: {}, CountA: {}, CountB: {}".format(count_a, count_b, object["Count_A"], object["Count_B"]))
+        return cls(object, count_a, count_b)
+
+    @classmethod
+    def from_loss_connect(cls, object):
+        count_a = object["Count_A"]
+        count_b = object["Count_B"]
+        if count_a == 254 and count_b == 1:
+            self.object["Count_A"] = 1
+            self.object["Count_B"] = 254
+        else:
+            self.object["Count_A"] = self.object["Count_A"] + 1
+            self.object["Count_B"] = self.object["Count_B"] - 1
+
+        return cls(object, count_a+1, count_b-1)
+
+    @classmethod
+    def from_send_status(cls, object):
+        count_a = object["Count_A"]
+        count_b = object["Count_B"]
+        return cls(object, count_a, count_b)
+
+    def code_zone(self):
+        offset_by = 0
+        result = 0
+        temp = 0
+        zone = self.system_data["order_work"]["STATUS_ZONE"]
+        print("status_zone: {}".format(zone))
+        for j in range(int(len(list(zone.keys())))):
+            temp = zone[j+1]
+            temp = temp << offset_by
+            offset_by += 2
+            result = result | temp
+            if j and (j+1) % 4 == 0:
+                self.zone_hex.insert(0, hex(result))
+                result = 0
+                offset_by = 0
+        print("zone_hex: {}".format(self.zone_hex))
 
 
