@@ -110,10 +110,10 @@ class WorkFlow(object):
         """ Checking the OK number """
         # print(self.sys_data)
         tlg_a = self.sys_data["order"]["TLG_A"]
-        if self.sys_data["Number_OK"] == tlg_a["NUMBER_OK"]:
+        if self.sys_data["NUMBER_OK"] == tlg_a["NUMBER_OK"]:
             return True
         else:
-            print("Number OK {} in not equal to the received {}".format(self.sys_data["Number_OK"], tlg_a["NUMBER_OK"]))
+            print("Number OK {} in not equal to the received {}".format(self.sys_data["NUMBER_OK"], tlg_a["NUMBER_OK"]))
             return False
 
     def check_count_ok(self):

@@ -34,3 +34,13 @@ def check_crc_8(telegramm):
     for i in range(len(tlg)):
         crc = crc_table[crc ^ tlg[i]]
     return ("{:02x}".format(int(hex(crc), 16))).upper()
+
+
+def create_crc_8(telegram):
+    crc = 0
+    #print("telegramm: {}".format(telegram))
+    for i in telegram:
+        #print("I: {}".format(i))
+        crc = crc_table[crc ^ int(i, 16)]
+    #return ("{:02x}".format(int(hex(crc), 16)))
+    return hex(crc)

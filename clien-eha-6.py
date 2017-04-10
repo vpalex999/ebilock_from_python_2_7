@@ -13,6 +13,7 @@ from sources.hdlc import read_hdlc
 #from sources.work_order import sys_data
 from sources.work_order import WorkTimer as wtimer
 from sources.work_order import WorkFlow as wf
+from sources.print_status import PrintStatus as prints
 
 
 
@@ -69,7 +70,10 @@ class EbilockClientFactory(ClientFactory):
             "time_delta": "",
             "System_Status": "SAFE",
             "Lost_Connect": False,
-            "Number_OK": 3,
+            "LOOP_OK": 3,
+            "AREA_OK": 1,
+            "HUB_OK": 5,
+            "NUMBER_OK": 3,
             "FIRST_START": True,
             "Count_A": 1,
             "Count_B": 254,
@@ -78,9 +82,22 @@ class EbilockClientFactory(ClientFactory):
             "Start_timer": False,
             "order": "",
             "order_work": None,
+            "ORDER_STATUS": None,
+            "ZONE_CNS":
+            {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+                8: 0,
+            }
         }
         
         self.wf = wf(self.system_data)
+        self.prints = prints(self.system_data)
 
         self.system_data["Start_timer"] = True
         self.system_data["Timer_status"] = True
@@ -186,9 +203,13 @@ class EbilockClientFactory(ClientFactory):
                 order_work = self.system_data["order"]
                 self.system_data["order_work"] = None
                 self.system_data["order_work"] = order_work.copy()
-                stat_ok = stat.from_ok(self.system_data)
-                stat_ok.code_zone()
-
+                if stat.from_ok(self.system_data).code_telegramm():
+                    self.prints.show_admin_address_ok()
+                    self.prints.show_receive_address_ok()
+                    self.prints.show_zone_cns()
+                    self.prints.show_status_telegramm
+                else:
+                    print("Problem code status!!!")
 
             elif status == 50:
                 print("Discard a telegram")
