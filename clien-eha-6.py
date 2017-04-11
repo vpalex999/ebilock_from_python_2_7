@@ -235,7 +235,7 @@ class EbilockClientFactory(ClientFactory):
                     self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
                     # Increase by 1
                     #self.wf.increase_count()
-                    print("Increase count A/B: {}, {}\n".format(self.system_data["Count_A"], self.system_data["Count_B"]))
+                    print("Increase count A/B: {}, {}\n".format(hex(self.system_data["Count_A"]), hex(self.system_data["Count_B"])))
 
             elif status == 0:
                 order_work = {}
@@ -243,32 +243,33 @@ class EbilockClientFactory(ClientFactory):
                 self.system_data["order_work"] = None
                 self.system_data["order_work"] = order_work.copy()
                 if stat.from_ok(self.system_data).code_telegramm():
-                    self.prints.show_admin_address_ok()
-                    self.prints.show_receive_address_ok()
-                    self.prints.show_zone_cns()
-                    self.prints.show_status_telegramm()
                     self.system_data["HDLC_SEND_STATUS"] = None
                     self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
                     #self.d_send_status(self.system_data["HDLC_SEND_STATUS"])
                     #print("hdlc_send: {}".format(hdlc_send))
-                
 
             elif status == 50:
                 print("Discard a telegram")
                 self.system_data["Timer_status"] = True
             else:
-                    print("Problem code status!!!")
-            
+                    self.system_data["HDLC_SEND_STATUS"] = None
+                    self.system_data["ORDER_STATUS"] = None
+                    print("Don't send status!!!")
+            self.prints.show_admin_address_ok()
+            self.prints.show_receive_address_ok()
+            self.prints.show_zone_cns()
+            self.prints.show_status_telegramm()
+
             self.check_timer()
 
-            print "{} order: status system: {}, order status: {}, err_code: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data["System_Status"],\
+            print "{} receive order: status system: {}, order status: {}, err_code: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data["System_Status"],\
                     self.system_data["order"]["DESC_ALARM"], self.system_data["order"]["CODE_ALARM"], self.system_data["time_delta"],\
-                     self.system_data["Count_A"], self.system_data["Count_B"], self.system_data["order"]["STATUS_ZONE"])
+                     hex(self.system_data["Count_A"]), hex(self.system_data["Count_B"]), self.system_data["order"]["STATUS_ZONE"])
 
             if not self.system_data["order_work"] is None:
                 print "{} order_work: status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data["System_Status"],\
                         self.system_data["order_work"]["DESC_ALARM"], self.system_data["time_delta"],\
-                            self.system_data["Count_A"], self.system_data["Count_B"], self.system_data["order_work"]["STATUS_ZONE"])
+                            hex(self.system_data["Count_A"]), hex(self.system_data["Count_B"]), self.system_data["order_work"]["STATUS_ZONE"])
             print("#"*10)
                 
         

@@ -9,10 +9,12 @@ class PrintStatus(object):
               self.system_data["AREA_OK"], self.system_data["HUB_OK"], self.system_data["NUMBER_OK"]))
 
     def show_receive_address_ok(self):
+        if self.system_data["order_work"] is None:
+            return
         tlg_a = self.system_data["order_work"]["TLG_A"]
         if tlg_a:
             print("Receive address OK from the EBilock: LOOP: {}, AREA: {}, HUB: {}, NUMBER: {}, ADDRES: {}".format(tlg_a["LOOP_OK"],\
-              tlg_a["AREA_OK"], tlg_a["HUB_OK"], tlg_a["NUMBER_OK"], tlg_a["ADDR_OK"]))
+            tlg_a["AREA_OK"], tlg_a["HUB_OK"], tlg_a["NUMBER_OK"], tlg_a["ADDR_OK"]))
         else:
             print("No data received")
 
