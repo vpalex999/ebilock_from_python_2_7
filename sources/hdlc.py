@@ -9,6 +9,7 @@ def read_hdlc(hdlc):
     telegramm = []
     #for item in hdlc:
     #    telegramm.append("{:02x}".format(int(item), 16).upper())
+    #print(hdlc)
     for item in hdlc:
         telegramm.append("{:02x}".format(int(binascii.hexlify(item), 16)).upper())
     if len(hdlc) >= 2:
@@ -29,3 +30,15 @@ def read_hdlc(hdlc):
         print("wrong format hdlc: {}".format(telegramm))
         return None
 
+def create_hdlc(telegramm):
+    DLE = hex(16)
+    STX = hex(2)
+    ETX = hex(131)
+    temp = telegramm[:]
+    temp.insert(0, DLE)
+    temp.insert(1, STX)
+    temp.append(DLE)
+    temp.append(ETX)
+    #return bytes([int(temp[x], 16) for x in range(len(temp))])
+    return ''.join(([binascii.unhexlify("{:02x}".format(int(temp[x], 16))) for x in range(len(temp))]))
+    #eturn '\\'.join(temp[:])

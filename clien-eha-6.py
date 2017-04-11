@@ -8,6 +8,8 @@ import threading
 from sources.ebilockorder import Ebilock_order as ord
 from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
+from sources.hdlc import create_hdlc
+
 #from sources.work_order import work_order
 #from sources.work_order import to_work_timer_err
 #from sources.work_order import sys_data
@@ -26,18 +28,34 @@ from twisted.application import service
 
 class EbilockProtocol(Protocol):
 
+    def __init__(self, factory, system_data):
+        self.system_data = system_data
+        self.factory = factory
+        self.d = defer.Deferred()
+
     def delta_time(self, receive_time):
-        self.factory.system_data["time_delta"] = receive_time - self.factory.start_time
-        self.factory.start_time = time.time()
+        self.system_data["time_delta"] = receive_time - self.system_data["start_time"]
+        self.system_data["start_time"] = time.time()
+        #self.factory.system_data["time_delta"] = receive_time - self.factory.start_time
+        #self.factory.start_time = time.time()
 
     def dataReceived(self, data):
         self.delta_time(time.time())
-        self.factory.system_data["hdlc"] = data
+        self.system_data["hdlc"] = data
         self.factory.order_received()
+        from twisted.internet import reactor
+        #d.addCallback(self.dataSend())
+        reactor.callLater(0, self.dataSend, "send_status")
 
 
-    def dataSend(self, data):
-        self.transport.write(data)
+        #self.factory.d_send_status(self.system_data["HDLC_SEND_STATUS"])
+        #self.transport.write(self.hello)
+
+    def dataSend(self, status):
+        
+        #print(self.system_data["HDLC_SEND_STATUS"])
+        self.transport.write(self.system_data["HDLC_SEND_STATUS"])
+        #print("send status!!!")
 
     
     #def connectionMade(self):
@@ -66,6 +84,7 @@ class EbilockClientFactory(ClientFactory):
         self.defered = defered
         self.start_time = time.time()
         self.system_data = {
+            "start_time": time.time(),
             "hdlc": "",
             "time_delta": "",
             "System_Status": "SAFE",
@@ -83,6 +102,7 @@ class EbilockClientFactory(ClientFactory):
             "order": "",
             "order_work": None,
             "ORDER_STATUS": None,
+            "HDLC_SEND_STATUS": None,
             "ZONE_CNS":
             {
                 1: 0,
@@ -109,10 +129,14 @@ class EbilockClientFactory(ClientFactory):
         reactor.callLater(1.5, self.d.callback, stat)
         print("First start system. Activate CallLater 1.5c!!!")
 
+
+
         print("Check timer status: {}".format(self.system_data["Timer_status"]))
         print("Check timer start: {}".format(self.system_data["Start_timer"]))
         print("Check system status: {}".format(format(self.system_data["System_Status"])))
 
+    def buildProtocol(self, addr):
+        return EbilockProtocol(self, self.system_data)
 
     def switch_to_pass(self, *args):
         """ system to switch to the safe mode """
@@ -138,6 +162,15 @@ class EbilockClientFactory(ClientFactory):
         self.d.addBoth(self.errorback_timer)
         reactor.callLater(1.5, self.d.callback, stat)
         print("Timer Restart!!!")
+
+    def d_send_status(self, status_order):
+        from twisted.internet import reactor
+        d = None
+        d = defer.Deferred()
+        d.addCallback(self.protocol(self, self.system_data).dataSend())
+        reactor.callLater(0, d.callback, send_status)
+        print("callback send status started")
+        
 
     def check_timer(self, *args):
         print("Check timer status: {}".format(self.system_data["Timer_status"]))
@@ -191,12 +224,18 @@ class EbilockClientFactory(ClientFactory):
             #print("return status work_order {}".format(status))
             if status == 80:
                 print("Send Status!!!")
+                if stat.from_send_status(self.system_data).code_telegramm():
+                    self.system_data["HDLC_SEND_STATUS"] = None
+                    self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
 
             elif status == 110:
                 print("Lost Communication\nTransfer status with old counters and Increase the counter")
-                # Increase by 1
-                self.wf.increase_count()
-                print("Increase count A/B: {}, {}\n".format(self.system_data["Count_A"], self.system_data["Count_B"]))
+                if stat.from_loss_connect(self.system_data).code_telegramm():
+                    self.system_data["HDLC_SEND_STATUS"] = None
+                    self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
+                    # Increase by 1
+                    #self.wf.increase_count()
+                    print("Increase count A/B: {}, {}\n".format(self.system_data["Count_A"], self.system_data["Count_B"]))
 
             elif status == 0:
                 order_work = {}
@@ -207,14 +246,19 @@ class EbilockClientFactory(ClientFactory):
                     self.prints.show_admin_address_ok()
                     self.prints.show_receive_address_ok()
                     self.prints.show_zone_cns()
-                    self.prints.show_status_telegramm
-                else:
-                    print("Problem code status!!!")
+                    self.prints.show_status_telegramm()
+                    self.system_data["HDLC_SEND_STATUS"] = None
+                    self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
+                    #self.d_send_status(self.system_data["HDLC_SEND_STATUS"])
+                    #print("hdlc_send: {}".format(hdlc_send))
+                
 
             elif status == 50:
                 print("Discard a telegram")
                 self.system_data["Timer_status"] = True
-
+            else:
+                    print("Problem code status!!!")
+            
             self.check_timer()
 
             print "{} order: status system: {}, order status: {}, err_code: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data["System_Status"],\

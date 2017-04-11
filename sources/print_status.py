@@ -20,7 +20,7 @@ class PrintStatus(object):
         print("Status zone from CNS: {}".format(self.system_data["ZONE_CNS"]))
 
     def show_status_telegramm(self):
-        if self.system_data[ORDER_STATUS] is None:
+        if self.system_data["ORDER_STATUS"] is None:
             print("Empty status telegramm!!!")
         else:
-            print("Status telegramm: {}".format(ORDER_STATUS))
+            print("Status telegramm: {}".format(self.system_data["ORDER_STATUS"]))

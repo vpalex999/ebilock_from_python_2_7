@@ -50,7 +50,7 @@ class Ebilock_status(object):
 
         if count_a == 1 and count_b == 254:
             count_a = 255
-            count_b = 1
+            count_b = 0
         else:
             count_a -= 1
             count_b += 1
@@ -62,13 +62,13 @@ class Ebilock_status(object):
         count_a = object["Count_A"]
         count_b = object["Count_B"]
         if count_a == 254 and count_b == 1:
-            self.object["Count_A"] = 1
-            self.object["Count_B"] = 254
+            object["Count_A"] = 1
+            object["Count_B"] = 254
         else:
-            self.object["Count_A"] = self.object["Count_A"] + 1
-            self.object["Count_B"] = self.object["Count_B"] - 1
+            object["Count_A"] = object["Count_A"] + 1
+            object["Count_B"] = object["Count_B"] - 1
 
-        return cls(object, count_a+1, count_b-1)
+        return cls(object, count_a, count_b)
 
     @classmethod
     def from_send_status(cls, object):
@@ -80,8 +80,8 @@ class Ebilock_status(object):
         offset_by = 0
         result = 0
         temp = 0
-        zone = self._system_data["order_work"]["STATUS_ZONE"]
-        print("status_zone: {}".format(zone))
+        zone = self._system_data["ZONE_CNS"]
+        #print("status_zone: {}".format(zone))
         for j in range(int(len(list(zone.keys())))):
             temp = zone[j+1]
             temp = temp << offset_by
@@ -93,11 +93,11 @@ class Ebilock_status(object):
                 offset_by = 0
         print("zone_hex: {}".format(self._zone_hex))
 
-    def _code_size_packet(self):
-        offset_by = 0
-        result = 0
-        temp = 0
-        sum_size = 12+len(self._telegramm_a_hex)*2
+    #def _code_size_packet(self):
+    #    offset_by = 0
+    #    result = 0
+    #    temp = 0
+    #    sum_size = 12+len(self._telegramm_a_hex)*2
 
     def _code_address_ok(self, telegramm):
         offset_by = 12
@@ -151,6 +151,7 @@ class Ebilock_status(object):
 
     def _create_crc_16(self, telegramm):
         r_c = bytearray([int(telegramm[x], 16) for x in range(len(telegramm))])
+        # print("r_c: {}".format(r_c))
         get_check_rc = Crc16CcittFalse.calchex(r_c)
         # print("get_check_rc16_hex: {}".format(get_check_rc))
         self._crc16 = self.hex_to_2bytes(int(get_check_rc, 16), 2)
@@ -179,11 +180,13 @@ class Ebilock_status(object):
         self._create_crc_16(self._order)
         self._add_to_paket(self._crc16, self._order)
         if size_packet == len(self._order):
+            self._system_data["ORDER_STATUS"] = self._order
             status = True
         return status
 
     def code_telegramm(self):
         status = False
+        self._code_zone_to_hex()
         self._code_telegramm_a()
         # print("Status telegramm a: {}".format(self._telegramm_a_hex))
         self._code_telegramm_b()
@@ -197,7 +200,7 @@ class Ebilock_status(object):
             print("Status telegramm inv b: {}".format(self._telegramm_b_hex_inversion))
             print("size_packet: {}".format(self._size_packet))
             print("CRC-16: {}".format(self._crc16))
-            print("Order: {}".format(self._order))
+            # print("Order: {}".format(self._order))
         return status
         
 
