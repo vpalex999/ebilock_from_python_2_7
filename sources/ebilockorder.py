@@ -44,7 +44,8 @@ class Ebilock_order(object):
                 "RC": ""
             },
             "TLG_B": {},
-            "STATUS_ZONE": ""
+            "STATUS_ZONE": "",
+            "ADDRESS_OK": None,
         }
 
 
@@ -363,12 +364,15 @@ class Ebilock_order(object):
         """
         type = TLG_A or TLG_B
         """
+        status = True
+
         _dsc_tlg = dsc_tel["TLG_AB"]
         telegramm = telegramm_dec[type]["BODY_TLG"]
 
         _ok = ''.join(telegramm[_dsc_tlg["OK_START"]:_dsc_tlg["OK_END"]+1])
 
         telegramm_dec[type]["ADDR_OK"] = _ok
+        telegramm_dec["ADDRESS_OK"] = _ok
 
         telegramm_dec[type]["LOOP_OK"] = _ok[0]
 
@@ -377,7 +381,7 @@ class Ebilock_order(object):
         telegramm_dec[type]["HUB_OK"] = _ok[2]
 
         telegramm_dec[type]["NUMBER_OK"] = self._bit_shift_right(_ok[3])
-
+        
         telegramm_dec[type]["ML_CO"] = telegramm[_dsc_tlg["ML_CO"]]
 
         telegramm_dec[type]["SIZE"] = int(telegramm_dec[type]["ML_CO"][0], 16)
@@ -390,13 +394,15 @@ class Ebilock_order(object):
 
         telegramm_dec[type]["RC"] = telegramm[telegramm_dec[type]["SIZE"]-1]
 
-        block_crc = str(telegramm_dec[type]["ADDR_OK"]) + \
-            str(telegramm_dec[type]["ML_CO"]) + \
-            str(''.join(self.telegramm_decode[type]["DATA"]))
-        if not telegramm_dec[type]["RC"] == crc8(block_crc):
-            return False
-        else:
-            return True
+        if status:
+            block_crc = str(telegramm_dec[type]["ADDR_OK"]) + \
+                str(telegramm_dec[type]["ML_CO"]) + \
+                str(''.join(self.telegramm_decode[type]["DATA"]))
+            if not telegramm_dec[type]["RC"] == crc8(block_crc):
+                status = False
+            else:
+                status = True
+        return status
 
     def _decode_zone_status(self, data_list):
         status_zone = {}
@@ -519,9 +525,19 @@ class Ebilock_order(object):
 
                     return False
                 else:
-
+                    
                     crc_a_status = self._decode_telegram(self.desc_header_packet, self.telegramm_decode, "TLG_A")
                     crc_b_status = self._decode_telegram(self.desc_header_packet, self.telegramm_decode, "TLG_B")
+
+                    if int(self.telegramm_decode["ADDRESS_OK"][1], 16) & 1 != 0:
+                        self.telegramm_decode["CODE_ALARM"] = 8
+                        self.telegramm_decode["DESC_ALARM"] = "Invalid configure AREA OK '{}'".format(int(self.telegramm_decode["ADDRESS_OK"][1], 16))
+                        return False
+                    if int(self.telegramm_decode["ADDRESS_OK"][3], 16) & 1 != 1:
+                        self.telegramm_decode["CODE_ALARM"] = 9
+                        self.telegramm_decode["DESC_ALARM"] = "Invalid configure Number OK '{}'".format(int(self.telegramm_decode["ADDRESS_OK"][3], 16))
+                        return False
+
                     if not crc_a_status and not crc_b_status:
                         self.telegramm_decode["CODE_ALARM"] = 74
                         self.telegramm_decode["DESC_ALARM"] = "Wrong checksum CRC-8 of the telegramms A and B!!!"
@@ -548,6 +564,7 @@ class Ebilock_order(object):
                         self.telegramm_decode["PACKET_COUNT_A"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_A_IND"]], 16)
                         self.telegramm_decode["PACKET_COUNT_B"] = int(self.telegramm[self.desc_header_packet["PACKET_COUNT_B_IND"]], 16)
                         return True
+                    
 
         elif (type_packet == 3 and type_co == 8 or type_packet == 3 and type_co == 8):
             self.telegramm_decode["CODE_ALARM"] = 80

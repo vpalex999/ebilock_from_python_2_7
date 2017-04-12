@@ -101,7 +101,7 @@ class Ebilock_status(object):
 
     def _code_address_ok(self, telegramm):
         offset_by = 12
-        mass = [self._system_data["LOOP_OK"], self._system_data["AREA_OK"], self._system_data["HUB_OK"], self._system_data["NUMBER_OK"]]
+        #mass = [self._system_data["LOOP_OK"], self._system_data["AREA_OK"], self._system_data["HUB_OK"], self._system_data["NUMBER_OK"]]
         # print(mass)
         result = self._system_data["LOOP_OK"] << 4
         temp = self._system_data["AREA_OK"] << 1
@@ -146,8 +146,10 @@ class Ebilock_status(object):
         data = telegramm[:]
         del data[4]
         del data[3]
+        print("telegramm-CRC-8 data: {}".format(data))
         crc_8 = crc8(data)
         telegramm.append(crc_8)
+        print("telegramm-CRC-8: {}".format(telegramm))
 
     def _create_crc_16(self, telegramm):
         r_c = bytearray([int(telegramm[x], 16) for x in range(len(telegramm))])

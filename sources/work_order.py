@@ -5,54 +5,6 @@ import datetime
 from twisted.internet import defer
 
 
-class WorkTimer(object):
-
-    def __init__(self, sys_data):
-        self.sys_data = sys_data
-        self.timer_err = threading.Timer(1.5, self.do_timer_err)
-        self.timer_err.start()
-        if self.isalive():
-            self.sys_data["Timer_status"] = True
-            print"Safe timer start!!!"
-        #   print("System status: {}".format(self.sys_data["System_Status"]))
-
-    def do_timer_err(self):
-        self.switch_to_pass()
-        self.sys_data["Timer_status"] = False
-        print("Safe timer stop = 1.5sec.")
-        print("Safe timer status: {}".format(self.sys_data["Timer_status"]))
-
-    def isalive(self):
-        return self.timer_err.is_alive()
-
-    def isstart(self):
-        self.timer_err.finished.cle
-        if not self.timer_err.is_alive():
-            self.timer_err.run()
-            print("Safe timer start (RUN)!!!, STATUS: {}".format(self.timer_err.is_alive()))
-        return self.timer_err.is_alive()
-
-    def isstop(self):
-        if self.timer_err.is_alive():
-            self.timer_err.cancel()
-            print("Safe timer stop")
-        return self.timer_err.is_alive()
-
-    def switch_to_pass(self):
-        """ system to switch to the safe mode """
-        self.sys_data["System_Status"] = "SAFE"
-        #self.sys_data["FIRST_START"] = True
-        print("System status: {}".format(self.sys_data["System_Status"]))
-
-    def check_timer(self):
-        print("Check timer status: {}".format(self.sys_data["Timer_status"]))
-        #print("Check timer: {}".format(self.timer_err.is_alive()))
-        if not self.sys_data["Timer_status"] and self.sys_data["System_Status"] == "WORK":
-            self.isstart()
-        else:
-            self.isstop()
-
-
 class WorkFlow(object):
 
     def __init__(self, sys_data):
@@ -106,14 +58,41 @@ class WorkFlow(object):
             self.sys_data["Lost_Connect"] = False
             return True
 
+    def checking_address_ok(self):
+        status = True
+        address_ok = None
+        if status:
+            offset_by = 12
+            result = self.sys_data["LOOP_OK"] << 4
+            temp = self.sys_data["AREA_OK"] << 1
+            result = result | temp
+            address_ok = "{:2x}".format(int(hex(result), 16))
+            result = 0
+            temp = self.sys_data["HUB_OK"] << 4
+            result = result | temp
+            temp = int(self.sys_data["NUMBER_OK"]) << 1
+            temp = temp | 1
+            result = result | temp
+            address_ok = address_ok + "{:2x}".format(int(hex(result), 16))
+            if address_ok:
+                self.sys_data["ADDRESS_OK"] = address_ok
+            else:
+                status = False
+        return status
+
+
     def checking_number_ok(self):
         """ Checking the OK number """
         # print(self.sys_data)
+        if self.sys_data["order"]["CODE_ALARM"] == 8 or\
+            self.sys_data["order"]["CODE_ALARM"] == 9:
+            return False
+
         tlg_a = self.sys_data["order"]["TLG_A"]
-        if self.sys_data["NUMBER_OK"] == tlg_a["NUMBER_OK"]:
+        if self.sys_data["ADDRESS_OK"] == tlg_a["ADDR_OK"]:
             return True
         else:
-            print("Number OK {} in not equal to the received {}".format(self.sys_data["NUMBER_OK"], tlg_a["NUMBER_OK"]))
+            print("Address OK {} in not equal to the received {}".format(self.sys_data["ADDRESS_OK"], tlg_a["ADDR_OK"]))
             return False
 
     def check_count_ok(self):
@@ -158,7 +137,9 @@ class WorkFlow(object):
     def work_order(self):
         status = 100
         # print("Order: {}".format(sys_data))
-        if self.sys_data["order"]["DESC_ALARM"] == "This send status":
+        if not self.checking_number_ok():
+            status = 50
+        elif self.sys_data["order"]["DESC_ALARM"] == "This send status":
             status = self.sys_data["order"]["CODE_ALARM"]  # return send status
         else:
             if self.check_err_first_stage():
@@ -167,13 +148,8 @@ class WorkFlow(object):
                     # print("check_count_OK")
                     if self.sys_data["order"]["CODE_ALARM"] == 0:
                         # print(self.sys_data["order"]["DESC_ALARM"])
-                        if self.checking_number_ok():
-                            self.switching_to_work()
-                            status = 0
-                        else:  # not self.checking_number_ok()
-                            self.sys_data["Timer_status"] = True
-                            self.sys_data["Err_Count"] += 1
-                            # return 100    
+                        self.switching_to_work()
+                        status = 0
                     else:  # status_order not OK
                         self.sys_data["Timer_status"] = True
                         self.sys_data["Err_Count"] += 1

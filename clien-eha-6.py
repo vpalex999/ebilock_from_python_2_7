@@ -13,7 +13,6 @@ from sources.hdlc import create_hdlc
 #from sources.work_order import work_order
 #from sources.work_order import to_work_timer_err
 #from sources.work_order import sys_data
-from sources.work_order import WorkTimer as wtimer
 from sources.work_order import WorkFlow as wf
 from sources.print_status import PrintStatus as prints
 
@@ -93,6 +92,7 @@ class EbilockClientFactory(ClientFactory):
             "AREA_OK": 1,
             "HUB_OK": 5,
             "NUMBER_OK": 3,
+            "ADDRESS_OK": None,
             "FIRST_START": True,
             "Count_A": 1,
             "Count_B": 254,
@@ -105,14 +105,14 @@ class EbilockClientFactory(ClientFactory):
             "HDLC_SEND_STATUS": None,
             "ZONE_CNS":
             {
-                1: 0,
-                2: 0,
-                3: 0,
-                4: 0,
-                5: 0,
-                6: 0,
-                7: 0,
-                8: 0,
+                1: 1,
+                2: 1,
+                3: 1,
+                4: 1,
+                5: 3,
+                6: 2,
+                7: 2,
+                8: 2,
             }
         }
         
@@ -121,6 +121,9 @@ class EbilockClientFactory(ClientFactory):
 
         self.system_data["Start_timer"] = True
         self.system_data["Timer_status"] = True
+
+        if self.wf.checking_address_ok():
+            print("Adress_OK: {}".format(self.system_data["ADDRESS_OK"]))
 
         self.d = defer.Deferred()
         self.d.addCallbacks(self.switch_to_pass, self.errorback_timer)
@@ -293,7 +296,9 @@ def client_main():
     from twisted.internet import reactor
     start = datetime.datetime.now()
     port = 4016
+    #port = 9090
     host = '192.168.101.100'
+    #host = '192.168.10.168'
     #port = 10000
     #host = "localhost"
 
