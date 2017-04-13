@@ -228,24 +228,21 @@ class Ebilock_order(object):
         status = True
 
         ct_A = self.telegramm_decode["PACKET_COUNT_A"]
-        if ct_A == 0 or ct_A == 255:
+        ct_B = self.telegramm_decode["PACKET_COUNT_B"]
+        if ct_A == 0 or ct_B == 255:
             self.telegramm_decode["CODE_ALARM"] = 31
-            self.telegramm_decode["DESC_ALARM"] = "The value global_ctA can not be 0 or 255:'{}'".format(ct_A)
+            self.telegramm_decode["DESC_ALARM"] = "The value global_ctA can not be 0: '{}' or the value global_ctB can not be 255:'{}'".format(ct_A, ct_B)
             # self.STATUS_TLG = "The value can not be 0 or 255:'{}'".format(ct_A)
             return False
-        ct_B = self.telegramm_decode["PACKET_COUNT_B"]
-        if ct_B == 0 or ct_B == 255:
-            self.telegramm_decode["CODE_ALARM"] = 32
-            self.telegramm_decode["DESC_ALARM"] = "The value global_ctB can not be 0 or 255:'{}'".format(ct_B)
-            # self.STATUS_TLG = "The value can not be 0 or 255:'{}'".format(ct_B)
-            return False
+
         ct_a = self.telegramm_decode["TLG_A"]["COUNT"]
-        if ct_a == 0 or ct_a == 255:
+        ct_b = self.telegramm_decode["TLG_B"]["COUNT"]
+        if ct_a == 0 or ct_b == 255:
             self.telegramm_decode["CODE_ALARM"] = 33
-            self.telegramm_decode["DESC_ALARM"] = "The value ct_a can not be 0 or 255:'{}'".format(ct_a)
+            self.telegramm_decode["DESC_ALARM"] = "The value ct_a can not be 0: '{}' or the value ct_b can not be 255:'{}'".format(ct_a, ct_b)
             self.STATUS_TLG = "The value can not be 0 or 255:'{}'".format(ct_a)
             return False
-        ct_b = self.telegramm_decode["TLG_B"]["COUNT"]
+        
         if ct_b == 0 or ct_b == 255:
             self.telegramm_decode["CODE_ALARM"] = 34
             self.telegramm_decode["DESC_ALARM"] = "The value ct_b can not be 0 or 255:'{}'".format(ct_b)

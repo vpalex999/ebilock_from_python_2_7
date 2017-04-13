@@ -153,9 +153,9 @@ class Ebilock_status(object):
 
     def _create_crc_16(self, telegramm):
         r_c = bytearray([int(telegramm[x], 16) for x in range(len(telegramm))])
-        # print("r_c: {}".format(r_c))
+        #print("r_c: {}".format(r_c))
         get_check_rc = Crc16CcittFalse.calchex(r_c)
-        # print("get_check_rc16_hex: {}".format(get_check_rc))
+        #print("get_check_rc16_hex: {}".format(get_check_rc))
         self._crc16 = self.hex_to_2bytes(int(get_check_rc, 16), 2)
 
     def _add_to_paket(self, data_src, data_dst):

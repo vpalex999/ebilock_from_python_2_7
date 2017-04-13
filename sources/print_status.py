@@ -5,8 +5,8 @@ class PrintStatus(object):
         self.system_data = system_data
 
     def show_admin_address_ok(self):
-        print("Administrative settings EHA: LOOP: {}, AREA: {}, HUB: {}, NUMBER: {}".format(self.system_data["LOOP_OK"],\
-              self.system_data["AREA_OK"], self.system_data["HUB_OK"], self.system_data["NUMBER_OK"]))
+        print("Administrative settings EHA: LOOP: {}, AREA: {}, HUB: {}, NUMBER: {}, ADDRESS_OK: {}".format(self.system_data["LOOP_OK"],\
+              self.system_data["AREA_OK"], self.system_data["HUB_OK"], self.system_data["NUMBER_OK"], self.system_data["ADDRESS_OK"]))
 
     def show_receive_address_ok(self):
         if self.system_data["order_work"] is None:
@@ -26,3 +26,9 @@ class PrintStatus(object):
             print("Empty status telegramm!!!")
         else:
             print("Status telegramm: {}".format(self.system_data["ORDER_STATUS"]))
+
+    def show_receive_packet(self):
+        if self.system_data["order"]["PACKET"] is None:
+            print("Empty receive packet")
+        else:
+            print("Receive packet from order: {}".format(self.system_data["order"]["PACKET"]))

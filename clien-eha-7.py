@@ -5,6 +5,9 @@
 import datetime
 import time
 import threading
+import optparse
+import sys
+
 from sources.ebilockorder import Ebilock_order as ord
 from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
@@ -24,6 +27,44 @@ from twisted.internet.protocol import ClientFactory
 from twisted.internet import defer
 from twisted.python import log
 from twisted.application import service
+
+
+def parse_args():
+    usage = """usage: %prog [options] [hostname]:port ...
+
+Run it like this:
+
+  python client-eha-7.py [hostname]:port1 port2 config.json
+
+"""
+
+    parser = optparse.OptionParser(usage)
+
+    _, addresses = parser.parse_args()
+
+    if not addresses:
+        print parser.format_help()
+        parser.exit()
+
+    def parse_address(addr):
+        if ':' not in addr:
+            host = '127.0.0.1'
+            port = addr
+        else:
+            host, port = addr.split(':', 1)
+
+        if not port.isdigit():
+            parser.error('Ports must be integers.')
+
+        return host, int(port)
+
+    return map(parse_address, addresses)
+
+
+
+
+
+
 
 
 class EbilockProtocol(Protocol):
@@ -110,17 +151,7 @@ class EbilockClientFactory(ClientFactory):
             "order_work": None,
             "ORDER_STATUS": None,
             "HDLC_SEND_STATUS": None,
-            "ZONE_CNS":
-            {
-                1: 1,
-                2: 1,
-                3: 1,
-                4: 1,
-                5: 3,
-                6: 2,
-                7: 2,
-                8: 2,
-            }
+            "ZONE_CNS": {1: 1, 2: 1, 3: 1, 4: 1, 5: 3, 6: 2, 7: 2, 8: 2, },
         }
         
         self.wf = wf(self.system_data)
