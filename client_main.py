@@ -27,16 +27,18 @@ def client_main():
         if type(address_ok) == int:
             address_ok = "{}".format(address_ok)
         sys_data_ok = {
+            "STATUS_OK": "SAFE",
             "LOOP_OK": False,
             "AREA_OK": False,
             "HUB_OK": False,
             "NUMBER_OK": False,
             "ADDRESS_OK": False,
             "Err_Count": 0,
+            "count_a": 1,
+            "count_b": 254,
             "ORDER_WORK": False,
-            "ZONE_CNS": {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, },
-            "ORDER_STATUS": None,
-            "HDLC_SEND_STATUS": None,
+            "ZONE_FROM_CNS": {1: 1, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
+            "ZONE_FOR_CNS": None,
         }
 
         def _code_address_ok(sys_data_ok):

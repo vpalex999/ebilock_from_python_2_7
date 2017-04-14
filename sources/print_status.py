@@ -38,6 +38,6 @@ class PrintStatus(object):
         if self.system_data["ORDER"] is None:
             print("Empty receive packet")
         else:
-            print("{} receive order: status system: {}, order status: {}, err_code: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}".format(time.ctime(), self.system_data["System_Status"],\
+            print("{} receive order: status system: {}, order status: {}, err_code: {}, delta time: {}, CountA: {}, CountB: {}, Zone_for_CNS: {}".format(time.ctime(), self.system_data["System_Status"],\
                     self.system_data["ORDER"]["DESC_ALARM"], self.system_data["ORDER"]["CODE_ALARM"], self.system_data["time_delta"],\
                      hex(self.system_data["Count_A"]), hex(self.system_data["Count_B"]), self.system_data["ORDER"]["STATUS_ZONE"]))
