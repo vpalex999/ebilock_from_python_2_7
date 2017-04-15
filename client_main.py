@@ -90,7 +90,7 @@ def client_main():
         return d
 
     def got_order(data):
-        print "delta time: {1}".format(data["time_delta"])
+        print("delta time: {1}".format(data["time_delta"]))
 
     def order_filed(err):
         print("Order filed: {}".format(err))
@@ -112,7 +112,7 @@ def client_main():
         d.addCallbacks(got_order, order_filed)
         reactor.run()
         elasped = datetime.datetime.now() - start
-        print 'Got orders in {}'.format(elasped)
+        print('Got orders in {}'.format(elasped))
 
 if __name__ == '__main__':
     client_main()
