@@ -28,6 +28,7 @@ class Ebilock_status(object):
         return mass
 
     def __init__(self, system_data, count_a, count_b):
+        print("init ebl status")
         self.count += 1
         print("status_count: {}".format(self.count))
         self._system_data = system_data
