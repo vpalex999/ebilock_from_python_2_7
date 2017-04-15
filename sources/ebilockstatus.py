@@ -6,7 +6,7 @@ import binascii
 
 class Ebilock_status(object):
     """ class Ebilock status """
-
+    count = 0
     ID_SOURCE = hex(1)
     ID_DEST = hex(0)
     TYPE_PACKET = hex(3)
@@ -28,6 +28,8 @@ class Ebilock_status(object):
         return mass
 
     def __init__(self, system_data, count_a, count_b):
+        self.count += 1
+        print("status_count: {}".format(self.count))
         self._system_data = system_data
         self._count_a = count_a
         self._count_b = count_b

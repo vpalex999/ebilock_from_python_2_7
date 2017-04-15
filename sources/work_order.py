@@ -7,9 +7,13 @@ from twisted.internet import defer
 
 class WorkFlow(object):
 
+    count = 0
+
     def __init__(self, sys_data):
 
         self.sys_data = sys_data
+        self.count += 1
+        # print("count wf: {}".format(self.count))
         # self.sys_data_old = sys_data_old
 
 
