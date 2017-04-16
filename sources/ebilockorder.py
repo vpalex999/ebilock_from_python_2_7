@@ -54,7 +54,10 @@ class Ebilock_order(object):
     def from_hdlc(cls, object):
         telegramm = []
         for item in object:
-            telegramm.append("{:02x}".format(int(binascii.hexlify(item), 16)).upper())
+            # for python 3-6:
+            telegramm.append("{:02x}".format(int(hex(item), 16)).upper())
+            # from python 2-7
+            # telegramm.append("{:02x}".format(int(binascii.hexlify(item), 16)).upper())
         return cls(telegramm, "hdlc")
 
     @classmethod

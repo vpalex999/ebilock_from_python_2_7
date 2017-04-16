@@ -1,0 +1,26 @@
+[
+  {
+    "Telegrams": [
+      { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] },
+      { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+    ],
+    "Repeat": 6,
+    "PackageRules": [""]
+  },
+  {
+    "Telegrams": [
+      { "ocAddr": "0x3257", "TelegramRules": ["SET_WRONG_A_CRC8"], "Zones": [0,1,2,3] },
+      { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+    ],
+    "Repeat": 6,
+    "PackageRules": [""]
+  },
+  {
+    "Telegrams": [
+      { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] },
+      { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+    ],
+    "Repeat": 0,
+    "PackageRules": ["SEND_EMPTY_ORDER"]
+  }
+]

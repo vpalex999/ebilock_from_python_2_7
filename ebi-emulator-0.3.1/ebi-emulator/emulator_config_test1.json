@@ -1,0 +1,16 @@
+{
+  "port1": 9090,
+  "port2": 9091,
+  "package_delay": 600,
+  "package_delay_answer_1": 140,
+  "package_delay_answer_2": 140,
+  "cases": [
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": []
+    }
+  ]
+}

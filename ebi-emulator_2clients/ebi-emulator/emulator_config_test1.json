@@ -1,0 +1,9 @@
+[
+  {
+    "Telegrams": [
+      { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] }
+    ],
+    "Repeat": 6,
+    "PackageRules": [""]
+  }
+]

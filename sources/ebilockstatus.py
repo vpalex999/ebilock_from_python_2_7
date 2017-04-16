@@ -21,24 +21,22 @@ class Ebilock_status(object):
         item_unhex = bytearray.fromhex(item)
         if size_hex < len(item_unhex):
             size_hex = len(item_unhex)
-        mass = [hex(0) for x in xrange(size_hex)]
+        # for python 3-6:
+        mass = [hex(0) for x in range(size_hex)]
+        # for python 2-7:
+        # mass = [hex(0) for x in xrange(size_hex)]
         for item in item_unhex:
             mass.append(hex(item))
             del mass[0]
         return mass
 
     def __init__(self, system_data, count_a, count_b):
-        
-        self.count += 1
-        print("status_count: {}".format(self.count))
+
+        # self.count += 1
+        # print("status_count: {}".format(self.count))
         self._system_data = system_data
         self._count_a = count_a
         self._count_b = count_b
-        #self._zone_hex = []
-        #self._telegramm_a_hex = []
-        #self._telegramm_b_hex = []
-        #self._telegramm_b_hex_inversion = []
-        #self._telegramm_ab = []
         self._block_ab = []
         self._crc16 = []
         self._order = []
@@ -99,12 +97,6 @@ class Ebilock_status(object):
                 offset_by = 0
         # print("zone_hex: {}".format(zone_hex))
 
-    #def _code_size_packet(self):
-    #    offset_by = 0
-    #    result = 0
-    #    temp = 0
-    #    sum_size = 12+len(self._telegramm_a_hex)*2
-
     def _code_address_ok(self, telegramm, telegramm_data):
         offset_by = 12
         result = telegramm_data["LOOP_OK"] << 4
@@ -127,9 +119,7 @@ class Ebilock_status(object):
         telegramm_a_hex.insert(2, hex(result))
         telegramm_a_hex.insert(3, hex(self._count_a))
         telegramm_a_hex.insert(4, self._alarm_code)
-        for item in zone_hex:
-            telegramm_a_hex.append(item)
-        # calculate CRC-8
+        telegramm_a_hex.extend(zone_hex)
 
     def _code_telegramm_b(self, zone_hex, telegramm_b_hex, telegramm_data):
         self._code_address_ok(telegramm_b_hex, telegramm_data)
@@ -139,12 +129,8 @@ class Ebilock_status(object):
         telegramm_b_hex.insert(2, hex(result))
         telegramm_b_hex.insert(3, hex(self._count_b))
         telegramm_b_hex.insert(4, self._alarm_code)
-        for item in zone_hex:
-            telegramm_b_hex.append(item)
-        # calculate CRC-8
-
-    def _inversion_byte(self, telegramm):
-        return [hex(int(telegramm[x], 16).__xor__(255)) for x in range(len(telegramm))]
+        # inversion data:
+        telegramm_b_hex.extend([hex(int(x, 16).__xor__(255)) for x in zone_hex])
 
     def _create_crc_8(self, telegramm):
         data = telegramm[:]
@@ -159,12 +145,12 @@ class Ebilock_status(object):
         r_c = bytearray([int(telegramm[x], 16) for x in range(len(telegramm))])
         # print("r_c: {}".format(r_c))
         get_check_rc = Crc16CcittFalse.calchex(r_c)
-        #print("get_check_rc16_hex: {}".format(get_check_rc))
+        # print("get_check_rc16_hex: {}".format(get_check_rc))
         self._crc16 = self.hex_to_2bytes(int(get_check_rc, 16), 2)
 
-    def _add_to_paket(self, data_src, data_dst):
-        for item in data_src:
-            data_dst.append(item)
+    # def _add_to_paket(self, data_src, data_dst):
+    #     for item in data_src:
+    #         data_dst.append(item)
 
     def _create_packet(self):
         status = False
@@ -178,21 +164,21 @@ class Ebilock_status(object):
         size_block_ab = len(self._block_ab)
         self._size_block_ab = self.hex_to_2bytes(size_block_ab, 2)
         body_packet = []
-        self._add_to_paket(size_addreses_ok, body_packet)
-        self._add_to_paket(add_hex_ok, body_packet)
-        self._add_to_paket(self._size_block_ab, body_packet)
-        self._add_to_paket(self._block_ab, body_packet)
+        body_packet.extend(size_addreses_ok)
+        body_packet.extend(add_hex_ok)
+        body_packet.extend(self._size_block_ab)
+        body_packet.extend(self._block_ab)
         # print("Body packet: {}".format(body_packet))
         size_packet = 10 + len(body_packet)
         self._size_packet = self.hex_to_2bytes(size_packet, 4)
         self._order.append(self.ID_SOURCE)
         self._order.append(self.ID_DEST)
         self._order.append(self.TYPE_PACKET)
-        self._add_to_paket(self._size_packet, self._order)
+        self._order.extend(self._size_packet)
         self._order.append(self.ZERO_BYTE)
-        self._add_to_paket(body_packet, self._order)
+        self._order.extend(body_packet)
         self._create_crc_16(self._order)
-        self._add_to_paket(self._crc16, self._order)
+        self._order.extend(self._crc16)
 
         if size_packet == len(self._order):
             self._system_data["ORDER_STATUS"] = self._order
@@ -220,7 +206,6 @@ class Ebilock_status(object):
         _zone_hex = []
         _telegramm_a_hex = []
         _telegramm_b_hex = []
-        _telegramm_b_hex_inversion = []
         _telegramm_ab = []
         try:
             # print(telegramm_data)
@@ -229,14 +214,14 @@ class Ebilock_status(object):
             # print("Status telegramm a: {}".format(_telegramm_a_hex))
             self._code_telegramm_b(_zone_hex, _telegramm_b_hex, telegramm_data)
             # print("Status telegramm b: {}".format(_telegramm_b_hex))
-            _telegramm_b_hex_inversion = self._inversion_byte(_telegramm_b_hex)
             self._create_crc_8(_telegramm_a_hex)
-            self._create_crc_8(_telegramm_b_hex_inversion)
-            self._add_to_paket(_telegramm_a_hex, _telegramm_ab)
-            self._add_to_paket(_telegramm_b_hex_inversion, _telegramm_ab)
-            self._add_to_paket(_telegramm_ab, self._block_ab)
+            # self._create_crc_8(_telegramm_b_hex_inversion)
+            self._create_crc_8(_telegramm_b_hex)
+            _telegramm_ab.extend(_telegramm_a_hex)
+            _telegramm_ab.extend(_telegramm_b_hex)
+            self._block_ab.extend(_telegramm_ab)
             # print("Status telegramm a: {}".format(_telegramm_a_hex))
-            # print("Status telegramm inv b: {}".format(_telegramm_b_hex_inversion))
+            # print("Status telegramm b: {}".format(_telegramm_b_hex))
             # print("Status telegramm ab : {}".format(_telegramm_ab))
             # print("Block ab: {}".format(self._block_ab))
             return True

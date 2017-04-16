@@ -9,10 +9,11 @@ def read_hdlc(hdlc):
     telegramm = []
     #for item in hdlc:
     #    telegramm.append("{:02x}".format(int(item), 16).upper())
-    #print(hdlc)
+    # print(hdlc)
     for item in hdlc:
-        telegramm.append("{:02x}".format(int(binascii.hexlify(item), 16)).upper())
-
+        
+        telegramm.append("{:02x}".format(int(hex(item), 16)).upper())
+    # print(telegramm)
     if len(hdlc) >= 2:
         t0 = telegramm[0]
         t1 = telegramm[1]
@@ -29,8 +30,10 @@ def read_hdlc(hdlc):
                     del tmptlg[i]
                     #print("tmptlg: {}".format(tmptlg))
                     #print("Order HDLC: {}".format(hdlc[2:i+2]))
-                    return ''.join(([binascii.unhexlify("{:02x}".format(int(tmptlg[x], 16))) for x in range(len(tmptlg))]))
-                    #return hdlc[2:i+2]
+                    # for python3-6:
+                    return (bytearray([int(x, 16) for x in tmptlg]))
+                    # for python 2-7:
+                    #return ''.join([binascii.unhexlify(hex(int(tmptlg[x], 16))) for x in range(len(tmptlg))])
         else:
             print("wrong format hdlc: {}".format(telegramm))
             return None
@@ -52,6 +55,8 @@ def create_hdlc(telegramm):
     temp.append(DLE)
     temp.append(ETX)
     print("send status hdlc: {}".format(temp))
-    #return bytes([int(temp[x], 16) for x in range(len(temp))])
-    return ''.join(([binascii.unhexlify("{:02x}".format(int(temp[x], 16))) for x in range(len(temp))]))
+    # for python 3-6:
+    return bytes([int(temp[x], 16) for x in range(len(temp))])
+    # for python 2-7:
+    # return ''.join(([binascii.unhexlify("{:02x}".format(int(temp[x], 16))) for x in range(len(temp))]))
     #return '\\'.join(temp[:])
