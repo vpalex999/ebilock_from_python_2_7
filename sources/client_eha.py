@@ -343,6 +343,7 @@ class EbilockClientFactory(ClientFactory):
             #self.prints.show_status_telegramm()
 
             self.check_timer()
+            self.prints.show_OK()
 
             
 

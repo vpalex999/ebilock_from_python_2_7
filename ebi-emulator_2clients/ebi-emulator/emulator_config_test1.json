@@ -1,7 +1,7 @@
 [
   {
     "Telegrams": [
-      { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3,3,2,1,0] }
     ],
     "Repeat": 6,
     "PackageRules": [""]

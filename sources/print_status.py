@@ -2,11 +2,15 @@
 import time
 from pprint import pprint
 
+
 class PrintStatus(object):
     def __init__(self, system_data):
         # self.system_data_old = system_data_old
         self.system_data = system_data
 
+    def show_OK(self):
+        ok = self.system_data["OK"]
+        [print("Status OK: {}, {}".format(x, ok[x]["STATUS_OK"])) for x in ok]
 
     #def show_admin_address_ok(self):
     #    print("Administrative settings EHA: LOOP: {}, AREA: {}, HUB: {}, NUMBER: {}, ADDRESS_OK: {}".format(self.system_data_old["LOOP_OK"],\
