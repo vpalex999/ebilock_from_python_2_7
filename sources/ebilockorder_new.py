@@ -88,9 +88,9 @@ class Ebilock_order(object):
             },
         }
 
-    desc_telegramm_ab = {
-        "pass": ""
-    }
+    # desc_telegramm_ab = {
+    #     "pass": ""
+    # }
 
     def _check_byte_flow(self):
         """ Verifying bytes in the packet stream\
@@ -102,22 +102,22 @@ class Ebilock_order(object):
         status = True
         sources = self.telegramm
         if len(sources) < 14:
-            self.telegramm_decode["CODE_ALARM"] = 10
-            self.telegramm_decode["DESC_ALARM"] = "Invalid package '{}' 2xByte, min = 14 2xByte".format(len(sources))
+            self.system_data["ORDER_CODE_ALARM"] = 10
+            self.system_data["ORDER_DESC_ALARM"] = "Invalid package '{}' 2xByte, min = 14 2xByte".format(len(sources))
             # self.STATUS_TLG = "Invalid package '{}' 2xByte, min = 20 2xByte".format(len(sources))
             status = False
 
         for item in sources:
             if item == '':
                 status = False
-                self.telegramm_decode["CODE_ALARM"] = 11
-                self.telegramm_decode["DESC_ALARM"] = "Empty value by index '{}'".format(sources.index(""))
+                self.system_data["ORDER_CODE_ALARM"] = 11
+                self.system_data["ORDER_DESC_ALARM"] = "Empty value by index '{}'".format(sources.index(""))
                 # self.STATUS_TLG = "Empty value by index '{}'".format(sources.index(""))
                 break
             if len(item) != 2:
                 status = False
-                self.telegramm_decode["CODE_ALARM"] = 12
-                self.telegramm_decode["DESC_ALARM"] = "Length value '{}' is not equal to 2".format(item)
+                self.system_data["ORDER_CODE_ALARM"] = 12
+                self.system_data["ORDER_DESC_ALARM"] = "Length value '{}' is not equal to 2".format(item)
                 # self.STATUS_TLG = "Length value '{}' is not equal to 2".format(item)
                 break
         self.telegramm_decode["PACKET"] = sources
@@ -135,8 +135,8 @@ class Ebilock_order(object):
         # Check ID Sources
         tmp = int(sources[0], 16)
         if tmp != 0:
-            self.telegramm_decode["CODE_ALARM"] = 21
-            self.telegramm_decode["DESC_ALARM"] = "Error!  ID_SEND = '{}' should be 0".format(tmp)
+            self.system_data["ORDER_CODE_ALARM"] = 21
+            self.system_data["ORDER_DESC_ALARM"] = "Error!  ID_SEND = '{}' should be 0".format(tmp)
             # self.STATUS_TLG = "Error!  ID_SOURCE = '{}' should be between 0 or 1".format(tmp)
             return False
         else:
@@ -145,8 +145,8 @@ class Ebilock_order(object):
         # Check ID Destination
         tmp = int(sources[1], 16)
         if tmp != 1:
-            self.telegramm_decode["CODE_ALARM"] = 22
-            self.telegramm_decode["DESC_ALARM"] = "Error!  ID_RECIEVE = '{}' should be 1".format(tmp)
+            self.system_data["ORDER_CODE_ALARM"] = 22
+            self.system_data["ORDER_DESC_ALARM"] = "Error!  ID_RECIEVE = '{}' should be 1".format(tmp)
             # self.STATUS_TLG = "Error!  ID_DEST = '{}' should be between 0 or 1".format(tmp)
             return False
         else:
@@ -162,15 +162,15 @@ class Ebilock_order(object):
                 key_stat = True
                 break
         if not key_stat:
-            self.telegramm_decode["CODE_ALARM"] = 23
-            self.telegramm_decode["DESC_ALARM"] = "Error TYPE_ID: {}".format(tmp)
+            self.system_data["ORDER_CODE_ALARM"] = 23
+            self.system_data["ORDER_DESC_ALARM"] = "Error TYPE_ID: {}".format(tmp)
             return False
 
         # Check size paket
         tmp = int(''.join(sources[3: 7]), 16)
         if tmp != len(sources):
-            self.telegramm_decode["CODE_ALARM"] = 24
-            self.telegramm_decode["DESC_ALARM"] = "Error Checking length packet!!! data length = '{0}', actual length = '{1}'".format(tmp, len(sources))
+            self.system_data["ORDER_CODE_ALARM"] = 24
+            self.system_data["ORDER_DESC_ALARM"] = "Error Checking length packet!!! data length = '{0}', actual length = '{1}'".format(tmp, len(sources))
             # self.STATUS_TLG = "Error Checking length packet!!! data length = '{0}', actual length = '{1}'".format(tmp, len(sources))
             return False
         else:
@@ -179,15 +179,15 @@ class Ebilock_order(object):
         # Check Null Byte
         tmp = int(sources[7], 16)
         if tmp != 0:
-            self.telegramm_decode["CODE_ALARM"] = 26
-            self.telegramm_decode["DESC_ALARM"] = "Invalid header structure, Zero byte value = '{}', must be 0".format(tmp)
+            self.system_data["ORDER_CODE_ALARM"] = 26
+            self.system_data["ORDER_DESC_ALARM"] = "Invalid header structure, Zero byte value = '{}', must be 0".format(tmp)
             # self.STATUS_TLG = "Invalid header structure, Zero byte value = '{}', must be 0".format(tmp)
             return False
 
         # Check status request
         if int(sources[2], 16) == 4:
-            self.telegramm_decode["CODE_ALARM"] = 80
-            self.telegramm_decode["DESC_ALARM"] = "This status request"
+            self.system_data["ORDER_CODE_ALARM"] = 80
+            self.system_data["ORDER_DESC_ALARM"] = "This status request"
             return False
         return True
 
@@ -259,8 +259,8 @@ class Ebilock_order(object):
 
         # Check Empty data
         if size_body == 0:
-            self.telegramm_decode["CODE_ALARM"] = 45
-            self.telegramm_decode["DESC_ALARM"] = "Empty body packet - '{}'".format(size_body)
+            self.system_data["ORDER_CODE_ALARM"] = 45
+            self.system_data["ORDER_DESC_ALARM"] = "Empty body packet - '{}'".format(size_body)
             # self.STATUS_TLG = "Empty data A/B - '{}'".format(size_body)
             return False
 
@@ -271,42 +271,45 @@ class Ebilock_order(object):
         ct_A = self.telegramm_decode["PACKET_COUNT_A"]
         ct_B = self.telegramm_decode["PACKET_COUNT_B"]
         if ct_A == 0 and ct_B == 255:
-            self.telegramm_decode["CODE_ALARM"] = 31
-            self.telegramm_decode["DESC_ALARM"] = "The value global_ctA can not be: '{}' or the value global_ctB can not be:'{}'".format(hex(ct_A), hex(ct_B))
+            self.system_data["ORDER_CODE_ALARM"] = 31
+            self.system_data["ORDER_DESC_ALARM"] = "The value global_ctA can not be: '{}' or the value global_ctB can not be:'{}'".format(hex(ct_A), hex(ct_B))
             return False
         elif ct_A == 0:
-            self.telegramm_decode["DESC_ALARM"] = "The value global_ctA can not be: '{}'".format(hex(ct_A))
-            self.telegramm_decode["CODE_ALARM"] = 39
+            self.system_data["ORDER_DESC_ALARM"] = "The value global_ctA can not be: '{}'".format(hex(ct_A))
+            self.system_data["ORDER_CODE_ALARM"] = 39
             return False
         elif ct_B == 255:
-            self.telegramm_decode["DESC_ALARM"] = "The value global_ctB can not be: '{}'".format(hex(ct_B))
-            self.telegramm_decode["CODE_ALARM"] = 38
+            self.system_data["ORDER_DESC_ALARM"] = "The value global_ctB can not be: '{}'".format(hex(ct_B))
+            self.system_data["ORDER_CODE_ALARM"] = 38
             return False
 
         if ct_A + ct_B != 255:
-            self.telegramm_decode["CODE_ALARM"] = 30
-            self.telegramm_decode["DESC_ALARM"] = "Error! Inconsistent global count: glA-'{}', glB- {}".format(hex(ct_A), hex(ct_B))
+            self.system_data["ORDER_CODE_ALARM"] = 30
+            self.system_data["ORDER_DESC_ALARM"] = "Error! Inconsistent global count: glA-'{}', glB- {}".format(hex(ct_A), hex(ct_B))
             return False
+
+        self.system_data["ORDER_Count_A"] = ct_A
+        self.system_data["ORDER_Count_B"] = ct_B
 
         # Check max size data
         # tmp = int(''.join(sources[10:12]), 16)
         real_len_data_ab = len(sources[12:-2])
         if real_len_data_ab > 4096:
-            self.telegramm_decode["CODE_ALARM"] = 25
-            self.telegramm_decode["DESC_ALARM"] = "Too long data > 4096 bytes - '{}'".format(real_len_data_ab)
+            self.system_data["ORDER_CODE_ALARM"] = 25
+            self.system_data["ORDER_DESC_ALARM"] = "Too long data > 4096 bytes - '{}'".format(real_len_data_ab)
             return False
 
         # Check empty telegramm A/B
         size_ab = int(''.join(sources[10:12]), 16)
         if size_ab == 0:
-            self.telegramm_decode["CODE_ALARM"] = 41
-            self.telegramm_decode["DESC_ALARM"] = "Empty size telegramm A/B - '{}'".format(size_ab)
+            self.system_data["ORDER_CODE_ALARM"] = 41
+            self.system_data["ORDER_DESC_ALARM"] = "Empty size telegramm A/B - '{}'".format(size_ab)
             return False
 
         # Check equal zise A/B
         if not size_ab == real_len_data_ab:
-            self.telegramm_decode["CODE_ALARM"] = 43
-            self.telegramm_decode["DESC_ALARM"] = "telegramm length '{}' is not equal to the size A/B '{}'".format(real_len_data_ab, size_ab)
+            self.system_data["ORDER_CODE_ALARM"] = 43
+            self.system_data["ORDER_DESC_ALARM"] = "telegramm length '{}' is not equal to the size A/B '{}'".format(real_len_data_ab, size_ab)
             return False
         else:
             self.telegramm_decode["SIZE_AB"] = size_ab
@@ -375,8 +378,8 @@ class Ebilock_order(object):
         if r_c.upper() == get_check_rc.upper():
             return True
         else:
-            self.telegramm_decode["CODE_ALARM"] = 51
-            self.telegramm_decode["DESC_ALARM"] = "Wrong checksum CRC-16 !!!"
+            self.system_data["ORDER_CODE_ALARM"] = 51
+            self.system_data["ORDER_DESC_ALARM"] = "Wrong checksum CRC-16 !!!"
             # self.STATUS_TLG = "Wrong checksum CRC-16 !!!"
             return False
 

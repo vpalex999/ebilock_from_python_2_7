@@ -65,7 +65,7 @@ hdlc_8 = "00 01 02 00 00 00 42 00 06 F9 00 34 32 57 74 06 C1 81 2F 32 57 76 F9 3
 # other 3261 - own 3257 - other 3261 - own 3259 - own 3257 - own 3259 - own 3261
 hdlc_9 = "00 01 02 00 00 00 66 00 06 F9 00 58 32 61 64 04 AA 2F 32 61 66 FB 55 09 32 57 74 06 C1 81 2F 32 57 76 F9 3E 7E F5 32 61 64 04 AA 2F 32 61 66 FB 55 09 32 59 64 06 FF 2E 32 59 66 F9 00 08 32 57 74 06 C1 81 2F 32 57 76 F9 3E 7E F5 32 59 64 06 FF 2E 32 59 66 F9 00 08 32 61 64 04 AA 2F 32 61 66 FB 55 09 25 DB"
 
-system_data = {
+system_data_1 = {
             "start_time": time.time(),
             "hdlc": "",
             "time_delta": "",
@@ -77,6 +77,54 @@ system_data = {
             "Err_Count": 0,
             "Timer_status": False,
             "Start_timer": False,
+            "ORDER_Count_A": None,
+            "ORDER_Count_B": None,
+            "ORDER_CODE_ALARM": None,
+            "ORDER_DESC_ALARM": None,
+            "ORDER": False,
+            "ORDER_STATUS": None,
+            "HDLC_SEND_STATUS": None,
+            "OK": {"3257": {
+                            "STATUS_OK": "SAFE",
+                            "Timer_status": False,
+                            "LOOP_OK": False,
+                            "AREA_OK": False,
+                            "HUB_OK": False,
+                            "NUMBER_OK": False,
+                            "ADDRESS_OK": False,
+                            "Err_Count": 0,
+                            "count_a": 1,
+                            "count_b": 254,
+                            "ORDER_WORK": None,
+                            "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
+                            "ZONE_FOR_CNS": None,
+                            "CODE_ALARM": None,
+                            "DESC_ALARM": None,
+                            "TELEGRAMM_A": None,
+                            "TELEGRAMM_B": None,
+                            "RETURN_OK": 0,
+                            },
+            },
+}
+
+
+
+system_data_2 = {
+            "start_time": time.time(),
+            "hdlc": "",
+            "time_delta": "",
+            "System_Status": "SAFE",
+            "Lost_Connect": False,
+            "FIRST_START": True,
+            "Count_A": 1,
+            "Count_B": 254,
+            "Err_Count": 0,
+            "Timer_status": False,
+            "Start_timer": False,
+            "ORDER_Count_A": None,
+            "ORDER_Count_B": None,
+            "ORDER_CODE_ALARM": 0,
+            "ORDER_DESC_ALARM": "OK",
             "ORDER": False,
             "ORDER_STATUS": None,
             "HDLC_SEND_STATUS": None,

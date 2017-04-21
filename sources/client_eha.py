@@ -136,6 +136,8 @@ class EbilockClientFactory(ClientFactory):
             "Err_Count": 0,
             "Timer_status": False,
             "Start_timer": False,
+            "ORDER_Count_A": None,
+            "ORDER_Count_B": None,
             "ORDER": False,
             "ORDER_STATUS": None,
             "HDLC_SEND_STATUS": None,
