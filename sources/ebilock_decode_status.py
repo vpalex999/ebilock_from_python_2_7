@@ -1,10 +1,10 @@
 from crccheck.crc import Crc16CcittFalse
-from sources.crc8 import create_crc_8 as crc8
-from sources.error import EbException
+#from sources.crc8 import create_crc_8 as crc8
+#from sources.error import EbException
 import binascii
 
-from sources.hdlc import read_hdlc
-from sources.ebilockstatus import Ebilock_status as es
+#from sources.hdlc import read_hdlc
+#from sources.ebilockstatus import Ebilock_status as es
 
 
 class Ebilock_decode_status(object):
@@ -95,4 +95,13 @@ class Ebilock_decode_status(object):
         return status
         
 
+
+tt = "00 01 02 00 00 00 1c 00 02 ff 00 0e 32 57 74 c3 e4 1b b1 32 57 76 3c 1b e4 6b"
+len_t = "{:02x}".format(int(hex(len(tt.split(" "))+2), 16))
+len_ok = "{:02x}".format(int(hex(len(tt.split(" "))-12), 16))
+
+r_c = bytearray.fromhex(tt)
+get_check = Crc16CcittFalse.calchex(r_c)
+pass
+new_tt = "00 01 02 00 00 00 1c 00 02 ff 00 0e 32 57 74 c3 e4 1b b1 32 57 76 3c 1b e4 6b 7b e6"
 

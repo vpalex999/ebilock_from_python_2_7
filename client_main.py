@@ -36,9 +36,11 @@ def client_main():
             "Err_Count": 0,
             "count_a": 1,
             "count_b": 254,
-            "ORDER_WORK": False,
+            "ORDER_WORK": None,
             "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
             "ZONE_FOR_CNS": None,
+            "CODE_ALARM": 0,
+            "DESC_ALARM": "OK",
         }
 
         def _code_address_ok(sys_data_ok):

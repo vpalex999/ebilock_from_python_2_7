@@ -279,13 +279,14 @@ class EbilockClientFactory(ClientFactory):
         connector.connect()
 
     def order_received(self):
-        source_hdlc = read_hdlc(self.system_data["hdlc"])
+        #source_hdlc = read_hdlc(self.system_data["hdlc"])
         #print("hdlc {}".format(source_hdlc))
-        if source_hdlc:
-            self.system_data["ORDER"] = None
-            self.system_data["ORDER"] = ord.from_hdlc(source_hdlc).check_telegramm()
+        #if source_hdlc:
+        #    self.system_data["ORDER"] = None
+            #self.system_data["ORDER"] = ord.from_hdlc(source_hdlc).check_telegramm()
+        ord.from_hdlc(self.system_data).check_telegramm()
             #print("New ORDER: {}".format(self.system_data["ORDER"]))
-            status = self.wf.work_order()
+        status = self.wf.work_order()
 
         #source_hdlc_old = read_hdlc(self.system_data_old["hdlc"])
         # print("hdlc {}".format(source_hdlc))
