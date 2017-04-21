@@ -70,26 +70,8 @@ class Ebilock_order(object):
         return cls(telegramm, object, "test")
 
     desc_header_packet = {
-        "size": 8,
-        "ID_SOURCE_IND": 0,
-        "ID_DEST_IND": 1,
-        "TYPE_PACKET_IND": 2,
-        "START_DATA_IND": 3,
-        "END_DATA_IND": 6,
-        "NUL_BYTE_IND": 7,
-        "PACKET_COUNT_A_IND": 8,
-        "PACKET_COUNT_B_IND": 9,
-        "START_SIZE_AB_IND": 10,
-        "END_SIZE_AB_IND": 12,
-        "ID":
-            {"0": "IPU_GATE_RF",
-             "1": "EHA"
-            },
         "TYPE_ID":
-                  {
-                    2: "2 - order",
-                    4: "4 - empty order",
-                  },
+            {2: "2 - order", 4: "4 - empty order", },
         "TLG_AB":
             {
              "OK_START": 0,
@@ -97,12 +79,12 @@ class Ebilock_order(object):
              "ML_CO": 2,
              "COUNT_AB": 3,
              "co":
-                    {
-                     4: "4 - order, telegramm A (source Ebilock950 R4)",
-                     6: "6 - order, telegramm B (source Ebilock950 R4)",
-                     8: "8 - status, telegramm A (source EHA)",
-                     "C": "C - status, telegramm B (source EHA)"
-                    },
+             {
+                4: "4 - order, telegramm A (source Ebilock950 R4)",
+                6: "6 - order, telegramm B (source Ebilock950 R4)",
+                8: "8 - status, telegramm A (source EHA)",
+                "C": "C - status, telegramm B (source EHA)"
+             },
             },
         }
 
@@ -110,7 +92,6 @@ class Ebilock_order(object):
         "pass": ""
     }
 
-    
     def _check_byte_flow(self):
         """ Verifying bytes in the packet stream\
         and writing a package to a dictionary.\n
@@ -149,7 +130,6 @@ class Ebilock_order(object):
         ARG: String of bytes in hex.
         """
 
-        status = True
         sources = self.telegramm
 
         # Check ID Sources
@@ -217,7 +197,7 @@ class Ebilock_order(object):
         check_count_ab_packet()\n
         ARG: String of bytes in hex.
         """
-        status = True
+
         try:
             for _ok in self.system_data["OK"]:
                 if self.system_data["OK"][_ok]['CODE_ALARM'] is None:
@@ -302,13 +282,11 @@ class Ebilock_order(object):
             self.telegramm_decode["DESC_ALARM"] = "The value global_ctB can not be: '{}'".format(hex(ct_B))
             self.telegramm_decode["CODE_ALARM"] = 38
             return False
-       
 
         if ct_A + ct_B != 255:
             self.telegramm_decode["CODE_ALARM"] = 30
             self.telegramm_decode["DESC_ALARM"] = "Error! Inconsistent global count: glA-'{}', glB- {}".format(hex(ct_A), hex(ct_B))
             return False
-
 
         # Check max size data
         # tmp = int(''.join(sources[10:12]), 16)
@@ -316,15 +294,13 @@ class Ebilock_order(object):
         if real_len_data_ab > 4096:
             self.telegramm_decode["CODE_ALARM"] = 25
             self.telegramm_decode["DESC_ALARM"] = "Too long data > 4096 bytes - '{}'".format(real_len_data_ab)
-            # self.STATUS_TLG = "Too long data > 4096 bytes - '{}'".format(tmp)
-            status = False
+            return False
 
         # Check empty telegramm A/B
         size_ab = int(''.join(sources[10:12]), 16)
         if size_ab == 0:
             self.telegramm_decode["CODE_ALARM"] = 41
             self.telegramm_decode["DESC_ALARM"] = "Empty size telegramm A/B - '{}'".format(size_ab)
-            # self.STATUS_TLG = "Empty data A/B - '{}'".format(size_body)
             return False
 
         # Check equal zise A/B
@@ -419,7 +395,6 @@ class Ebilock_order(object):
                         self.system_data["OK"][_ok]['CODE_ALARM'] = 61
                         self.system_data["OK"][_ok]['DESC_ALARM'] = "Error decode block DATA"
                         return False
-                    #zon = zona_a[::-1]
                     zon = zona_a[:]
                     try:
                         key_zone_ = 1

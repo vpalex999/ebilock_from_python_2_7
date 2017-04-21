@@ -11,11 +11,11 @@ def client_main():
     """
     status_start = True
     start = datetime.datetime.now()
-    #port = 4016
-    port = 9090
+    port = 4016
+    #port = 9090
     #host = '192.168.200.6'
-    #host = '192.168.101.100'
-    host = '192.168.10.168'
+    host = '192.168.101.100'
+    #host = '192.168.10.168'
     #port = 10000
     #host = "localhost"
 
@@ -40,7 +40,9 @@ def client_main():
             "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
             "ZONE_FOR_CNS": None,
             "CODE_ALARM": 0,
-            "DESC_ALARM": "OK",
+            "DESC_ALARM": None,
+            "TELEGRAMM_A": None,
+            "TELEGRAMM_B": None,
         }
 
         def _code_address_ok(sys_data_ok):

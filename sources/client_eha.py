@@ -9,6 +9,7 @@ import optparse
 import sys
 
 from sources.ebilockorder import Ebilock_order as ord
+from sources.ebilockorder_new import Ebilock_order as ord_ok
 from sources.ebilockstatus import Ebilock_status as stat
 from sources.hdlc import read_hdlc
 from sources.hdlc import create_hdlc
@@ -139,7 +140,6 @@ class EbilockClientFactory(ClientFactory):
             "ORDER_STATUS": None,
             "HDLC_SEND_STATUS": None,
             "OK": False,
-            
         }
         self.system_data["OK"] = system_data_ok
         #print("New sysytem data: {}".format(self.system_data))
@@ -284,7 +284,9 @@ class EbilockClientFactory(ClientFactory):
         #if source_hdlc:
         #    self.system_data["ORDER"] = None
             #self.system_data["ORDER"] = ord.from_hdlc(source_hdlc).check_telegramm()
-        ord.from_hdlc(self.system_data).check_telegramm()
+        # ord.from_hdlc(self.system_data).check_telegramm()
+        ord_ok.from_hdlc(self.system_data).check_telegramm()
+        self.prints.show_all_data()
             #print("New ORDER: {}".format(self.system_data["ORDER"]))
         status = self.wf.work_order()
 
@@ -295,64 +297,60 @@ class EbilockClientFactory(ClientFactory):
         #    self.system_data_old["order"] = ord.from_hdlc(source_hdlc_old).check_telegramm()
         #    status = self.wf.work_order()
             #print("return status work_order {}".format(status))
-            if status == 80:
-                print("Send Status!!!")
-                #if stat.from_send_status(self.system_data_old).code_telegramm():
-                #    self.system_data_old["HDLC_SEND_STATUS"] = None
-                #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"])
-
-            elif status == 110:
-                print("Lost Communication\nTransfer status with old counters and Increase the counter")
-                #if stat.from_loss_connect(self.system_data).code_telegramm():
-                #    self.system_data_old["HDLC_SEND_STATUS"] = None
-                #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"])
-                    # Increase by 1
-                    #self.wf.increase_count()
-                #    print("Increase count A/B: {}, {}\n".format(hex(self.system_data_old["Count_A"]), hex(self.system_data_old["Count_B"])))
-
-            elif status == 0:
-                self.prints.show_receive_packet()
-                order_work = {}
-                order_work = self.system_data["ORDER"]
-                #print(("telegramm_order: {}".format(order_work)))
-                for ok in self.system_data["OK"]:
-                    _ok = self.system_data["OK"][ok]
-                    # print("_OK: {}".format(order_work["ADDRESS_OK"]))
-                    if _ok["ADDRESS_OK"] == order_work["ADDRESS_OK"]:
-                        _ok["ORDER_WORK"] = order_work.copy()
-                        _ok["STATUS_OK"] = self._WORK
-                        self.system_data["ORDER"] = None
-                        # print(("system_data_order: {}".format(_ok["ORDER_WORK"])))
-                        # self.prints.show_all_data()
-                if stat.from_ok(self.system_data).create_status():
-                    self.system_data["HDLC_SEND_STATUS"] = None
-                    self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
-                    #self.d_send_status(self.system_data_old["HDLC_SEND_STATUS"])
-                    #print("hdlc_send: {}".format(hdlc_send))
-
-            elif status == 50:
-                print("Discard a telegram")
-                self.system_data["Timer_status"] = True
-            else:
-                    self.system_data["HDLC_SEND_STATUS"] = None
-                    self.system_data["ORDER_STATUS"] = None
-                    print("Don't send status!!!")
-            #self.prints.show_all_data()
-            #self.prints.show_admin_address_ok()
-            #self.prints.show_receive_address_ok()
-            #self.prints.show_zone_cns()
-            #self.prints.show_status_telegramm()
-
-            self.check_timer()
-            self.prints.show_OK()
+        if status == 80:
+            print("Send Status!!!")
+            #if stat.from_send_status(self.system_data_old).code_telegramm():
+            #    self.system_data_old["HDLC_SEND_STATUS"] = None
+            #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"])
+        elif status == 110:
+            print("Lost Communication\nTransfer status with old counters and Increase the counter")
+            #if stat.from_loss_connect(self.system_data).code_telegramm():
+            #    self.system_data_old["HDLC_SEND_STATUS"] = None
+            #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"])
+                # Increase by 1
+                #self.wf.increase_count()
+            #    print("Increase count A/B: {}, {}\n".format(hex(self.system_data_old["Count_A"]), hex(self.system_data_old["Count_B"])))
+        elif status == 0:
+            self.prints.show_receive_packet()
+            order_work = {}
+            order_work = self.system_data["ORDER"]
+            #print(("telegramm_order: {}".format(order_work)))
+            for ok in self.system_data["OK"]:
+                _ok = self.system_data["OK"][ok]
+                # print("_OK: {}".format(order_work["ADDRESS_OK"]))
+                if _ok["ADDRESS_OK"] == order_work["ADDRESS_OK"]:
+                    _ok["ORDER_WORK"] = order_work.copy()
+                    _ok["STATUS_OK"] = self._WORK
+                    self.system_data["ORDER"] = None
+                    # print(("system_data_order: {}".format(_ok["ORDER_WORK"])))
+                    # self.prints.show_all_data()
+            if stat.from_ok(self.system_data).create_status():
+                self.system_data["HDLC_SEND_STATUS"] = None
+                self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
+                #self.d_send_status(self.system_data_old["HDLC_SEND_STATUS"])
+                #print("hdlc_send: {}".format(hdlc_send))
+        elif status == 50:
+            print("Discard a telegram")
+            self.system_data["Timer_status"] = True
+        else:
+                self.system_data["HDLC_SEND_STATUS"] = None
+                self.system_data["ORDER_STATUS"] = None
+                print("Don't send status!!!")
+        #self.prints.show_all_data()
+        #self.prints.show_admin_address_ok()
+        #self.prints.show_receive_address_ok()
+        #self.prints.show_zone_cns()
+        #self.prints.show_status_telegramm()
+        self.check_timer()
+        self.prints.show_OK()
 
             
 
-            #if not self.system_data["order_work"] is None:
-            #    print "{} order_work: status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data_old["System_Status"],\
-            #            self.system_data_old["order_work"]["DESC_ALARM"], self.system_data_old["time_delta"],\
-            #                hex(self.system_data_old["Count_A"]), hex(self.system_data_old["Count_B"]), self.system_data_old["order_work"]["STATUS_ZONE"])
-            print("#"*10)
+        #if not self.system_data["order_work"] is None:
+        #    print "{} order_work: status system: {}, order status: {}, delta time: {}, CountA: {}, CountB: {}, Zone: {}\n".format(time.ctime(), self.system_data_old["System_Status"],\
+        #            self.system_data_old["order_work"]["DESC_ALARM"], self.system_data_old["time_delta"],\
+        #                hex(self.system_data_old["Count_A"]), hex(self.system_data_old["Count_B"]), self.system_data_old["order_work"]["STATUS_ZONE"])
+        print("#"*10)
                 
         
 
