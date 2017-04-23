@@ -116,7 +116,7 @@ class TestOrder(unittest.TestCase):
                     self.assertFalse(orders._check_body_telegramm_ab(), print_OK(self.system_data))
 
     @unittest.skipIf(skipped, "")
-    def test_forbidden_combination_countA_31(self):
+    def test_forbidden_combination_countA_32(self):
         self.system_data['hdlc'] = hdlc_forbiden_count_A
         orders = order.from_test(self.system_data)
         if orders._check_byte_flow():
@@ -125,13 +125,65 @@ class TestOrder(unittest.TestCase):
                     self.assertFalse(orders._check_body_telegramm_ab(), print_OK(self.system_data))
 
     @unittest.skipIf(skipped, "")
-    def test_forbidden_combination_countB_31(self):
+    def test_forbidden_combination_countB_33(self):
         self.system_data['hdlc'] = hdlc_forbiden_count_B
         orders = order.from_test(self.system_data)
         if orders._check_byte_flow():
             if orders._check_rc_16():
                 if orders._check_header_packet():
                     self.assertFalse(orders._check_body_telegramm_ab(), print_OK(self.system_data))
+
+    @unittest.skipIf(skipped, "")
+    def test_err_ctb_36(self):
+        self.system_data['hdlc'] = hdlc_err_ctb_36
+        orders = order.from_test(self.system_data)
+        if orders._check_byte_flow():
+            if orders._check_rc_16():
+                if orders._check_header_packet():
+                    if orders._check_body_telegramm_ab():
+                        if orders._parcer_ok():
+                            if orders._check_decode_ab():
+                                self.assertFalse(orders._check_count_order(), print_OK(self.system_data))
+                                self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 0)
+                                self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], 36)
+
+    @unittest.skipIf(skipped, " ")
+    def test_err_cta_37(self):
+        self.system_data['hdlc'] = hdlc_err_cta_37
+        orders = order.from_test(self.system_data)
+        if orders._check_byte_flow():
+            if orders._check_rc_16():
+                if orders._check_header_packet():
+                    if orders._check_body_telegramm_ab():
+                        if orders._parcer_ok():
+                            if orders._check_decode_ab():
+                                self.assertFalse(orders._check_count_order(), print_OK(self.system_data))
+                                self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 0)
+                                self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], 37)
+
+    @unittest.skipIf(skipped, "")
+    def test_err_ctab_34(self):
+        self.system_data['hdlc'] = hdlc_err_ctab_34
+        orders = order.from_test(self.system_data)
+        if orders._check_byte_flow():
+            if orders._check_rc_16():
+                if orders._check_header_packet():
+                    if orders._check_body_telegramm_ab():
+                        if orders._parcer_ok():
+                            if orders._check_decode_ab():
+                                self.assertFalse(orders._check_count_order(), print_OK(self.system_data))
+                                self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 0)
+                                self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], 34)
+
+    @unittest.skipIf(skipped, "")
+    def test_err_ctb_gl_30(self):
+        self.system_data['hdlc'] = hdlc_err_ctb_gl_30
+        orders = order.from_test(self.system_data)
+        if orders._check_byte_flow():
+            if orders._check_rc_16():
+                if orders._check_header_packet():
+                    self.assertFalse(orders._check_body_telegramm_ab(), print_OK(self.system_data))
+                    self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 30)
 
     @unittest.skipIf(skipped, "")
     def test_err_not_ab_41(self):
@@ -368,7 +420,7 @@ class TestOrder(unittest.TestCase):
                                 if orders._check_count_order():
                                     self.assertTrue(orders._decode_zone_status(), print_OK(self.system_data))
                                     self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], None)
-    
+
     @unittest.skipIf(skipped, "")
     def test_tresh_2ok(self):
         self.system_data['hdlc'] = hdlc_2

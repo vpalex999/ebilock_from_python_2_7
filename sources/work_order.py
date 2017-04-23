@@ -39,8 +39,8 @@ class WorkFlow(object):
         try:
             if self.sys_data["ORDER_CODE_ALARM"] == 30 or\
                     self.sys_data["ORDER_CODE_ALARM"] == 31 or\
-                    self.sys_data["ORDER_CODE_ALARM"] == 38 or\
-                    self.sys_data["ORDER_CODE_ALARM"] == 39:
+                    self.sys_data["ORDER_CODE_ALARM"] == 32 or\
+                    self.sys_data["ORDER_CODE_ALARM"] == 33:
                         status = False
 
             for x in self.sys_data["OK"]:

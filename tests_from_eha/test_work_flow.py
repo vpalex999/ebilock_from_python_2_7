@@ -109,13 +109,38 @@ class TestWork_Flow(unittest.TestCase):
         work_f.work_order()
         self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 31, print_OK(self.system_data_1))
 
-    #@unittest.skipIf(skipped, " ")
+    @unittest.skipIf(skipped, " ")
     def test_work_forbidden_combination_countA_31(self):
         self.system_data_1["hdlc"] = hdlc_forbiden_count_A
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 39, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 32, print_OK(self.system_data_1))
+
+    @unittest.skipIf(skipped, " ")
+    def test_work_forbidden_combination_countB_33(self):
+        self.system_data_1["hdlc"] = hdlc_forbiden_count_B
+        order.from_test(self.system_data_1).check_telegramm()
+        work_f = wf(self.system_data_1)
+        work_f.work_order()
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 33, print_OK(self.system_data_1))
+
+    @unittest.skipIf(skipped, " ")
+    def test_work_err_ctb_36(self):
+        self.system_data_1["hdlc"] = hdlc_err_ctb_36
+        order.from_test(self.system_data_1).check_telegramm()
+        work_f = wf(self.system_data_1)
+        work_f.work_order()
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 36, print_OK(self.system_data_1))
+
+    #@unittest.skipIf(skipped, " ")
+    def test_work_err_cta_37(self):
+        self.system_data_1["hdlc"] = hdlc_err_cta_37
+        order.from_test(self.system_data_1).check_telegramm()
+        work_f = wf(self.system_data_1)
+        work_f.work_order()
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 37, print_OK(self.system_data_1))
+
 
 if __name__ == "__main__":
     unittest.main()
