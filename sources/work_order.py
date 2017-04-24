@@ -17,7 +17,7 @@ class WorkFlow(object):
         # self.sys_data_old = sys_data_old
 
     def check_err_first_stage(self):
-        if self.sys_data["ORDER_CODE_ALARM"] is None:
+        if self.sys_data["ORDER_CODE_ALARM"] is None or self.sys_data["ORDER_CODE_ALARM"] == 0:
             return True
         elif self.sys_data["ORDER_CODE_ALARM"] == 10 or\
             self.sys_data["ORDER_CODE_ALARM"] == 11 or\
@@ -49,11 +49,12 @@ class WorkFlow(object):
                     continue
                 else:
                     if _ok["CODE_ALARM"] == 33 or\
-                       _ok["CODE_ALARM"] == 35 or\
-                       _ok["CODE_ALARM"] == 36 or\
-                       _ok["CODE_ALARM"] == 37 or\
-                       _ok["CODE_ALARM"] == 38 or\
-                       _ok["CODE_ALARM"] == 39 or\
+                        _ok["CODE_ALARM"] == 34 or\
+                        _ok["CODE_ALARM"] == 35 or\
+                        _ok["CODE_ALARM"] == 36 or\
+                        _ok["CODE_ALARM"] == 37 or\
+                        _ok["CODE_ALARM"] == 38 or\
+                        _ok["CODE_ALARM"] == 39 or\
                             _ok["CODE_ALARM"] == 40:
                             _ok["RETURN_OK"] = 110
                             status = False
@@ -169,7 +170,7 @@ class WorkFlow(object):
                     # print("first stage")
                     if self.check_count_ok():
                         # print("check_count_OK")
-                        if self.sys_data["ORDER_CODE_ALARM"] is None:
+                        if self.sys_data["ORDER_CODE_ALARM"] is None or self.sys_data["ORDER_CODE_ALARM"] == 0:
                             # print(self.sys_data_old["order"]["DESC_ALARM"])
                             self.switching_to_work()
                             status = 0

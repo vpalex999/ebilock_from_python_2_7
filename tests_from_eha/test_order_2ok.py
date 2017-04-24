@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from sources.ebilockorder_new import Ebilock_order as order
 from tests_from_eha.data import *
 
-skipped = True
+skipped = False
 
 
 def print_OK(system_data):
@@ -24,12 +24,12 @@ def print_OK(system_data):
 
 class TestOrder(unittest.TestCase):
 
-    # @unittest.skipIf(skipped, "")
     def setUp(self):
-        self.system_data = system_data_2
-    #     self.order = order.from_test(hdlc_telegramm)
-    #     self.order_less = order.from_test(hdlc_less)
-    #     self.order_crc16_wrong = order.from_test(hdlc_crc16_wrong)
+        self.system_data = system_data_2.copy()
+        _ok = self.system_data["OK"]
+        for x in _ok:
+            _ok[x]["CODE_ALARM"] = None
+            _ok[x]["DESC_ALARM"] = None
 
     @unittest.skipIf(skipped, "")
     def test_check_byte_flow(self):
@@ -176,6 +176,16 @@ class TestOrder(unittest.TestCase):
                                 self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], 34)
 
     @unittest.skipIf(skipped, "")
+    def test_err_cta_gl_30(self):
+        self.system_data['hdlc'] = hdlc_err_cta_gl_30
+        orders = order.from_test(self.system_data)
+        if orders._check_byte_flow():
+            if orders._check_rc_16():
+                if orders._check_header_packet():
+                    self.assertFalse(orders._check_body_telegramm_ab(), print_OK(self.system_data))
+                    self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 30)
+
+    @unittest.skipIf(skipped, "")
     def test_err_ctb_gl_30(self):
         self.system_data['hdlc'] = hdlc_err_ctb_gl_30
         orders = order.from_test(self.system_data)
@@ -184,6 +194,19 @@ class TestOrder(unittest.TestCase):
                 if orders._check_header_packet():
                     self.assertFalse(orders._check_body_telegramm_ab(), print_OK(self.system_data))
                     self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 30)
+
+    @unittest.skipIf(skipped, "")
+    def test_err_ctab_gl_34(self):
+        self.system_data['hdlc'] = hdlc_err_ctab_gl_34
+        orders = order.from_test(self.system_data)
+        if orders._check_byte_flow():
+            if orders._check_rc_16():
+                if orders._check_header_packet():
+                    if orders._check_body_telegramm_ab():
+                        if orders._parcer_ok():
+                            if orders._check_decode_ab():
+                                self.assertFalse(orders._check_count_order(), print_OK(self.system_data))
+                                self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], 34)
 
     @unittest.skipIf(skipped, "")
     def test_err_not_ab_41(self):
@@ -320,7 +343,7 @@ class TestOrder(unittest.TestCase):
                     if orders._check_body_telegramm_ab():
                         if orders._parcer_ok():
                             self.assertTrue(orders._check_decode_ab(), print_OK(self.system_data))
-                            self.assertEqual(system_data["ORDER_CODE_ALARM"], 0)
+                            self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 0)
                             self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], None)
 
     @unittest.skipIf(skipped, " ")
@@ -468,6 +491,22 @@ class TestOrder(unittest.TestCase):
         self.system_data['hdlc'] = hdlc_9
         orders = order.from_test(self.system_data)
         self.assertTrue(orders.check_telegramm(), print_OK(self.system_data))
+
+    @unittest.skipIf(skipped, "")
+    def test_no_order_ok_6(self):
+        self.system_data['hdlc'] = hdlc_6
+        orders = order.from_test(self.system_data)
+        self.assertTrue(orders.check_telegramm(), print_OK(self.system_data))
+        self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 0)
+        self.assertEqual(self.system_data["OK"]["3259"]["CODE_ALARM"], 6)
+
+    @unittest.skipIf(skipped, "")
+    def test_duplicated_order_7(self):
+        self.system_data['hdlc'] = hdlc_6
+        orders = order.from_test(self.system_data)
+        self.assertTrue(orders.check_telegramm(), print_OK(self.system_data))
+        self.assertEqual(self.system_data["ORDER_CODE_ALARM"], 0)
+        self.assertEqual(self.system_data["OK"]["3257"]["CODE_ALARM"], 7)
 
 
 

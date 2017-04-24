@@ -213,7 +213,7 @@ class Ebilock_order(object):
 
                     if ct_A - ct_a != 0 and ct_B - ct_b != 0:
                         self.system_data["OK"][_ok]['CODE_ALARM'] = 34
-                        self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctab. cta: '{}', ctb: '{}'".format(hex(ct_a), hex(ct_b))
+                        self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctab or ctab Global. cta_gl: {}, ctb_gl: {}, cta: '{}', ctb: '{}'".format(hex(ct_A), hex(ct_B), hex(ct_a), hex(ct_b))
                         return False
 
                     if ct_A - ct_a != 0:
