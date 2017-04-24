@@ -205,46 +205,52 @@ class Ebilock_order(object):
                     ct_b = self.system_data["OK"][_ok]['count_b']
                     ct_A = self.telegramm_decode["PACKET_COUNT_A"]
                     ct_B = self.telegramm_decode["PACKET_COUNT_B"]
+
                     if ct_a == 0 or ct_b == 255:
                         self.system_data["OK"][_ok]['CODE_ALARM'] = 33
                         self.system_data["OK"][_ok]['DESC_ALARM'] = "The value ct_a can not be 0: '{}' or the value ct_b can not be 255:'{}'".format(ct_a, ct_b)
-
-                    if ct_a + ct_b != 255:
-                        self.system_data["OK"][_ok]['CODE_ALARM'] = 40
-                        self.system_data["OK"][_ok]['DESC_ALARM'] = "Err_ctab: a-'{}', b- {}".format(ct_a, ct_b)
                         return False
+
+                    if ct_A - ct_a != 0 and ct_B - ct_b != 0:
+                        self.system_data["OK"][_ok]['CODE_ALARM'] = 34
+                        self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctab. cta: '{}', ctb: '{}'".format(hex(ct_a), hex(ct_b))
+                        return False
+
+                    if ct_A - ct_a != 0:
+                        self.system_data["OK"][_ok]['CODE_ALARM'] = 37
+                        self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_cta"
+                        # bself.STATUS_TLG = "Error_ctb"
+                        return False
+
+                    if ct_B - ct_b != 0:
+                        self.system_data["OK"][_ok]['CODE_ALARM'] = 36
+                        self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctb"
+                        # self.STATUS_TLG = "Error_cta"
+                        return False
+
                     if ct_A + ct_B == 255:
                         if ct_a + ct_b == 255:
-                            if ct_A - ct_a == 0 and ct_B - ct_b == 0:
-                                # self.system_data["Count_A"] = ct_A
-                                # self.system_data["Count_B"] = ct_B
+                            if (ct_A - ct_a) == 0 and (ct_B - ct_b) == 0:
                                 return True
                             else:
                                 self.system_data["OK"][_ok]['CODE_ALARM'] = 35
                                 self.system_data["OK"][_ok]['DESC_ALARM'] = "Sum values count packet and count telegramm are not equal"
                                 return False
-                        else:
                             if ct_A - ct_a == 0:
-                                self.system_data["OK"][_ok]['CODE_ALARM'] = 36
-                                self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctb"
-                                # bself.STATUS_TLG = "Error_ctb"
+                                self.system_data["OK"][_ok]['CODE_ALARM'] = 38
+                                self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctb_gl"
+                                # self.STATUS_TLG = "Error_ctb_gl"
                                 return False
                             else:
-                                self.system_data["OK"][_ok]['CODE_ALARM'] = 37
-                                self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_cta"
-                                # self.STATUS_TLG = "Error_cta"
+                                self.system_data["OK"][_ok]['CODE_ALARM'] = 39
+                                self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_cta_gl"
+                                # self.STATUS_TLG = "Error_cta_gl"
                                 return False
-                    else:
-                        if ct_A - ct_a == 0:
-                            self.system_data["OK"][_ok]['CODE_ALARM'] = 38
-                            self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_ctb_gl"
-                            # self.STATUS_TLG = "Error_ctb_gl"
-                            return False
                         else:
-                            self.system_data["OK"][_ok]['CODE_ALARM'] = 39
-                            self.system_data["OK"][_ok]['DESC_ALARM'] = "Error_cta_gl"
-                            # self.STATUS_TLG = "Error_cta_gl"
+                            self.system_data["OK"][_ok]['CODE_ALARM'] = 40
+                            self.system_data["OK"][_ok]['DESC_ALARM'] = "Err_ctab: a-'{}', b- {}".format(ct_a, ct_b)
                             return False
+
             return True
         except:
             return False
@@ -276,11 +282,11 @@ class Ebilock_order(object):
             return False
         elif ct_A == 0:
             self.system_data["ORDER_DESC_ALARM"] = "The value global_ctA can not be: '{}'".format(hex(ct_A))
-            self.system_data["ORDER_CODE_ALARM"] = 39
+            self.system_data["ORDER_CODE_ALARM"] = 32
             return False
         elif ct_B == 255:
             self.system_data["ORDER_DESC_ALARM"] = "The value global_ctB can not be: '{}'".format(hex(ct_B))
-            self.system_data["ORDER_CODE_ALARM"] = 38
+            self.system_data["ORDER_CODE_ALARM"] = 33
             return False
 
         if ct_A + ct_B != 255:

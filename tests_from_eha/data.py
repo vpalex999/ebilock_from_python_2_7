@@ -45,7 +45,14 @@ hdlc_err_crcab_74 = "00 01 02 00 00 00 1C 00 03 FC 00 0E 32 57 74 03 C1 81 34 32
 hdlc_err_conc = "00 01 02 00 00 00 1C 00 03 FC 00 0E 32 57 74 03 C1 81 2F 32 57 76 FC C1 81 5C 72 99"
 # Error CO
 hdlc_err_co_a_81 = "00 01 02 00 00 00 1C 00 04 FB 00 0E 32 57 78 04 C1 81 80 32 57 7C FB 3E 7E CF F8 CD"
-
+# Error ctb
+hdlc_err_ctb_36 = "00 01 02 00 00 00 1C 00 04 FB 00 0E 32 57 74 04 C1 81 2F 32 57 76 0F 3E 7E F5 35 91"
+# Error cta
+hdlc_err_cta_37 = "00 01 02 00 00 00 1C 00 04 FB 00 0E 32 57 74 F0 C1 81 2F 32 57 76 FB 3E 7E F5 03 52"
+# Error ctab
+hdlc_err_ctab_34 = "00 01 02 00 00 00 1C 00 04 FB 00 0E 32 57 74 F0 C1 81 2F 32 57 76 0F 3E 7E F5 56 EE"
+# Error ctb_gl
+hdlc_err_ctb_gl_30 = "00 01 02 00 00 00 1C 00 04 0F 00 0E 32 57 74 04 C1 81 2F 32 57 76 FB 3E 7E F5 89 AA"
 
 
 # own 3257 - own 3259
