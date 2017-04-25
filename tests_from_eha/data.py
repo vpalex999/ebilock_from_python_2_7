@@ -97,6 +97,7 @@ system_data_1 = {
             "OK": {"3257": {
                             "STATUS_OK": "SAFE",
                             "Timer_status": False,
+                            "Start_timer": False,
                             "LOOP_OK": False,
                             "AREA_OK": False,
                             "HUB_OK": False,
@@ -140,6 +141,8 @@ system_data_2 = {
             "HDLC_SEND_STATUS": None,
             "OK": {"3257": {
                             "STATUS_OK": "SAFE",
+                            "Timer_status": False,
+                            "Start_timer": False,
                             "LOOP_OK": False,
                             "AREA_OK": False,
                             "HUB_OK": False,
@@ -155,9 +158,12 @@ system_data_2 = {
                             "DESC_ALARM": None,
                             "TELEGRAMM_A": None,
                             "TELEGRAMM_B": None,
+                            "RETURN_OK": 0,
                             },
                     "3259": {
                             "STATUS_OK": "SAFE",
+                            "Timer_status": False,
+                            "Start_timer": False,
                             "LOOP_OK": False,
                             "AREA_OK": False,
                             "HUB_OK": False,
@@ -173,6 +179,7 @@ system_data_2 = {
                             "DESC_ALARM": None,
                             "TELEGRAMM_A": None,
                             "TELEGRAMM_B": None,
+                            "RETURN_OK": 0,
                             }},
 
 }

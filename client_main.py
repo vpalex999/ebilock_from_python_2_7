@@ -11,15 +11,15 @@ def client_main():
     """
     status_start = True
     start = datetime.datetime.now()
-    port = 4016
-    #port = 9090
+    port = 4015
+    #port = 9092
     #host = '192.168.200.6'
     host = '192.168.101.100'
     #host = '192.168.10.168'
     #port = 10000
     #host = "localhost"
 
-    addresses_ok = [3257, "3259"]
+    addresses_ok = [3257]
     system_data_ok = {}
 
     def from_address_ok(address_ok):
@@ -28,6 +28,8 @@ def client_main():
             address_ok = "{}".format(address_ok)
         sys_data_ok = {
             "STATUS_OK": "SAFE",
+            "Timer_status": False,
+            "Start_timer": False,
             "LOOP_OK": False,
             "AREA_OK": False,
             "HUB_OK": False,
@@ -39,10 +41,11 @@ def client_main():
             "ORDER_WORK": None,
             "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
             "ZONE_FOR_CNS": None,
-            "CODE_ALARM": 0,
+            "CODE_ALARM": None,
             "DESC_ALARM": None,
             "TELEGRAMM_A": None,
             "TELEGRAMM_B": None,
+            "RETURN_OK": 0,
         }
 
         def _code_address_ok(sys_data_ok):

@@ -101,9 +101,9 @@ class Ebilock_order(object):
 
         status = True
         sources = self.telegramm
-        if len(sources) < 14:
+        if len(sources) < 10:
             self.system_data["ORDER_CODE_ALARM"] = 10
-            self.system_data["ORDER_DESC_ALARM"] = "Invalid package '{}' 2xByte, min = 14 2xByte".format(len(sources))
+            self.system_data["ORDER_DESC_ALARM"] = "Invalid package '{}' 2xByte, min = 10 2xByte".format(len(sources))
             # self.STATUS_TLG = "Invalid package '{}' 2xByte, min = 20 2xByte".format(len(sources))
             status = False
 
@@ -185,7 +185,7 @@ class Ebilock_order(object):
             return False
 
         # Check status request
-        if int(sources[2], 16) == 4:
+        if int(sources[2], 16) == 4 and len(sources) == 10:
             self.system_data["ORDER_CODE_ALARM"] = 80
             self.system_data["ORDER_DESC_ALARM"] = "This status request"
             return False

@@ -54,7 +54,7 @@ def create_hdlc(telegramm):
     temp.insert(1, STX)
     temp.append(DLE)
     temp.append(ETX)
-    print("send status hdlc: {}".format(temp))
+    #print("send status hdlc: {}".format(temp))
     # for python 3-6:
     return bytes([int(temp[x], 16) for x in range(len(temp))])
     # for python 2-7:

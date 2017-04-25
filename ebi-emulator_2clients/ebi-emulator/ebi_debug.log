@@ -8327,3 +8327,5 @@
 10:18:50,474 INFO  EbiEmulator:221 - ======================read data====================
 10:18:50,474 INFO  EbiEmulator:569 - Client[9091] telegram read successfully
 10:18:50,475 INFO  EbiEmulator:602 - User[9091] telegram: {12887=Telegram[ 3257;  Data: 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 ; cyclesA/B: 0x2C 0xD3; status: BLANK; time: 1 ] }
+14:37:02,679 INFO  EmulatorFrame:67 - Size: 8
+14:40:03,125 INFO  EmulatorFrame:67 - Size: 8
