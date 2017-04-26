@@ -228,7 +228,7 @@ class EbilockClientFactory(ClientFactory):
         self.system_data["Start_timer"] = False
         self.system_data["System_Status"] = "SAFE"
         self.system_data["Timer_status"] = False
-        print("{}  System switch to SAFE mode: {}".format(time.ctime(), self.system_data["System_Status"]))
+        print("{}  System switch to SAFE mode => {}".format(time.ctime(), self.system_data["System_Status"]))
 
         # self.system_data["Start_timer"] = False
         # # if self.system_data_old["System_Status"] == "WORK" and self.system_data_old["Timer_status"]:
@@ -247,7 +247,7 @@ class EbilockClientFactory(ClientFactory):
         _ok["Start_timer"] = False
         _ok["STATUS_OK"] = "SAFE"
         _ok["Timer_status"] = False
-        print("{} {} OK's switch to SAFE mode: {}".format(time.ctime(), ok, _ok["STATUS_OK"]))
+        print("{} {} OK's switch to SAFE mode => {}".format(time.ctime(), ok, _ok["STATUS_OK"]))
 
     def timer_restart_ok(self, ok):
         from twisted.internet import reactor
