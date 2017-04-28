@@ -1,6 +1,7 @@
 from crccheck.crc import Crc16CcittFalse
 from sources.crc8 import check_crc_8 as crc8
-from sources.hdlc import read_hdlc
+# from sources.hdlc import read_hdlc
+from sources.hdlc import hdlc_work
 from sources.error import EbException
 import binascii
 import re
@@ -32,37 +33,34 @@ class Ebilock_order(object):
             "SIZE_AB": "",
             "TELEGRAMM_AB": "",
             "RC": "",
-            "TLG_A": {
-                "BODY_TLG": "",
-                "ADDR_OK": "",
-                "LOOP_OK": "",
-                "AREA_OK": "",
-                "HUB_OK": "",
-                "NUMBER_OK": "",
-                "ML_CO": "",
-                "SIZE": "",
-                "type_co": "",
-                "COUNT": "",
-                "DATA": "",
-                "RC": ""
-            },
-            "TLG_B": {},
-            "STATUS_ZONE": "",
-            "ADDRESS_OK": None,
+            # "TLG_A": {
+            #     "BODY_TLG": "",
+            #     "ADDR_OK": "",
+            #     "LOOP_OK": "",
+            #     "AREA_OK": "",
+            #     "HUB_OK": "",
+            #     "NUMBER_OK": "",
+            #     "ML_CO": "",
+            #     "SIZE": "",
+            #     "type_co": "",
+            #     "COUNT": "",
+            #     "DATA": "",
+            #     "RC": ""
+            # },
+            # "TLG_B": {},
+            # "STATUS_ZONE": "",
+            # "ADDRESS_OK": None,
         }
 
     @classmethod
     def from_hdlc(cls, object):
-        source_hdlc = read_hdlc(object["hdlc"])
-        
+        # source_hdlc = read_hdlc(object["hdlc"])
+        # source_hdlc = hdlc_work(object['hdlc'])
+        source_hdlc = object['hdlc']
+        # print(source_hdlc)
         if source_hdlc:
             telegramm = ["{:02x}".format(int(hex(x), 16)).upper() for x in source_hdlc]
-        # for item in object:
-        #     # for python 3-6:
-        #     telegramm.append("{:02x}".format(int(hex(item), 16)).upper())
-        #     # from python 2-7
-        #     # telegramm.append("{:02x}".format(int(binascii.hexlify(item), 16)).upper())
-        return cls(telegramm, object, "hdlc")
+            return cls(telegramm, object, "hdlc")
 
     @classmethod
     def from_test(cls, object):
@@ -406,7 +404,7 @@ class Ebilock_order(object):
                         return False
                     zon = zona_a[:]
                     try:
-                        key_zone_ = 1
+                        key_zone_ = 0
                         key = 0
                         for zone in zon:
                             bin_zones = "{:08b}".format(int(zone, 16))
@@ -421,7 +419,10 @@ class Ebilock_order(object):
                                     start -= 2
                                 stop -= 2
                                 key += 1
-                        self.system_data["OK"][_ok]["ZONE_FOR_CNS"] = status_zone
+                        zone_for_cns = {}
+                        zone_for_cns = self.system_data["OK"][_ok]["ZONE_FOR_CNS"]
+                        zone_for_cns.update(status_zone)
+                        #self.system_data["OK"][_ok]["ZONE_FOR_CNS"] = status_zone
                     except:
                         self.system_data["OK"][_ok]['CODE_ALARM'] = 61
                         self.system_data["OK"][_ok]['DESC_ALARM'] = "Error decode block DATA"
@@ -522,6 +523,7 @@ class Ebilock_order(object):
             return False
 
     def check_telegramm(self):
+        # print("check_telegramm")
         status = False
         if self._check_byte_flow():
             if self._check_rc_16():
@@ -531,5 +533,8 @@ class Ebilock_order(object):
                             if self._check_decode_ab():
                                 if self._check_count_order():
                                     if self._decode_zone_status():
+                                        self.system_data["ORDER_CODE_ALARM"] = 0
+                                        self.system_data["ORDER_DESC_ALARM"] = "OK"
                                         status = True
+
         return status

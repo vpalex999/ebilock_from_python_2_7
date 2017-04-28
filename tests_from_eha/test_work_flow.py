@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from sources.ebilockorder_new import Ebilock_order as order
 from sources.work_order import WorkFlow as wf
 from tests_from_eha.data import *
+from sources.hdlc import hdlc_work
 
 skipped = False
 
@@ -224,7 +225,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 71)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -235,7 +236,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 72)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -246,7 +247,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 74)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -257,7 +258,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 75)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -268,7 +269,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 76)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -279,7 +280,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 77)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -290,7 +291,7 @@ class TestWork_Flow(unittest.TestCase):
         order.from_test(self.system_data_1).check_telegramm()
         work_f = wf(self.system_data_1)
         status = work_f.work_order()
-        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], None, print_OK(self.system_data_1))
+        self.assertEqual(self.system_data_1["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_1))
         self.assertEqual(self.system_data_1["OK"]["3257"]["CODE_ALARM"], 81)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_1["OK"]["3257"]["RETURN_OK"], 100)
@@ -327,6 +328,17 @@ class TestWork_Flow(unittest.TestCase):
         self.assertEqual(self.system_data_2["OK"]["3257"]["CODE_ALARM"], 7)
         self.assertIs(status, 0)
         self.assertIs(self.system_data_2["OK"]["3257"]["RETURN_OK"], 100)
+
+    #@unittest.skipIf(skipped, " ")
+    def test_work_discard_telegramm(self):
+        self.system_data_2["hdlc"] = hdlc_work(hdlc_discard)
+        order.from_hdlc(self.system_data_2).check_telegramm()
+        work_f = wf(self.system_data_2)
+        status = work_f.work_order()
+        self.assertEqual(self.system_data_2["ORDER_CODE_ALARM"], 0, print_OK(self.system_data_2))
+        self.assertEqual(self.system_data_2["OK"]["3257"]["CODE_ALARM"], None)
+        self.assertIs(status, 0)
+        self.assertIs(self.system_data_2["OK"]["3257"]["RETURN_OK"], 0)
 
 
 

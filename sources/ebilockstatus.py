@@ -69,8 +69,9 @@ class Ebilock_status(object):
             object["Count_A"] = 1
             object["Count_B"] = 254
         else:
-            object["Count_A"] = object["Count_A"] + 1
-            object["Count_B"] = object["Count_B"] - 1
+            pass
+            # object["Count_A"] = object["Count_A"] + 1
+            # object["Count_B"] = object["Count_B"] - 1
 
         return cls(object, count_a, count_b)
 
@@ -81,21 +82,25 @@ class Ebilock_status(object):
         return cls(object, count_a, count_b)
 
     def _code_zone_to_hex(self, zone_hex, telegramm_data):
+        # print("z: {}".format(telegramm_data))
         offset_by = 0
         result = 0
         temp = 0
         zone = telegramm_data["ZONE_FROM_CNS"]
         # print("status_zone: {}".format(zone))
-        for j in range(int(len(list(zone.keys())))):
-            temp = zone[j+1]
-            temp = temp << offset_by
-            offset_by += 2
-            result = result | temp
-            if j and (j+1) % 4 == 0:
-                zone_hex.append(hex(result))
-                result = 0
-                offset_by = 0
-        # print("zone_hex: {}".format(zone_hex))
+        try:
+            for j in range(int(len(list(zone.keys())))):
+                temp = zone[j]
+                temp = temp << offset_by
+                offset_by += 2
+                result = result | temp
+                if j and (j+1) % 4 == 0:
+                    zone_hex.append(hex(result))
+                    result = 0
+                    offset_by = 0
+            # print("zone_hex: {}".format(zone_hex))
+        except:
+            print("Problem code zone to hex")
 
     def _code_address_ok(self, telegramm, telegramm_data):
         offset_by = 12
@@ -188,8 +193,8 @@ class Ebilock_status(object):
 
     def create_status(self):
         status = False
-        for ok in self._system_data["OK"]:
-            _ok = self._system_data["OK"][ok]
+        for ok in self._system_data["WORK_OK"]:
+            _ok = self._system_data["WORK_OK"][ok]
             if _ok["STATUS_OK"] == "WORK":
                 # print("WORK")
                 if self._code_telegramm(_ok):

@@ -107,8 +107,8 @@ system_data_1 = {
                             "count_a": 1,
                             "count_b": 254,
                             "ORDER_WORK": None,
-                            "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
-                            "ZONE_FOR_CNS": None,
+                            "ZONE_FROM_CNS": dict.fromkeys(range(36), 0),
+                            "ZONE_FOR_CNS": dict.fromkeys(range(36), 0),
                             "CODE_ALARM": None,
                             "DESC_ALARM": None,
                             "TELEGRAMM_A": None,
@@ -152,8 +152,8 @@ system_data_2 = {
                             "count_a": 1,
                             "count_b": 254,
                             "ORDER_WORK": None,
-                            "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
-                            "ZONE_FOR_CNS": None,
+                            "ZONE_FROM_CNS": dict.fromkeys(range(36), 0),
+                            "ZONE_FOR_CNS": dict.fromkeys(range(36), 0),
                             "CODE_ALARM": None,
                             "DESC_ALARM": None,
                             "TELEGRAMM_A": None,
@@ -173,8 +173,8 @@ system_data_2 = {
                             "count_a": 1,
                             "count_b": 254,
                             "ORDER_WORK": None,
-                            "ZONE_FROM_CNS": {1: 3, 2: 1, 3: 1, 4: 1, 5: 0, 6: 2, 7: 2, 8: 3},
-                            "ZONE_FOR_CNS": None,
+                            "ZONE_FROM_CNS": dict.fromkeys(range(36), 0),
+                            "ZONE_FOR_CNS": dict.fromkeys(range(36), 0),
                             "CODE_ALARM": None,
                             "DESC_ALARM": None,
                             "TELEGRAMM_A": None,
@@ -183,3 +183,13 @@ system_data_2 = {
                             }},
 
 }
+
+
+hdlc_block_bin = b'\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x02\xfd\x00\x0e2Wt\x02\xc1\x81/2Wv\xfd>~\xf5\xd4\xe8\x10\x83\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x03\xfc\x00\x0e\
+\2Wt\x03\xc1\x81/2Wv\xfc>~\xf5\x9a\xc6\x10\x83\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x04\xfb\x00\x0e2Wt\x04\xc1\x81/2Wv\xfb>~\xf5`-\x10\x83\x10\x02\x00\x01\x02\
+\x00\x00\x00\x1c\x00\x05\xfa\x00\x0e2Wt\x05\xc1\x81/2Wv\xfa>~\xf5.\x03\x10\x83\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x06\xf9\x00\x0e2Wt\x06\xc1\x81/2Wv\xf9>\
+\xf5\xfcq\x10\x83\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x07\xf8\x00\x0e2Wt\x07\xc1\x81/2Wv\xf8>~\xf5\xb2_\x10\x83\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x08\
+\xf7\x00\x0e2Wt\x08\xc1\x81/2Wv\xf7>~\xf5\x19\x86\x10\x83\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\t\xf6\x00\x0e2Wt\t\xc1\x81/2Wv\xf6>~\xf5W\xa8\x10\x83\x10\x02\
+\x00\x01\x02\x00\x00\x00\x1c\x00\n\xf5\x00\x0e2Wt\n\xc1\x81/2Wv\xf5>~\xf5\x85\xda\x10\x83'
+
+hdlc_discard = b'\x10\x02\x00\x01\x02\x00\x00\x00\x1c\x00\x17\xe8\x00\x0e2Wt\x17\xc1\x81/2Wv\xe8>~\xf5\x10\x10;\x10\x83'

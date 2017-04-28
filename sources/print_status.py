@@ -56,25 +56,16 @@ class PrintStatus(object):
         for ok in self.system_data["OK"]:
             _ok = self.system_data["OK"][ok]
             zones = zones + "\nOK: {}, \
-ZONE_FROM_CNS: {}, \
-ZONE_FOR_CNS: {}"\
-                             .format(_ok["ADDRESS_OK"],\
-                             _ok["ZONE_FROM_CNS"],\
-                             _ok["ZONE_FOR_CNS"])
+ZONE_FOR_CNS: {}\n".format(_ok["ADDRESS_OK"], _ok["ZONE_FOR_CNS"])
         return zones + "\n"
 
-    def show_status_work_zone(self):
+    def show_status_cns_zone(self):
         zones = ""
         for ok in self.system_data["WORK_OK"]:
             _ok = self.system_data["WORK_OK"][ok]
-            zones = zones + "\nOK: {}, \
-ZONE_FROM_CNS: {}, \
-ZONE_FOR_CNS: {}"\
-                             .format(_ok["ADDRESS_OK"],\
-                             _ok["ZONE_FROM_CNS"],\
-                             _ok["ZONE_FOR_CNS"])
+            zones = zones + "\nOK: {},\n\
+ZONE_FROM_CNS: {},\nZONE_FOR_CNS: {}".format(_ok["ADDRESS_OK"], _ok["ZONE_FROM_CNS"], _ok["ZONE_FOR_CNS"])
         return zones + "\n"
-
 
     def show_receive_packet(self):
         # if self.system_data["ORDER_STATUS"] is None:
@@ -86,7 +77,7 @@ err_code: {}, \
 delta time: {}, \
 ORDER_Count_A: {}, \
 ORDER_Count_B: {}, \n\
-Zone_for_CNS: {}"\
+Zone_for_CNS: {}\n"\
                 .format(time.ctime(),\
                 self.system_data["System_Status"],\
                 self.system_data["ORDER_DESC_ALARM"], \
@@ -109,6 +100,6 @@ Zone_for_CNS: {}"\
                 self.system_data["ORDER_DESC_ALARM"], \
                 self.system_data["ORDER_CODE_ALARM"], \
                 self.system_data["time_delta"],\
-                hex(self.system_data["ORDER_Count_A"]), \
-                hex(self.system_data["ORDER_Count_B"]), \
-                self.show_status_work_zone()))
+                hex(self.system_data["Count_A"]), \
+                hex(self.system_data["Count_B"]), \
+                self.show_status_cns_zone()))

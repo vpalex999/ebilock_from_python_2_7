@@ -1,5 +1,5 @@
 """ Module for parsing config """
-
+import time
 import json
 import os
 import optparse
@@ -23,13 +23,38 @@ default_data_ok = {
             "count_a": 1,
             "count_b": 254,
             "ORDER_WORK": None,
-            "ZONE_FROM_CNS": None,
-            "ZONE_FOR_CNS": None,
+            "ZONE_FROM_CNS": dict.fromkeys(range(36), 0),
+            "ZONE_FOR_CNS": dict.fromkeys(range(36), 0),
             "CODE_ALARM": None,
             "DESC_ALARM": None,
             "TELEGRAMM_A": None,
             "TELEGRAMM_B": None,
             "RETURN_OK": 0,
+        }
+
+
+system_data = {
+            "start_time": time.time(),
+            "hdlc": bytearray(),
+            "time_delta": "",
+            "System_Status": "SAFE",
+            "Lost_Connect": False,
+            "FIRST_START": True,
+            "Count_A": 1,
+            "Count_B": 254,
+            "Err_Count": 0,
+            "Timer_status": False,
+            "Start_timer": False,
+            "ORDER_Count_A": 1,
+            "ORDER_Count_B": 254,
+            "ORDER_CODE_ALARM": None,
+            "ORDER_DESC_ALARM": None,
+            "ORDER": None,
+            "ORDER_STATUS": None,
+            "HDLC_SEND_STATUS": None,
+            "OK": False,
+            "WORK_OK": {},
+            "Timer_OK": {},
         }
 
 
@@ -96,6 +121,20 @@ def from_address_ok(address_ok, default_data_ok, reason=None):
             return False
 
 
+def zone_for_cns(data_from_config, system_data_ok):
+    telegrams = data_from_config['Telegrams']
+    
+    for ok in system_data_ok:
+        for tlg in telegrams:
+            if tlg['ocAddr'] == ok:
+                zone = tlg['Zones']
+                zone_dict = {x: zone[x] for x in range(len(zone))}
+                zone_from_cns = dict.fromkeys(range(36), 0)
+                zone_from_cns.update(zone_dict)
+                system_data_ok[ok]["ZONE_FROM_CNS"] = zone_from_cns
+
+
+
 def read_config_file(file_name):
     try:
         if os.path.isfile(file_name):
@@ -140,19 +179,25 @@ def create_ok(data_from_config, system_data_ok, default_data_ok, from_address_ok
 
 
 def start_parser(file_config):
-    data_from_config.update(read_config_file(file_config))
-    if check_header_config(data_from_config):
-        if create_ok(data_from_config, system_data_ok, default_data_ok, from_address_ok):
-            return True
-    return False
+    try:
+        data_from_config.update(read_config_file(file_config))
+        if check_header_config(data_from_config):
+            if create_ok(data_from_config, system_data_ok, default_data_ok, from_address_ok):
+                zone_for_cns(data_from_config, system_data_ok)
+                system_data["OK"] = system_data_ok
+                return True
+        return False
+    except:
+        return False
 
 
 #parse_args()
-# start_parser()
+#start_parser('./tests_from_eha/client_eha_config_1ok_ok.json')
+# zone_for_cns(data_from_config, system_data_ok)
 
 #data_from_config = read_config_file('./tests_from_eha/client_eha_config_1ok_ok.json')
 #create_ok(data_from_config, system_data_ok, default_data_ok, from_address_ok)
-pass
+#pass
 
 # pass
 
