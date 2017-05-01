@@ -1,0 +1,9 @@
+{
+    "port1": 9001,
+    "port2": 9002,
+    "host": "localhost",
+    "Telegrams": [ 
+        {"ocAddr":"3257", "Zones": [0,1,2,3]}
+    ]
+}
+

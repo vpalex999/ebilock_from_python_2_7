@@ -7,18 +7,36 @@ import struct
 #     ETX = '83'
 
 
-def hdlc_work(hdlc, buffer=None):
+def hdlc_work(hdlc, buffers=None):
     start = (16, 2)
     end = (16, 131)
     middle = (16, 16)
     start_order = []
+    end_order = []
     middle_order = []
     status = False
     return_order = bytearray()
+    if buffers is None:
+        local_buffer = bytearray()
+    else:
+        local_buffer = buffers
 
+    size_hdlc = len(["{:02x}".format(int(hex(x), 16)) for x in hdlc])
+    if size_hdlc > 4096:
+        print("the data size is more than 4096 bytes {}".format(size))
+        return False
+    
+    size_buffer = len(local_buffer)
+    if size_buffer > 4096:
+        print("the buffer size is more than 4096 bytes {}".format(size))
+        local_buffer.clear()
+        return False
+        
+    # count_hdlc = size_hdlc
+    pass
     # print("\nreceive hdlc: {}".format(hdlc))
 
-    def _check_hdlc(hdlc):
+    def _check_hdlc(hdlc, local_buffer):
         status = False
         if len(hdlc) >= 4:
             # find start label
@@ -35,38 +53,48 @@ def hdlc_work(hdlc, buffer=None):
                     if x != len(start_order)-1:
                         end_byte = struct.unpack('>BB', start_order[x:x+2])
                         if end_byte == end:
-                            start_order = start_order[:x+2]
+                            end_order = start_order[:x+2]
                             status = True
                             break
                         else:
                             status = False
-            # find duble combination '0x10' label and delete it
+            # find duble combination '0x10\0x10\' label and delete it
             if status:
-                middle_order = start_order[2:-2]
-                for x in range(len(middle_order)):
-                    if x == len(middle_order)-1:
-                        return_order.append(middle_order[x])
-                        break
-                    middle_byte = struct.unpack('>BB', middle_order[x:x+2])
-                    if middle_byte == middle:
-                        continue
-                    else:
-                        return_order.append(middle_order[x])
+                middle_order = end_order[2:-2]
+                count_10 = ["{:02x}".format(int(hex(x), 16)) for x in middle_order]
+                if count_10.count('10') % 2 != 0:
+                    local_buffer.clear()
+                    print("\nThe line of bytes contains odd number of elements '\\x10', buffer clear()")
+                    status = False
+                else:
+                    i = 0
+                    while i < len(middle_order):
+                        if i == len(middle_order)-1:
+                            return_order.append(middle_order[i])
+                            break
+                        middle_byte = struct.unpack('>BB', middle_order[i:i+2])
+                        if middle_byte == middle:
+                            return_order.append(middle_order[i])
+                            # return_order += struct.pack('>B', middle_order[i])
+                            i += 2
+                        else:
+                            return_order.append(middle_order[i])
+                            i += 1
+
             # print(start_order)
             if status:
                 return return_order
         return status
 
-    if buffer is None:
-        buffer = bytearray()
+    
 
-    work_order = _check_hdlc(hdlc)
+    work_order = _check_hdlc(hdlc, local_buffer)
 
     if work_order:
         return work_order
     else:
-        [buffer.append(i) for i in hdlc]
-        work_order = _check_hdlc(buffer)
+        [local_buffer.append(i) for i in hdlc]
+        work_order = _check_hdlc(local_buffer, local_buffer)
         if work_order:
             return work_order
         else:

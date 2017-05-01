@@ -2,22 +2,15 @@
 
 # NOTE: This should not be used as the basis for production code.
 # It uses low-level Twisted APIs as a learning exercise.
-import datetime
+
 import time
-import threading
-import optparse
-import sys
 from pprint import pprint
-from sources.ebilockorder import Ebilock_order as ord
+
 from sources.ebilockorder_new import Ebilock_order as ord_ok
 from sources.ebilockstatus import Ebilock_status as stat
-# from sources.hdlc import read_hdlc
 from sources.hdlc import create_hdlc
 from sources.hdlc import hdlc_work
 
-#from sources.work_order import work_order
-#from sources.work_order import to_work_timer_err
-#from sources.work_order import sys_data
 from sources.work_order import WorkFlow as wf
 from sources.print_status import PrintStatus as prints
 from sources.ebilock_decode_status import Ebilock_decode_status as decode_stat
@@ -33,55 +26,30 @@ class EbilockProtocol(Protocol):
 
     def __init__(self, factory, system_data):
         self.system_data = system_data
-        # self.system_data_old = system_data_old
         self.factory = factory
-        self.d = defer.Deferred()
         self.buffer = bytearray()
 
     def delta_time(self, receive_time):
         self.system_data["time_delta"] = receive_time - self.system_data["start_time"]
         self.system_data["start_time"] = time.time()
-        # self.system_data_old["time_delta"] = receive_time - self.system_data_old["start_time"]
-        # self.system_data_old["start_time"] = time.time()
 
     def dataReceived(self, data):
-        # print("data received: {}".format(data))
         work_data = hdlc_work(data, self.buffer)
-        # print("wd: {}".format(work_data))
-        # print("buff: {}".format(self.buffer))
+
         if work_data:
             self.delta_time(time.time())
             self.system_data["hdlc"] = work_data
-            self.buffer.clear()
-            # self.system_data_old["hdlc"] = data
             self.factory.order_received()
+            self.buffer.clear()
 
             from twisted.internet import reactor
             if self.system_data["HDLC_SEND_STATUS"]:
                     status = self.system_data["HDLC_SEND_STATUS"]
                     reactor.callLater(0, self.dataSend, status[:])
                     self.system_data["HDLC_SEND_STATUS"] = None
-                    # self.system_data["ORDER_STATUS"] = None
-
-            # if self.system_data_old["HDLC_SEND_STATUS"] is None:
-            #    return
-            #else:
-            #    reactor.callLater(0, self.dataSend, "send_status?")
 
     def dataSend(self, status):
-        # print(self.system_data_old["HDLC_SEND_STATUS"])
-        #self.transport.write(self.system_data["HDLC_SEND_STATUS"])
-        # print(status)
-        #hdlc = self.system_data["HDLC_SEND_STATUS"]
         self.transport.write(status)
-        #self.system_data["HDLC_SEND_STATUS"] = None
-        # decode_stat(self.system_data_old["HDLC_SEND_STATUS"])
-        # self.system_data_old["HDLC_SEND_STATUS"] = None
-        # print("send status!!!: {}".format(status))
-
-    # def connectionLost(self, reason):
-    #    print("Connection Lost!!! {}".format(reason))
-    #    self.factory.clientConnectionLost(connector, reason)
 
 
 class EbilockClientFactory(ClientFactory):
@@ -104,13 +72,6 @@ class EbilockClientFactory(ClientFactory):
         self.prints = prints(self.system_data)
 # -----------------------------------------------------------------------------------------
 
-
-        #self.system_data_old["Start_timer"] = True
-        #self.system_data_old["Timer_status"] = True
-
-        #if self.wf.checking_address_ok():
-        #    print("Adress_OK: {}".format(self.system_data_old["ADDRESS_OK"]))
-
         self.d = defer.Deferred()
         self.d.addCallbacks(self.switch_to_pass, self.errorback_timer)
         self.d.addBoth(self.errorback_timer)
@@ -120,10 +81,7 @@ class EbilockClientFactory(ClientFactory):
 
         self.create_timer_ok()
 
-
-        print("Check timer status: {}".format(self.system_data["Timer_status"]))
-        print("Check timer start: {}".format(self.system_data["Start_timer"]))
-        print("Check system status: {}".format(format(self.system_data["System_Status"])))
+        self.prints.show_status_timer_system()
 
     def create_timer_ok(self):
         for ok in self.system_data["OK"]:
@@ -150,36 +108,29 @@ class EbilockClientFactory(ClientFactory):
         """ system to switch to the safe mode """
         print("{} The delay time of 1.5.sec has worked. To go into System in 'SAFE' mode!!!".format(time.ctime()))
         self.system_data["Start_timer"] = False
-        self.system_data["System_Status"] = "SAFE"
+        self.system_data["System_Status"] = self._SAFE
         self.system_data["Timer_status"] = False
         print("{}  System switch to SAFE mode => {}".format(time.ctime(), self.system_data["System_Status"]))
 
-        # self.system_data["Start_timer"] = False
-        # # if self.system_data_old["System_Status"] == "WORK" and self.system_data_old["Timer_status"]:
-        # self.system_data["System_Status"] = "SAFE"
-        # self.system_data["Timer_status"] = False
-        # print("{}  System switch to SAFE: {}".format(time.ctime(), self.system_data["System_Status"]))
-
     def errorback_timer(self, *args):
         return
-        #print("Timer stop")
-    
+        # print("Timer stop")
+
     def switch_to_pass_ok(self, ok):
         """ system to switch to the safe mode for OK's"""
         print("{} The delay time of 1.5.sec has worked. To go into OK in 'SAFE' mode!!!: {}".format(time.ctime(), ok))
         _ok = self.system_data["WORK_OK"][ok]
         _ok["Start_timer"] = False
-        _ok["STATUS_OK"] = "SAFE"
+        _ok["STATUS_OK"] = self._SAFE
         _ok["Timer_status"] = False
         _ok["ZONE_FOR_CNS"] = dict.fromkeys(range(36), 0)
         print("{} {} OK's switch to SAFE mode => {}".format(time.ctime(), ok, _ok["STATUS_OK"]))
         print(self.prints.show_status_cns_zone())
 
-
     def timer_restart_ok(self, ok):
         from twisted.internet import reactor
-        #print("Timer restart\nTimer_Ok: {}".format(self.system_data["Timer_OK"]))
-        #d_+str(ok) = self.system_data["Timer_OK"][ok]
+        # print("Timer restart\nTimer_Ok: {}".format(self.system_data["Timer_OK"]))
+        # d_+str(ok) = self.system_data["Timer_OK"][ok]
         dd = self.system_data["Timer_OK"][ok]
         reactor.callLater(0.0, dd.cancel)
         self.system_data["Timer_OK"][ok] = None
@@ -190,7 +141,7 @@ class EbilockClientFactory(ClientFactory):
         from twisted.internet import reactor
         reactor.callLater(1.5, d_.callback, ok)
         print("Timer OK: {} Restart!!!".format(ok))
-        #print("Timer_d_: {}".format(self.system_data["Timer_OK"][ok]))
+        # print("Timer_d_: {}".format(self.system_data["Timer_OK"][ok]))
 
     def timer_restart(self):
         from twisted.internet import reactor
@@ -202,8 +153,6 @@ class EbilockClientFactory(ClientFactory):
         reactor.callLater(1.5, self.d.callback, stat)
         print("Timer Restart!!!")
 
-    
-
     def d_send_status(self, status_order):
         from twisted.internet import reactor
         d = None
@@ -211,18 +160,13 @@ class EbilockClientFactory(ClientFactory):
         d.addCallback(self.protocol(self, self.system_data).dataSend())
         reactor.callLater(0, d.callback, send_status)
         print("callback send status started")
-        
 
     def check_timer(self, *args):
-        print("Check timer status: {}".format(self.system_data["Timer_status"]))
-        print("Check timer start: {}".format(self.system_data["Start_timer"]))
-        print("Check system status: {}".format(format(self.system_data["System_Status"])))
-        print("Err_Count: {}".format(self.system_data["Err_Count"]))
-        
+        self.prints.show_status_timer_system()
 
         if self.system_data["Timer_status"] and not self.system_data["Start_timer"] and self.system_data["System_Status"] == "WORK":
             from twisted.internet import reactor
-            reactor.callLater(1.5, self.switch_to_pass, "SAFE")
+            reactor.callLater(1.5, self.switch_to_pass, self._SAFE)
             self.system_data["Err_Count"] = 0
             self.system_data["Start_timer"] = True
             print("Activate CallLater 1.5c - 1!!!")
@@ -242,10 +186,8 @@ class EbilockClientFactory(ClientFactory):
                 else:
                     pass
 
-        print("\nAfter check_timer")
-        print("Check timer status: {}".format(self.system_data["Timer_status"]))
-        print("Check timer start: {}".format(self.system_data["Start_timer"]))
-        print("Check system status: {}\n".format(format(self.system_data["System_Status"])))
+        print("After check_timer:")
+        self.prints.show_status_timer_system()
 
     def check_timer_ok(self):
         self.prints.show_status_ok()
@@ -283,84 +225,45 @@ class EbilockClientFactory(ClientFactory):
         connector.connect()
 
     def order_received(self):
-        #source_hdlc = read_hdlc(self.system_data["hdlc"])
-        # print("hdlc: {}".format(self.system_data['hdlc']))
-        #if source_hdlc:
-        #    self.system_data["ORDER"] = None
-            #self.system_data["ORDER"] = ord.from_hdlc(source_hdlc).check_telegramm()
-        # ord.from_hdlc(self.system_data).check_telegramm()
         if ord_ok.from_hdlc(self.system_data).check_telegramm():
             self.prints.show_receive_packet()
-        # self.prints.show_all_data()
-            #print("New ORDER: {}".format(self.system_data["ORDER"]))
         self.prints.show_work_packet()
         status = self.wf.work_order()
-        
-        
-        #source_hdlc_old = read_hdlc(self.system_data_old["hdlc"])
-        # print("hdlc {}".format(source_hdlc))
-        #if source_hdlc_old:
-        #    self.system_data_old["order"] = None
-        #    self.system_data_old["order"] = ord.from_hdlc(source_hdlc_old).check_telegramm()
-        #    status = self.wf.work_order()
-            #print("return status work_order {}".format(status))
+
         if status == 80:
             print("Send Status!!!")
             # if stat.from_send_status(self.system_data_old).code_telegramm():
             #    self.system_data_old["HDLC_SEND_STATUS"] = None
-            #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"])
+            #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"]
+
         elif status == 110:
             print("Lost Communication\nTransfer status with old counters and Increase the counter")
-            order_count_A = self.system_data["ORDER_Count_A"]
-            order_count_B = self.system_data["ORDER_Count_B"]
-            self.system_data["Count_A"] = order_count_A
-            self.system_data["Count_B"] = order_count_B
-            # pprint("status 110: {}".format(self.system_data))
-            # if stat.from_loss_connect(self.system_data).code_telegramm():
-            #    self.system_data_old["HDLC_SEND_STATUS"] = None
-            #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"])
-                # Increase by 1
-                #self.wf.increase_count()
-            #    print("Increase count A/B: {}, {}\n".format(hex(self.system_data_old["Count_A"]), hex(self.system_data_old["Count_B"])))
+            # order_count_A = self.system_data["ORDER_Count_A"]
+            # order_count_B = self.system_data["ORDER_Count_B"]
+            self.system_data["Count_A"] = self.system_data["ORDER_Count_A"]
+            self.system_data["Count_B"] = self.system_data["ORDER_Count_B"]
+
         elif status == 0:
-            # self.prints.show_receive_packet()
-            #order_work = {}
-            #order_work = self.system_data["ORDER"]
-            #print(("telegramm_order: {}".format(order_work)))
+
             for ok in self.system_data["OK"]:
                 _ok = self.system_data["OK"][ok]
-                # print("OK: {}".format(ok))
-                # print("_OK: {}".format(_ok))
                 self.system_data["WORK_OK"][ok] = _ok.copy()
-                # print("WORK_OK: {}".format(self.system_data["WORK_OK"]))
-                # if _ok["ADDRESS_OK"] == order_work["ADDRESS_OK"]:
-                #     _ok["ORDER_WORK"] = order_work.copy()
-                #     _ok["STATUS_OK"] = self._WORK
-                #     self.system_data["ORDER"] = None
-                    # print(("system_data_order: {}".format(_ok["ORDER_WORK"])))
-                    # self.prints.show_all_data()
-            # self.prints.show_work_packet()
+
             if stat.from_ok(self.system_data).create_status():
                 self.system_data["HDLC_SEND_STATUS"] = None
                 self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
-                #self.d_send_status(self.system_data_old["HDLC_SEND_STATUS"])
-                #print("hdlc_send: {}".format(hdlc_send))
+
         elif status == 50:
             print("Discard a telegram")
             self.system_data["Timer_status"] = True
-            # pprint("status 50: {}".format(self.system_data))
-            #print("Code ALARM: {}, DESC_ALARM: {}".format(self.system_data["CODE_ALARM"], self.system_data["DESC_ALARM"]))
+
         else:
                 self.system_data["HDLC_SEND_STATUS"] = None
                 self.system_data["ORDER_STATUS"] = None
                 print("Don't send status!!!")
-        #self.prints.show_all_data()
-        #self.prints.show_admin_address_ok()
-        #self.prints.show_receive_address_ok()
-        #self.prints.show_zone_cns()
-        #self.prints.show_status_telegramm()
+
         self.check_timer()
         self.check_timer_ok()
         # self.prints.show_OK()
-        print("#"*10)
+        print("#"*20)
 

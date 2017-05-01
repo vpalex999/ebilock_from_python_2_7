@@ -1,7 +1,5 @@
 """ Client-Main"""
 import datetime
-# from sources.client_eha import *
-# from sources.client_parser import *
 import sources.client_eha as c_eha
 import sources.client_parser as c_parser
 from twisted.internet import defer
@@ -26,7 +24,7 @@ def client_main():
         return d
 
     def got_order(data):
-        print("delta time: {1}".format(data["time_delta"]))
+        print("delta time: {}".format(data["time_delta"]))
 
     def order_filed(err):
         print("Order filed: {}".format(err))
@@ -42,9 +40,11 @@ def client_main():
             d = get_order(c_parser.data_from_config["host"],\
                           c_parser.data_from_config["port1"], c_parser.system_data_ok)
             d.addCallbacks(got_order, order_filed)
-            reactor.run()
-            elasped = datetime.datetime.now() - start
-            print('Uptime client EHA: {}'.format(elasped))
+        reactor.run()
+        elasped = datetime.datetime.now() - start
+        print('Uptime client EHA: {}'.format(elasped))
+    else:
+        print("No 'file_config.json' with arguments")
 
 
 if __name__ == '__main__':
