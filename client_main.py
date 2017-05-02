@@ -11,11 +11,11 @@ def client_main():
     """
     status_start = True
     start = datetime.datetime.now()
-    port = 4016
-    #port = 9090
+    #port = 4016
+    port = 9093
     #host = '192.168.0.197'
-    host = '192.168.101.100'
-    #host = '192.168.10.168'
+    #host = '192.168.101.100'
+    host = '192.168.10.168'
     #port = 10000
     #host = "localhost"
 
