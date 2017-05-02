@@ -33,23 +33,6 @@ class Ebilock_order(object):
             "SIZE_AB": "",
             "TELEGRAMM_AB": "",
             "RC": "",
-            # "TLG_A": {
-            #     "BODY_TLG": "",
-            #     "ADDR_OK": "",
-            #     "LOOP_OK": "",
-            #     "AREA_OK": "",
-            #     "HUB_OK": "",
-            #     "NUMBER_OK": "",
-            #     "ML_CO": "",
-            #     "SIZE": "",
-            #     "type_co": "",
-            #     "COUNT": "",
-            #     "DATA": "",
-            #     "RC": ""
-            # },
-            # "TLG_B": {},
-            # "STATUS_ZONE": "",
-            # "ADDRESS_OK": None,
         }
 
     @classmethod
