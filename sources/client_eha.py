@@ -33,6 +33,9 @@ class EbilockProtocol(Protocol):
         self.system_data["time_delta"] = receive_time - self.system_data["start_time"]
         self.system_data["start_time"] = time.time()
 
+    def connectionMade(self):
+        print("{} Connect to... {}".format(time.ctime(), self.transport.connector.getDestination()))
+
     def dataReceived(self, data):
         work_data = hdlc_work(data, self.buffer)
 
@@ -53,7 +56,6 @@ class EbilockProtocol(Protocol):
 
 
 class EbilockClientFactory(ClientFactory):
-
     task_num = 1
     result = ""
     protocol = EbilockProtocol
@@ -215,12 +217,12 @@ class EbilockClientFactory(ClientFactory):
         self.prints.show_status_ok()
 
     def clientConnectionFailed(self, connector, reason):
-        print("Failed to connect to: {}".format(connector.getDestination()))
+        print("{} Failed to connect to: {}".format(time.ctime(), connector.getDestination()))
         time.sleep(1)
         connector.connect()
 
     def clientConnectionLost(self, connector, reason):
-        print("Client connection Lost: {}".format(reason))
+        print("{} Client connection Lost: {}".format(time.ctime(), connector.getDestination()))
         time.sleep(1)
         connector.connect()
 

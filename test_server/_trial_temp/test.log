@@ -1,0 +1,32 @@
+2017-05-03 19:45:08+0500 [-] Log opened.
+2017-05-03 19:45:08+0500 [-] --> test_remoute_2.RemoteTestCase.test_connect_client <--
+2017-05-03 19:45:08+0500 [-] RemoteEHAFactory starting on 10000
+2017-05-03 19:45:08+0500 [-] Starting factory <server_1.RemoteEHAFactory object at 0x03BACAF0>
+2017-05-03 19:45:08+0500 [-] RemoteEHAFactory starting on 10001
+2017-05-03 19:45:08+0500 [-] Starting factory <server_1.RemoteEHAFactory object at 0x03BACB10>
+2017-05-03 19:45:10+0500 [-] Unhandled Error
+	Traceback (most recent call last):
+	  File "C:\Users\Bubenshchikov\AppData\Local\Programs\Python\Python36-32\lib\site-packages\twisted\internet\utils.py", line 197, in runWithWarningsSuppressed
+	    result = f(*a, **kw)
+	  File "D:\VV\Ebilock\ebilock_from_python_2_7\test_server\test_remoute_2.py", line 52, in setUp
+	    reactor.run()
+	  File "C:\Users\Bubenshchikov\AppData\Local\Programs\Python\Python36-32\lib\site-packages\twisted\internet\base.py", line 1243, in run
+	    self.mainLoop()
+	  File "C:\Users\Bubenshchikov\AppData\Local\Programs\Python\Python36-32\lib\site-packages\twisted\internet\base.py", line 1252, in mainLoop
+	    self.runUntilCurrent()
+	--- <exception caught here> ---
+	  File "C:\Users\Bubenshchikov\AppData\Local\Programs\Python\Python36-32\lib\site-packages\twisted\internet\base.py", line 878, in runUntilCurrent
+	    call.func(*call.args, **call.kw)
+	  File "D:\VV\Ebilock\ebilock_from_python_2_7\test_server\test_remoute_2.py", line 63, in reactor_stop
+	    reactor.stop()
+	  File "C:\Users\Bubenshchikov\AppData\Local\Programs\Python\Python36-32\lib\site-packages\twisted\trial\_asynctest.py", line 242, in _
+	    return self._reactorMethods[name](*a, **kw)
+	  File "C:\Users\Bubenshchikov\AppData\Local\Programs\Python\Python36-32\lib\site-packages\twisted\internet\base.py", line 627, in stop
+	    "Can't stop reactor that isn't running.")
+	twisted.internet.error.ReactorNotRunning: Can't stop reactor that isn't running.
+	
+2017-05-03 19:45:10+0500 [server_1.RemoteEHAFactory] (TCP Port 10000 Closed)
+2017-05-03 19:45:10+0500 [-] Stopping factory <server_1.RemoteEHAFactory object at 0x03BACAF0>
+2017-05-03 19:45:10+0500 [server_1.RemoteEHAFactory] (TCP Port 10001 Closed)
+2017-05-03 19:45:10+0500 [-] Stopping factory <server_1.RemoteEHAFactory object at 0x03BACB10>
+2017-05-03 19:45:10+0500 [-] Main loop terminated.
