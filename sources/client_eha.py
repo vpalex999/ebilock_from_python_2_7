@@ -67,6 +67,10 @@ class EbilockProtocol(Protocol):
         host = self.transport.getPeer().host
         port = self.transport.getPeer().port
         return port, host
+<<<<<<< HEAD
+=======
+
+>>>>>>> client_eha_for_python_3_6
 
 <<<<<<< HEAD
 
@@ -235,6 +239,7 @@ class EbilockClientFactory(ClientFactory):
     def clientConnectionFailed(self, connector, reason):
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         print("{} Failed to connect to: {}".format(time.ctime(), connector.getDestination()))
 =======
         logger_client_eha.warning("Failed to connect to: {}".format(connector.getDestination()))
@@ -242,10 +247,14 @@ class EbilockClientFactory(ClientFactory):
 =======
         print("{} Failed to connect to: {}".format(time.ctime(), connector.getDestination()))
 >>>>>>> 1dd4af5585806de725b942e4b47761b309663a0a
+=======
+        logger_client_eha.warning("Failed to connect to: {}".format(connector.getDestination()))
+>>>>>>> client_eha_for_python_3_6
         time.sleep(1)
         connector.connect()
 
     def clientConnectionLost(self, connector, reason):
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         print("{} Client connection Lost: {}".format(time.ctime(), connector.getDestination()))
@@ -255,6 +264,9 @@ class EbilockClientFactory(ClientFactory):
 =======
         print("{} Client connection Lost: {}".format(time.ctime(), connector.getDestination()))
 >>>>>>> 1dd4af5585806de725b942e4b47761b309663a0a
+=======
+        logger_client_eha.warning("Client connection Lost: {}".format(connector.getDestination()))
+>>>>>>> client_eha_for_python_3_6
         time.sleep(1)
         connector.connect()
 
