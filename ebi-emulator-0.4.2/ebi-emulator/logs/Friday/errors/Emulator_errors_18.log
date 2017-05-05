@@ -1,0 +1,120 @@
+18:09:01,861 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/05 18:09:01 port1:10000 port2:10001 config_file:emulator_config_localhost_10000.json]
+18:09:03,393 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:16,593 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:16,593 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:46,616 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:46,616 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:46,758 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:46,758 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:46,758 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:46,758 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:47,213 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:47,213 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:47,372 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:47,372 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:47,372 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:47,372 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:47,808 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:47,808 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:47,948 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:47,948 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:47,948 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:47,948 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:48,395 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:48,395 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:48,547 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:48,547 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:48,547 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:48,547 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:49,013 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:49,013 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:49,159 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:49,159 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:49,159 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:49,159 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:49,596 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:49,596 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:49,741 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:49,741 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:49,741 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:49,741 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:50,205 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+18:09:50,205 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+18:09:50,360 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:50,360 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:09:50,360 WARN  EbiEmulator: - No telegrams from client1 : 10000
+18:09:50,360 WARN  EbiEmulator: - No telegrams from client2 : 10001
+18:10:02,597 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:03,601 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:04,611 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:05,614 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:06,628 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:07,641 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:08,643 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:09,652 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:10,656 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:11,675 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:12,694 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:13,701 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:14,708 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:15,712 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:16,726 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:17,730 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:18,745 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:19,749 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:20,759 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:21,762 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:22,780 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:23,782 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:24,786 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:25,792 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:26,801 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:27,807 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:28,814 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:29,819 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:30,823 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:31,829 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:32,836 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:33,842 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:34,847 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:35,864 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:36,867 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:37,883 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:38,898 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:39,903 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:40,919 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:41,920 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:42,922 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:43,930 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:44,933 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:10:45,947 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:05,256 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:06,263 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:07,283 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:08,284 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:09,291 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:10,304 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:11,306 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:12,310 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:13,322 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:14,323 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:15,326 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:16,335 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:17,340 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:18,348 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:19,372 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:20,373 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:21,381 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:22,399 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:23,404 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:24,407 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:25,411 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:26,415 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:27,424 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:28,436 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:29,441 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:30,442 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:31,445 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:32,453 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:33,466 WARN  EbiEmulator: - New client tried connect to used port1[10000]
+18:11:34,462 WARN  EbiEmulator: - New client tried connect to used port1[10000]

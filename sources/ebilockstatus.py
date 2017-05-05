@@ -1,7 +1,9 @@
 from crccheck.crc import Crc16CcittFalse
 from sources.crc8 import create_crc_8 as crc8
-from sources.error import EbException
-import binascii
+# from sources.error import EbException
+# import binascii
+import logging
+logger_create_status = logging.getLogger("client_main.creat_status")
 
 
 class Ebilock_status(object):
@@ -69,9 +71,8 @@ class Ebilock_status(object):
             object["Count_A"] = 1
             object["Count_B"] = 254
         else:
-            pass
-            # object["Count_A"] = object["Count_A"] + 1
-            # object["Count_B"] = object["Count_B"] - 1
+            object["Count_A"] = object["ORDER_Count_A"]
+            object["Count_B"] = object["ORDER_Count_B"]
 
         return cls(object, count_a, count_b)
 
@@ -187,7 +188,7 @@ class Ebilock_status(object):
 
         if size_packet == len(self._order):
             self._system_data["ORDER_STATUS"] = self._order
-            # print(self._order)
+            logger_create_status.debug("Create status {}:".format(self._system_data["ORDER_STATUS"]))
             status = True
         return status
 

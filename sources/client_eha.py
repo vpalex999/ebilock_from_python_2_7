@@ -39,7 +39,7 @@ class EbilockProtocol(Protocol):
         self.system_data["start_time"] = time.time()
 
     def connectionMade(self):
-        print("{} Connect to... {}".format(time.ctime(), self.transport.connector.getDestination()))
+        logger_client_eha.warning("Connect to... {}".format(self.transport.connector.getDestination()))
 
     def dataReceived(self, data):
         host = self.transport.getPeer().host
@@ -54,19 +54,26 @@ class EbilockProtocol(Protocol):
             self.factory.order_received()
             self.buffer.clear()
 
-            from twisted.internet import reactor
-            if self.system_data["HDLC_SEND_STATUS"]:
-                    status = self.system_data["HDLC_SEND_STATUS"]
-                    reactor.callLater(0, self.dataSend, status[:])
-                    self.system_data["HDLC_SEND_STATUS"] = None
+            # from twisted.internet import reactor
+            # if self.system_data["HDLC_SEND_STATUS"]:
+            #         status = self.system_data["HDLC_SEND_STATUS"]
+            #         reactor.callLater(0, self.dataSend, status[:])
+            #         self.system_data["HDLC_SEND_STATUS"] = None
 
-    def dataSend(self, status):
-        self.transport.write(status)
+    def dataSend(self):
+        if self.system_data["HDLC_SEND_STATUS"]:
+            status = self.system_data["HDLC_SEND_STATUS"]
+            self.transport.write(status)
+            self.system_data["HDLC_SEND_STATUS"] = None
+            logger_client_eha.info("Send status => {}".format(status))
+        else:
+            logger_client_eha.info("Empty Data for Send status = {}".format(status))
 
     def get_port_host(self, st):
         host = self.transport.getPeer().host
         port = self.transport.getPeer().port
         return port, host
+
 
 class EbilockClientFactory(ClientFactory):
     task_num = 1
@@ -96,6 +103,10 @@ class EbilockClientFactory(ClientFactory):
         logger_client_eha.info("First System Status => {}".format(self.system_data["System_Status"]))
 
         self.create_timer_ok()
+        if self.system_data["System_Status"] == "SAFE":
+            logger_client_eha.warning("#"*31)
+            logger_client_eha.warning("# System  SWITCH TO SAFE MODE #")
+            logger_client_eha.warning("#"*31)
 
         logger_client_eha.debug(self.prints.show_status_timer_system())
         logger_client_eha.debug("initialization 'EbilockClientFactory'")
@@ -115,13 +126,19 @@ class EbilockClientFactory(ClientFactory):
             logger_client_eha.info("First start OK: {}. Activate Timer 1.5c!!!".format(d_ok))
             logger_client_eha.info("First Status OK: {} => {}".format(d_ok, self.system_data["OK"][ok]["STATUS_OK"]))
 
+    # def buildProtocol(self, addr):
+    #     return EbilockProtocol(self, self.system_data)
     def buildProtocol(self, addr):
-        return EbilockProtocol(self, self.system_data)
+        self.connection = EbilockProtocol(self, self.system_data)
+        return self.connection
 
 
     def switch_to_pass(self, *args):
         """ system to switch to the safe mode """
-        logger_client_eha.debug("The delay time of 1.5.sec has worked. To go into System in 'SAFE' mode!!!")
+        if self.system_data["System_Status"] != "SAFE":
+            logger_client_eha.warning("#"*68)
+            logger_client_eha.warning("# The delay time of 1.5.sec has worked. System SWITCH TO SAFE MODE #")
+            logger_client_eha.warning("#"*68)
         self.system_data["Start_timer"] = False
         self.system_data["System_Status"] = self._SAFE
         self.system_data["Timer_status"] = False
@@ -132,7 +149,10 @@ class EbilockClientFactory(ClientFactory):
 
     def switch_to_pass_ok(self, ok):
         """ system to switch to the safe mode for OK's"""
-        logger_client_eha.debug("The delay time of 1.5.sec has worked. To go into OK in 'SAFE' mode!!!: {}".format(ok))
+        if self.system_data["WORK_OK"][ok]["STATUS_OK"] != "SAFE":
+            logger_client_eha.warning("#"*81)
+            logger_client_eha.warning("# The delay time of 1.5.sec has worked. To go into OK: {} SWITCH TO SAFE MODE #".format(ok))
+            logger_client_eha.warning("#"*81)
         _ok = self.system_data["WORK_OK"][ok]
         _ok["Start_timer"] = False
         _ok["STATUS_OK"] = self._SAFE
@@ -229,24 +249,11 @@ class EbilockClientFactory(ClientFactory):
         logger_client_eha.info(self.prints.show_status_ok())
 
     def clientConnectionFailed(self, connector, reason):
-        print("{} Failed to connect to: {}".format(time.ctime(), connector.getDestination()))
-
-        logger_client_eha.warning("Failed to connect to: {}".format(connector.getDestination()))
-
-        print("{} Failed to connect to: {}".format(time.ctime(), connector.getDestination()))
-
         logger_client_eha.warning("Failed to connect to: {}".format(connector.getDestination()))
         time.sleep(1)
         connector.connect()
 
     def clientConnectionLost(self, connector, reason):
-
-        print("{} Client connection Lost: {}".format(time.ctime(), connector.getDestination()))
-
-        logger_client_eha.warning("Client connection Lost: {}".format(connector.getDestination()))
-
-        print("{} Client connection Lost: {}".format(time.ctime(), connector.getDestination()))
-
         logger_client_eha.warning("Client connection Lost: {}".format(connector.getDestination()))
         time.sleep(1)
         connector.connect()
@@ -266,10 +273,10 @@ class EbilockClientFactory(ClientFactory):
 
         elif status == 110:
             logger_client_eha.debug("Lost Communication\nTransfer status with old counters and Increase the counter")
-            # order_count_A = self.system_data["ORDER_Count_A"]
-            # order_count_B = self.system_data["ORDER_Count_B"]
-            self.system_data["Count_A"] = self.system_data["ORDER_Count_A"]
-            self.system_data["Count_B"] = self.system_data["ORDER_Count_B"]
+            if stat.from_loss_connect(self.system_data).create_status():
+                self.system_data["HDLC_SEND_STATUS"] = None
+                self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
+                self.connection.dataSend()
 
         elif status == 0:
 
@@ -280,6 +287,7 @@ class EbilockClientFactory(ClientFactory):
             if stat.from_ok(self.system_data).create_status():
                 self.system_data["HDLC_SEND_STATUS"] = None
                 self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
+                self.connection.dataSend()
 
         elif status == 50:
             logger_client_eha.debug("Discard a telegram")

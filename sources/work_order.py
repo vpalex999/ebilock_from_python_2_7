@@ -1,8 +1,10 @@
 """ Work orders """
-import threading
-import time
-import datetime
-from twisted.internet import defer
+# import threading
+# import time
+# import datetime
+# from twisted.internet import defer
+import logging
+logger_wo = logging.getLogger("client_main.work_order")
 
 
 class WorkFlow(object):
@@ -34,7 +36,7 @@ class WorkFlow(object):
             return True
 
     def check_err_second_stage(self):
-        #print("into secong stage")
+        # print("into secong stage")
         status = True
         try:
             if self.sys_data["ORDER_CODE_ALARM"] == 30 or\
@@ -129,6 +131,11 @@ class WorkFlow(object):
 
     def switching_to_work(self):
         """system to switch to the operating mode"""
+        if self.sys_data["System_Status"] != "WORK":
+            logger_wo.warning("#"*31)
+            logger_wo.warning("# System  SWITCH TO WORK MODE #")
+            logger_wo.warning("#"*31)
+        
         self.sys_data["Err_Count"] = 0
         self.sys_data["Timer_status"] = False
         self.sys_data["System_Status"] = "WORK"

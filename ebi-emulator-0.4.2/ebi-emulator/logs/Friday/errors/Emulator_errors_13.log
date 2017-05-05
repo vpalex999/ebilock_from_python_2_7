@@ -1,0 +1,49 @@
+13:46:30,029 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/05 13:46:30 port1:10000 port2:10001 config_file:emulator_config_mea1209-1211.json]
+13:46:30,464 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:47:25,918 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/05 13:47:25 port1:10000 port2:10001 config_file:emulator_config_mea1209-1211.json]
+13:49:42,577 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/05 13:49:42 port1:10000 port2:10001 config_file:emulator_config_mea1209-1211.json]
+13:49:42,906 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:51:00,680 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/05 13:51:00 port1:10000 port2:10001 config_file:emulator_config_mea1209-1211.json]
+13:52:17,685 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/05 13:52:17 port1:10000 port2:10001 config_file:emulator_config_mea1209-1211.json]
+13:54:09,699 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:09,700 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:09,840 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:09,840 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:09,840 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:09,840 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:10,298 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:10,298 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:10,439 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:10,439 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:10,439 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:10,439 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:10,898 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:10,898 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:11,039 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:11,039 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:11,039 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:11,039 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:11,498 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:11,498 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:11,639 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:11,639 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:11,639 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:11,639 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:12,098 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:12,098 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:12,238 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:12,238 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:12,238 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:12,238 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:12,697 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:12,697 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:12,838 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:12,838 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:12,838 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:12,838 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:13,298 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+13:54:13,298 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+13:54:13,439 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:13,439 WARN  EbiEmulator: - No telegrams from client2 : 10001
+13:54:13,439 WARN  EbiEmulator: - No telegrams from client1 : 10000
+13:54:13,439 WARN  EbiEmulator: - No telegrams from client2 : 10001

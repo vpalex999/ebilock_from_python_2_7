@@ -1,0 +1,79 @@
+{
+  "port1": 0,
+  "port2": 0,
+  "serial1": "/dev/pts/1",
+  "serial2": null,
+  "package_delay": 600,
+  "package_delay_answer_1": 140,
+  "package_delay_answer_2": 140,
+  "file": "/home/avolkow/Документы/EBILock/test/logs/sample.log",
+  "errorLogPath": "logs/",
+  "logPath": "logs/",
+  "showConsoleLogs": true,
+  "cases": [
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [3,2,1,0] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 1,
+      "PackageRules": [""]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [3,2,1,0] }
+      ],
+      "Repeat": 1,
+      "PackageRules": [""]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [3,2,1,0] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": ["", ""]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [3,2,1,0] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": ["", "SET_TM_CYCLE_AB_00FF"]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [3,2,1,0] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": ["", ""]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": ["ONLY_FIRST_CLIENT", "PUSH_BY_ONE_BYTE_SLP", "ADD_GARBAGE_BEFORE_HDLC", "ADD_GARBAGE_AFTER_HDLC", ""]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": ["SET_WRONG_A_CRC8"], "Zones": [0,1,2,3] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": [""]
+    },
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [0,1,2,3] },
+        { "ocAddr": "0x3258", "TelegramRules": [""], "Zones": [0,1,2,3] }
+      ],
+      "Repeat": 0,
+      "PackageRules": ["SEND_EMPTY_ORDER"]
+    }
+  ]
+}

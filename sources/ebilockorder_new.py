@@ -1,10 +1,12 @@
 from crccheck.crc import Crc16CcittFalse
 from sources.crc8 import check_crc_8 as crc8
 # from sources.hdlc import read_hdlc
-from sources.hdlc import hdlc_work
-from sources.error import EbException
-import binascii
+# from sources.hdlc import hdlc_work
+# from sources.error import EbException
+# import binascii
 import re
+import logging
+logger_ord_new = logging.getLogger("client_main.eb_ord_new")
 
 
 class Ebilock_order(object):
@@ -68,10 +70,6 @@ class Ebilock_order(object):
              },
             },
         }
-
-    # desc_telegramm_ab = {
-    #     "pass": ""
-    # }
 
     def _check_byte_flow(self):
         """ Verifying bytes in the packet stream\

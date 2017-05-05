@@ -1,6 +1,8 @@
 """ Read HDLC """
 # import binascii
 import struct
+import logging
+logger_hdlc = logging.getLogger("client_main.hdlc")
 
 #     DLE = '10'
 #     STX = '02'
@@ -86,8 +88,6 @@ def hdlc_work(hdlc, buffers=None):
                 return return_order
         return status
 
-    
-
     work_order = _check_hdlc(hdlc, local_buffer)
 
     if work_order:
@@ -100,54 +100,9 @@ def hdlc_work(hdlc, buffers=None):
         else:
             return False
 
-#         else:
-#             [buffer.append(i) for i in hdlc]
-#     else:
-#         [buffer.append(i) for i in hdlc]
-#     return status
-
-
-# def read_hdlc(hdlc):
-# 
-#     DLE = '10'
-#     STX = '02'
-#     ETX = '83'
-#     telegramm = []
-#     #for item in hdlc:
-#     #    telegramm.append("{:02x}".format(int(item), 16).upper())
-#     print(hdlc)
-#     for item in hdlc:
-#         
-#         telegramm.append("{:02x}".format(int(hex(item), 16)).upper())
-#     # print(telegramm)
-#     if len(hdlc) >= 2:
-#         t0 = telegramm[0]
-#         t1 = telegramm[1]
-#         t2 = telegramm[len(telegramm)-2]
-#         t3 = telegramm[len(telegramm)-1]
-#         if t0 == DLE and t1 == STX:
-#             cnt = 0
-#             tmptlg = telegramm[2:]
-#             for i in range(len(tmptlg)):
-#                 if tmptlg[i] == DLE and tmptlg[i+1] == DLE:
-#                     del tmptlg[i]
-#                 if tmptlg[i] == DLE and tmptlg[i+1] == ETX:
-#                     del tmptlg[i]
-#                     del tmptlg[i]
-#                     #print("tmptlg: {}".format(tmptlg))
-#                     #print("Order HDLC: {}".format(hdlc[2:i+2]))
-#                     # for python3-6:
-#                     return (bytearray([int(x, 16) for x in tmptlg]))
-#                     # for python 2-7:
-#                     #return ''.join([binascii.unhexlify(hex(int(tmptlg[x], 16))) for x in range(len(tmptlg))])
-#         else:
-#             print("wrong format hdlc: {}".format(telegramm))
-#             return None
-#     else:
-#         print("wrong format hdlc: {}".format(telegramm))
-#         return None
 
 def create_hdlc(telegramm):
+    logger_hdlc.debug("start creat_hdlc")
     DLE = hex(16)
     STX = hex(2)
     ETX = hex(131)
@@ -162,7 +117,10 @@ def create_hdlc(telegramm):
     temp.append(ETX)
     #print("send status hdlc: {}".format(temp))
     # for python 3-6:
-    return bytes([int(temp[x], 16) for x in range(len(temp))])
+    logger_hdlc.info("Create status hdlc(hex): {}".format(temp))
+    hdlc = bytes([int(temp[x], 16) for x in range(len(temp))])
+    logger_hdlc.debug("Create status hdlc: {}".format(hdlc))
+    return hdlc
     # for python 2-7:
     # return ''.join(([binascii.unhexlify("{:02x}".format(int(temp[x], 16))) for x in range(len(temp))]))
     #return '\\'.join(temp[:])
