@@ -4,12 +4,28 @@ import sources.client_eha as c_eha
 import sources.client_parser as c_parser
 from twisted.internet import defer
 from twisted.internet import reactor
+import logging
+
+logger_main = logging.getLogger("client_main")
+logger_main.setLevel(logging.DEBUG)
+handler_main = logging.FileHandler("eha.log")
+handler_main.setLevel(logging.INFO)
+formatter_main = logging.Formatter("%(asctime)s %(levelname)s | %(message)s")
+handler_main.setFormatter(formatter_main)
+logger_main.addHandler(handler_main)
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+console_formatter = logging.Formatter("%(asctime)s %(levelname)s in %(module)s - %(lineno)d | %(message)s")
+console_handler.setFormatter(console_formatter)
+logger_main.addHandler(console_handler)
 
 
 def client_main():
     """
     EHM_STATUS: 'PASS' - silence mode, 'WORK' - work mode
     """
+    logger_main.info("=====Start client EHA from Python=====")
 
     file_config = c_parser.parse_args()
     # status_start = True
@@ -42,9 +58,9 @@ def client_main():
             d.addCallbacks(got_order, order_filed)
         reactor.run()
         elasped = datetime.datetime.now() - start
-        print('Uptime client EHA: {}'.format(elasped))
+        logger_main.warning('=====Stop client EHA, Uptime: {}====='.format(elasped))
     else:
-        print("No 'file_config.json' with arguments")
+        logger_main.warning("No 'file_config.json' with arguments")
 
 
 if __name__ == '__main__':
