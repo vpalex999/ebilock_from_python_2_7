@@ -21,6 +21,9 @@ from twisted.internet import defer
 from twisted.python import log
 from twisted.application import service
 
+import logging
+logger_client_eha = logging.getLogger("client_main.client_eha")
+
 
 class EbilockProtocol(Protocol):
 
@@ -28,15 +31,21 @@ class EbilockProtocol(Protocol):
         self.system_data = system_data
         self.factory = factory
         self.buffer = bytearray()
+        logger_client_eha.debug("initialization 'EbilockProtocol'")
+        
 
     def delta_time(self, receive_time):
         self.system_data["time_delta"] = receive_time - self.system_data["start_time"]
         self.system_data["start_time"] = time.time()
 
     def dataReceived(self, data):
+        host = self.transport.getPeer().host
+        port = self.transport.getPeer().port
+        logger_client_eha.debug("- Client[{}] {}, received HDLC DATA".format(port, host))
         work_data = hdlc_work(data, self.buffer)
-
         if work_data:
+            logger_client_eha.info("{}Receive hdlc data [{}:{}]{}".format("="*30, host, port, "="*30))
+            logger_client_eha.info("- Client[{}] received HDLC DATA".format(self.transport.getPeer().port))
             self.delta_time(time.time())
             self.system_data["hdlc"] = work_data
             self.factory.order_received()
@@ -50,6 +59,11 @@ class EbilockProtocol(Protocol):
 
     def dataSend(self, status):
         self.transport.write(status)
+
+    def get_port_host(self, st):
+        host = self.transport.getPeer().host
+        port = self.transport.getPeer().port
+        return port, host
 
 
 class EbilockClientFactory(ClientFactory):
@@ -77,11 +91,13 @@ class EbilockClientFactory(ClientFactory):
         self.d.addBoth(self.errorback_timer)
         from twisted.internet import reactor
         reactor.callLater(1.5, self.d.callback, stat)
-        print("First start system. Activate CallLater 1.5c!!!")
+        logger_client_eha.info("First start system. Activate Timer 1.5c!!!")
+        logger_client_eha.info("First System Status => {}".format(self.system_data["System_Status"]))
 
         self.create_timer_ok()
 
-        self.prints.show_status_timer_system()
+        logger_client_eha.debug(self.prints.show_status_timer_system())
+        logger_client_eha.debug("initialization 'EbilockClientFactory'")
 
     def create_timer_ok(self):
         for ok in self.system_data["OK"]:
@@ -89,47 +105,44 @@ class EbilockClientFactory(ClientFactory):
             d_.addCallbacks(self.switch_to_pass_ok, self.errorback_timer)
             d_.addBoth(self.errorback_timer)
             self.system_data["Timer_OK"][ok] = d_
-        # print("Defer_OK1: {}".format(self.system_data["Timer_OK"]))
         from twisted.internet import reactor
         for d_ok in self.system_data["Timer_OK"]:
             dd = self.system_data["Timer_OK"][d_ok]
-            # print("d_ok: {}".format(d_ok))
-            # print("dd: {}".format(dd))
             reactor.callLater(1.5, dd.callback, d_ok)
             self.system_data["OK"][ok]["Start_timer"] = True
             self.system_data["OK"][ok]["Timer_status"] = True
-            print("First start OK: {}. Activate CallLater 1.5c!!!".format(d_ok))
-        # print("Defer_OK: {}".format(self.system_data["Timer_OK"]))
+            logger_client_eha.info("First start OK: {}. Activate Timer 1.5c!!!".format(d_ok))
+            logger_client_eha.info("First Status OK: {} => {}".format(d_ok, self.system_data["OK"][ok]["STATUS_OK"]))
 
     def buildProtocol(self, addr):
         return EbilockProtocol(self, self.system_data)
 
+
     def switch_to_pass(self, *args):
         """ system to switch to the safe mode """
-        print("{} The delay time of 1.5.sec has worked. To go into System in 'SAFE' mode!!!".format(time.ctime()))
+        logger_client_eha.debug("The delay time of 1.5.sec has worked. To go into System in 'SAFE' mode!!!")
         self.system_data["Start_timer"] = False
         self.system_data["System_Status"] = self._SAFE
         self.system_data["Timer_status"] = False
-        print("{}  System switch to SAFE mode => {}".format(time.ctime(), self.system_data["System_Status"]))
+        logger_client_eha.debug("System switch to SAFE mode => {}".format(self.system_data["System_Status"]))
 
     def errorback_timer(self, *args):
         return
-        # print("Timer stop")
 
     def switch_to_pass_ok(self, ok):
         """ system to switch to the safe mode for OK's"""
-        print("{} The delay time of 1.5.sec has worked. To go into OK in 'SAFE' mode!!!: {}".format(time.ctime(), ok))
+        logger_client_eha.debug("The delay time of 1.5.sec has worked. To go into OK in 'SAFE' mode!!!: {}".format(ok))
         _ok = self.system_data["WORK_OK"][ok]
         _ok["Start_timer"] = False
         _ok["STATUS_OK"] = self._SAFE
         _ok["Timer_status"] = False
         _ok["ZONE_FOR_CNS"] = dict.fromkeys(range(36), 0)
-        print("{} {} OK's switch to SAFE mode => {}".format(time.ctime(), ok, _ok["STATUS_OK"]))
-        print(self.prints.show_status_cns_zone())
+        logger_client_eha.debug("{} OK's switch to SAFE mode => {}".format(ok, _ok["STATUS_OK"]))
+        logger_client_eha.debug(self.prints.show_status_cns_zone())
 
     def timer_restart_ok(self, ok):
         from twisted.internet import reactor
-        # print("Timer restart\nTimer_Ok: {}".format(self.system_data["Timer_OK"]))
+
         # d_+str(ok) = self.system_data["Timer_OK"][ok]
         dd = self.system_data["Timer_OK"][ok]
         reactor.callLater(0.0, dd.cancel)
@@ -140,8 +153,7 @@ class EbilockClientFactory(ClientFactory):
         self.system_data["Timer_OK"][ok] = d_
         from twisted.internet import reactor
         reactor.callLater(1.5, d_.callback, ok)
-        print("Timer OK: {} Restart!!!".format(ok))
-        # print("Timer_d_: {}".format(self.system_data["Timer_OK"][ok]))
+        logger_client_eha.debug("Timer OK: {} Restart!!!".format(ok))
 
     def timer_restart(self):
         from twisted.internet import reactor
@@ -151,25 +163,25 @@ class EbilockClientFactory(ClientFactory):
         self.d.addCallbacks(self.switch_to_pass, self.errorback_timer)
         self.d.addBoth(self.errorback_timer)
         reactor.callLater(1.5, self.d.callback, stat)
-        print("Timer Restart!!!")
+        logger_client_eha.debug("System Timer Restart!!!")
 
     def d_send_status(self, status_order):
         from twisted.internet import reactor
         d = None
         d = defer.Deferred()
         d.addCallback(self.protocol(self, self.system_data).dataSend())
-        reactor.callLater(0, d.callback, send_status)
-        print("callback send status started")
+        reactor.callLater(0, d.callback, 'send_status')
+        logger_client_eha.debug("Callback send status started")
 
     def check_timer(self, *args):
-        self.prints.show_status_timer_system()
+        logger_client_eha.debug(self.prints.show_status_timer_system())
 
         if self.system_data["Timer_status"] and not self.system_data["Start_timer"] and self.system_data["System_Status"] == "WORK":
             from twisted.internet import reactor
             reactor.callLater(1.5, self.switch_to_pass, self._SAFE)
             self.system_data["Err_Count"] = 0
             self.system_data["Start_timer"] = True
-            print("Activate CallLater 1.5c - 1!!!")
+            logger_client_eha.debug("Activate CallLater 1.5c - 1!!!")
 
         else:
             if not self.system_data["Timer_status"] and not self.system_data["Start_timer"] and self.system_data["System_Status"] == "WORK" or\
@@ -186,11 +198,11 @@ class EbilockClientFactory(ClientFactory):
                 else:
                     pass
 
-        print("After check_timer:")
-        self.prints.show_status_timer_system()
+        logger_client_eha.info(self.prints.show_status_timer_system())
 
     def check_timer_ok(self):
-        self.prints.show_status_ok()
+        logger_client_eha.debug(self.prints.show_status_ok())
+
         for ok in self.system_data["WORK_OK"]:
             _ok = self.system_data["WORK_OK"][ok]
             if _ok["Timer_status"] and not _ok["Start_timer"] and _ok["STATUS_OK"] == "WORK":
@@ -198,7 +210,8 @@ class EbilockClientFactory(ClientFactory):
                 reactor.callLater(1.5, self.switch_to_pass_ok, ok)
                 _ok["Err_Count"] = 0
                 _ok["Start_timer"] = True
-                print("Activate CallLater OK: {}, 1.5c!!!".format(ok))
+                logger_client_eha.debug("Activate CallLater OK: {}, 1.5c!!!".format(ok))
+
             else:
                 if not _ok["Timer_status"] and not _ok["Start_timer"] and _ok["STATUS_OK"] == "WORK" or\
                  not _ok["Timer_status"] and _ok["Start_timer"] and _ok["STATUS_OK"] == "WORK":
@@ -212,32 +225,33 @@ class EbilockClientFactory(ClientFactory):
                         self.timer_restart_ok(ok)
                     else:
                         pass
-        self.prints.show_status_ok()
+        logger_client_eha.info(self.prints.show_status_ok())
 
     def clientConnectionFailed(self, connector, reason):
-        print("Failed to connect to: {}".format(connector.getDestination()))
+        logger_client_eha.warning("Failed to connect to: {}".format(connector.getDestination()))
         time.sleep(1)
         connector.connect()
 
     def clientConnectionLost(self, connector, reason):
-        print("Client connection Lost: {}".format(reason))
+        logger_client_eha.warning("Client connection Lost: {}".format(connector.getDestination()))
         time.sleep(1)
         connector.connect()
 
     def order_received(self):
         if ord_ok.from_hdlc(self.system_data).check_telegramm():
-            self.prints.show_receive_packet()
-        self.prints.show_work_packet()
+            logger_client_eha.info(self.prints.show_receive_packet())
+
+        logger_client_eha.info(self.prints.show_work_packet())
         status = self.wf.work_order()
 
         if status == 80:
-            print("Send Status!!!")
+            logger_client_eha.debug("Send Status!!!")
             # if stat.from_send_status(self.system_data_old).code_telegramm():
             #    self.system_data_old["HDLC_SEND_STATUS"] = None
             #    self.system_data_old["HDLC_SEND_STATUS"] = create_hdlc(self.system_data_old["ORDER_STATUS"]
 
         elif status == 110:
-            print("Lost Communication\nTransfer status with old counters and Increase the counter")
+            logger_client_eha.debug("Lost Communication\nTransfer status with old counters and Increase the counter")
             # order_count_A = self.system_data["ORDER_Count_A"]
             # order_count_B = self.system_data["ORDER_Count_B"]
             self.system_data["Count_A"] = self.system_data["ORDER_Count_A"]
@@ -254,16 +268,16 @@ class EbilockClientFactory(ClientFactory):
                 self.system_data["HDLC_SEND_STATUS"] = create_hdlc(self.system_data["ORDER_STATUS"])
 
         elif status == 50:
-            print("Discard a telegram")
+            logger_client_eha.debug("Discard a telegram")
             self.system_data["Timer_status"] = True
 
         else:
                 self.system_data["HDLC_SEND_STATUS"] = None
                 self.system_data["ORDER_STATUS"] = None
-                print("Don't send status!!!")
+                logger_client_eha.debug("Don't send status!!!")
 
         self.check_timer()
         self.check_timer_ok()
-        # self.prints.show_OK()
-        print("#"*20)
+
+
 
