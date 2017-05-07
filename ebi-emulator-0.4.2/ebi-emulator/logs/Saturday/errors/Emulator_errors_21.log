@@ -1,0 +1,29 @@
+21:07:56,380 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:10:52,087 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:13:10,652 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+21:13:10,818 WARN  EbiEmulator: - No telegrams from client1 : 10000
+21:13:10,818 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+21:13:11,568 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+21:13:11,584 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:13:11,628 ERROR EbiEmulator: - {}
+java.io.IOException: Удаленный хост принудительно разорвал существующее подключение
+	at sun.nio.ch.SocketDispatcher.write0(Native Method)
+	at sun.nio.ch.SocketDispatcher.write(Unknown Source)
+	at sun.nio.ch.IOUtil.writeFromNativeBuffer(Unknown Source)
+	at sun.nio.ch.IOUtil.write(Unknown Source)
+	at sun.nio.ch.SocketChannelImpl.write(Unknown Source)
+	at si.iskratel.aa.ebilock.emulator.EbiEmulator$8.run(EbiEmulator.java:689)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+21:14:15,499 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:14:34,091 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:14:53,926 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:20:34,091 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:20:40,684 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:21:04,685 WARN  EbiEmulator: - ====================== Client 1 disconnected
+21:21:15,485 WARN  EbiEmulator: - ====================== Client 1 disconnected

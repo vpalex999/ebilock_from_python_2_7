@@ -1,6 +1,6 @@
 """ Client-Main"""
 import datetime
-import sources.client_eha as c_eha
+import sources.client_eha_new as c_eha
 import sources.client_parser as c_parser
 from twisted.internet import defer
 from twisted.internet import reactor
