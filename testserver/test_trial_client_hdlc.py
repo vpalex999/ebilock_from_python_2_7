@@ -112,9 +112,12 @@ def get_order(host, port, number_test):
 class EhaTestCase(TestCase):
 
     def setUp(self):
+        self.port1 = 10000
+        self.port2 = None
+        self.host = "127.0.0.1"
         factory = EhaServerFactory(hdlc_dict)
         from twisted.internet import reactor
-        self.port = reactor.listenTCP(10000, factory, interface="127.0.0.1")
+        self.port = reactor.listenTCP(self.port1, factory, interface=self.host)
         # self.portnum = self.port.getHost().port
 
     def tearDown(self):

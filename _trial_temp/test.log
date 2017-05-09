@@ -1,1 +1,6 @@
-2017-05-07 18:01:24+0500 [-] Log opened.
+2017-05-09 20:58:03+0500 [-] Log opened.
+2017-05-09 20:58:03+0500 [-] --> testserver.test_trial_remoute_client2.RemoteClientTestCase.test_1 <--
+2017-05-09 20:58:03+0500 [-] ServerEHAFactory starting on 10000
+2017-05-09 20:58:03+0500 [-] Starting factory <testserver.server.ServerEHAFactory object at 0x03ACEDF0>
+2017-05-09 20:58:03+0500 [-] (TCP Port 10000 Closed)
+2017-05-09 20:58:03+0500 [-] Stopping factory <testserver.server.ServerEHAFactory object at 0x03ACEDF0>
