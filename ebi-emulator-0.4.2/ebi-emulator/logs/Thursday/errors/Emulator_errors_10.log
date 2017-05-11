@@ -1,0 +1,2 @@
+10:06:17,797 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/11 10:06:17 port1:20000 port2:20001 config_file:emulator_config_mea809_20000_20001.json]
+10:07:36,889 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 20001

@@ -1,1 +1,13 @@
-2017-05-09 14:31:28+0500 [-] Log opened.
+2017-05-11 16:06:28+0500 [-] Log opened.
+2017-05-11 16:06:28+0500 [-] --> test_trial_connect_for_client_port1.EhaTestCaseClient1.test_trial_connect_for_client_port1 <--
+2017-05-11 16:06:28+0500 [-] ServerEHAFactory starting on 10000
+2017-05-11 16:06:28+0500 [-] Starting factory <test_trial_connect_for_client_port1.ServerEHAFactory object at 0x04212170>
+2017-05-11 16:06:29+0500 [-] (TCP Port 10000 Closed)
+2017-05-11 16:06:29+0500 [-] Stopping factory <test_trial_connect_for_client_port1.ServerEHAFactory object at 0x04212170>
+2017-05-11 16:06:29+0500 [-] Main loop terminated.
+2017-05-11 16:06:29+0500 [-] --> test_trial_connect_for_client_port2.EhaTestCaseClient2.test_trial_connect_for_client_port2 <--
+2017-05-11 16:06:29+0500 [-] ServerEHAFactory starting on 10001
+2017-05-11 16:06:29+0500 [-] Starting factory <test_trial_connect_for_client_port2.ServerEHAFactory object at 0x040BD3F0>
+2017-05-11 16:06:31+0500 [-] (TCP Port 10001 Closed)
+2017-05-11 16:06:31+0500 [-] Stopping factory <test_trial_connect_for_client_port2.ServerEHAFactory object at 0x040BD3F0>
+2017-05-11 16:06:31+0500 [-] Main loop terminated.

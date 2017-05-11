@@ -1,0 +1,22 @@
+{
+  "port1": 20000,
+  "port2": 20001,
+  "serial1": null,
+  "serial2": null,
+  "package_delay": 600,
+  "package_delay_answer_1": 140,
+  "package_delay_answer_2": 140,
+  "file": "sample.log",
+  "errorLogPath": "logs/",
+  "logPath": "logs/",
+  "showConsoleLogs": true,
+  "cases": [
+    {
+      "Telegrams": [
+        { "ocAddr": "0x3257", "TelegramRules": [""], "Zones": [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] }
+      ],
+      "Repeat": 1,
+      "PackageRules": [""]
+    }
+  ]
+}

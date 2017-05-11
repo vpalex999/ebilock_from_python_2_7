@@ -1,4 +1,8 @@
 """ DATA FOR SERVER TEST"""
+
+server_port1 = 10000
+server_port2 = 10001
+
 # ========== order hdlc ==========
 hdlc_dict = {
     "hdlc_ok":
