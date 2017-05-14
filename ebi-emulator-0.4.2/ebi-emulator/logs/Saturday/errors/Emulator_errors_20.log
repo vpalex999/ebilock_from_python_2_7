@@ -1,0 +1,614 @@
+20:09:20,951 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:09:21,062 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:21,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:21,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:21,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:21,957 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:09:23,335 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:09:23,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:23,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:24,072 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:24,212 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:24,355 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:09:25,765 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:09:25,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:26,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:26,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:26,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:26,804 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:09:28,136 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:09:28,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:28,403 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:28,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:29,010 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:29,145 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:09:29,160 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:09:51,062 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:51,062 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:51,204 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:51,204 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:51,204 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:51,204 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:51,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:51,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:51,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:51,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:51,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:51,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:52,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:52,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:52,403 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:52,403 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:52,403 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:52,403 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:52,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:52,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:53,002 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:53,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:53,002 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:53,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:53,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:53,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:53,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:53,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:53,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:53,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:54,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:54,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:09:54,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:54,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:54,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:54,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:09:54,519 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:09:54,529 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:09:54,660 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:54,801 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:55,266 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:09:55,409 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:09:55,521 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:09:55,537 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:10:55,862 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:55,862 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:56,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:56,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:56,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:56,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:56,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:56,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:56,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:56,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:56,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:56,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:57,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:57,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:57,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:57,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:57,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:57,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:57,662 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:57,662 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:57,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:57,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:57,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:57,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:58,262 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:58,262 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:58,404 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:58,404 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:58,404 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:58,404 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:58,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:58,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:59,002 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:59,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:59,002 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:59,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:59,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:10:59,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:10:59,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:59,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:10:59,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:10:59,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:00,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:00,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:00,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:00,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:00,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:00,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:00,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:00,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:00,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:00,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:00,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:00,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:01,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:01,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:01,403 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:01,403 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:01,403 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:01,403 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:01,862 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:01,862 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:02,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:02,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:02,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:02,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:02,460 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:02,460 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:02,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:02,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:02,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:02,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:03,062 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:03,062 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:03,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:03,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:03,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:03,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:03,662 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:03,662 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:03,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:03,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:03,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:03,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:04,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:04,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:04,401 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:04,401 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:04,401 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:04,401 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:04,862 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:04,862 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:05,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:05,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:05,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:05,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:05,462 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:05,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:05,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:05,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:05,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:05,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:06,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:06,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:06,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:06,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:06,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:06,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:06,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:06,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:06,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:06,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:06,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:06,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:07,265 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:07,265 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:07,407 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:07,407 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:07,407 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:07,407 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:07,862 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:07,862 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:08,004 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:08,004 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:08,004 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:08,004 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:08,460 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:08,460 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:08,601 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:08,601 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:08,601 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:08,601 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:09,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:09,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:09,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:09,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:09,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:09,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:09,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:09,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:09,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:09,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:09,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:09,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:10,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:10,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:10,402 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:10,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:10,402 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:10,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:10,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:10,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:11,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:11,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:11,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:11,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:11,462 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:11,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:11,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:11,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:11,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:11,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:12,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:12,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:12,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:12,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:12,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:12,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:12,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:12,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:12,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:12,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:12,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:12,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:13,260 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:13,260 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:13,401 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:13,401 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:13,401 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:13,401 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:13,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:13,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:14,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:14,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:14,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:14,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:14,462 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:14,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:14,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:14,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:14,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:14,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:15,063 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:15,063 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:11:15,204 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:15,204 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:15,204 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:15,204 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:11:15,525 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:11:15,536 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:11:15,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:15,803 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:16,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:11:16,403 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:11:16,528 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:11:16,538 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:16:05,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:05,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:05,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:05,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:05,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:05,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:06,062 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:06,062 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:06,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:06,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:06,203 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:06,203 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:06,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:06,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:06,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:06,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:06,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:06,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:07,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:07,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:07,402 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:07,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:07,402 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:07,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:07,860 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:07,860 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:08,001 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:08,001 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:08,001 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:08,001 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:08,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:08,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:08,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:08,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:08,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:08,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:08,929 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:16:08,939 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:16:09,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:09,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:09,660 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:09,801 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:09,931 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:16:09,942 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:16:44,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:44,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:44,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:44,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:44,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:44,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:45,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:45,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:45,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:45,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:45,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:45,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:45,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:16:45,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:45,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:45,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:45,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:16:45,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:46,136 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:16:46,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:46,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:46,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:16:47,014 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:16:47,127 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:16:47,138 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:22:02,384 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:22:02,460 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:22:02,601 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:22:03,078 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:22:03,228 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:22:03,436 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:22:04,737 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:22:04,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:22:05,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:22:05,464 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:22:05,616 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:22:05,732 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:22:05,747 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:37:01,863 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:01,863 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:37:02,004 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:02,004 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:02,004 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:02,004 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:02,338 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:210, output:200
+20:37:02,339 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:37:02,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:02,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:37:02,510 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:294, output:200
+20:37:02,510 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:37:02,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:02,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:02,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:02,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:02,967 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:37:03,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:03,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:37:03,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:03,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:03,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:03,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:03,536 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:37:03,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:03,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:37:03,671 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:37:03,671 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:37:03,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:03,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:03,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:03,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:04,136 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:37:04,137 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:37:04,263 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:04,263 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:37:04,291 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:37:04,405 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:04,405 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:04,405 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:04,405 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:04,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:04,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:37:04,919 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:37:05,002 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:05,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:05,002 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:05,002 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:37:05,337 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:37:05,347 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:37:05,460 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:05,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:06,062 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:37:06,211 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:37:06,349 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:37:06,364 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:38:13,147 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:38:13,263 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:13,404 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:13,874 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:14,020 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:14,202 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:294, output:200
+20:38:14,334 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:38:14,334 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:378, output:200
+20:38:14,462 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:38:14,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:14,474 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:38:14,474 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:462, output:200
+20:38:14,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:38:14,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:14,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:38:14,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:14,949 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:38:15,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:38:15,061 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:15,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:38:15,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:15,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:38:15,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:15,538 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:38:15,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:38:15,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:15,710 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:38:15,710 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:38:15,804 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:38:15,804 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:15,804 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:38:15,804 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:16,142 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:38:16,262 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:16,403 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:16,869 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:38:17,016 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:38:17,148 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:38:17,163 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:39:21,547 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:39:21,663 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:39:21,803 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:39:22,284 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:39:22,425 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:39:22,540 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:39:22,556 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:40:55,735 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:40:55,735 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:378, output:200
+20:40:55,862 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:40:55,862 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:40:55,879 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:462, output:200
+20:40:55,880 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:40:56,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:56,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:40:56,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:56,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:40:56,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:40:56,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:40:56,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:56,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:40:56,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:56,602 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:40:56,942 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:40:56,943 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:40:57,063 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:40:57,063 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:40:57,077 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:40:57,077 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:40:57,204 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:57,204 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:40:57,204 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:57,204 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:40:57,535 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:40:57,546 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:40:57,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:40:57,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:58,271 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:40:58,411 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:40:58,538 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:40:58,548 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:41:12,530 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:41:12,530 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:378, output:200
+20:41:12,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:12,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:41:12,669 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:41:12,679 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:41:12,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:12,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:13,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:13,409 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:13,674 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:41:13,684 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:41:41,325 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:41:41,462 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:41,462 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:41:41,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:41,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:41,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:41,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:41,934 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:41:42,060 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:42,060 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:41:42,070 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:41:42,070 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:41:42,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:42,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:42,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:42,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:42,564 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:41:42,564 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:41:42,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:42,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:41:42,744 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:41:42,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:42,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:42,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:42,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:43,261 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:43,261 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:41:43,280 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:41:43,402 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:43,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:43,402 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:43,402 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:43,737 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:41:43,737 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:41:43,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:43,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:41:43,874 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:41:43,874 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:41:44,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:44,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:44,003 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:44,003 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:41:44,374 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:41:44,385 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:41:44,462 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:44,602 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:45,060 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:41:45,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:41:45,377 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:41:45,387 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:44:41,327 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:378, output:200
+20:44:41,469 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:41,469 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:44:41,487 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:462, output:200
+20:44:41,610 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:41,610 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:41,610 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:41,610 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:41,974 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:44:42,062 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:42,062 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:44:42,150 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:44:42,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:42,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:42,202 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:42,202 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:42,549 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:44:42,549 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:44:42,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:42,661 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:44:42,744 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:44:42,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:42,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:42,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:42,802 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:43,170 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:44:43,265 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:43,265 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:44:43,290 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:44:43,406 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:43,406 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:43,406 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:43,406 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:43,769 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:44:43,861 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:43,861 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:44:43,901 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:252, output:200
+20:44:43,901 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:44:44,001 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:44,001 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:44,001 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:44,001 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:44,380 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:336, output:200
+20:44:44,461 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:44,461 WARN  EbiEmulator: - ProcessData2 -> Send 140ms repeat on port: 10001
+20:44:44,507 WARN  HdlcCodec: - Oversized input data for decode HDLC: input:420, output:200
+20:44:44,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:44,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:44,603 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:44,603 WARN  EbiEmulator: - No telegrams from client2 : 10001
+20:44:44,928 WARN  EbiEmulator: -  ====================== Connection canceled port: 10001
+20:44:44,938 WARN  EbiEmulator: - ====================== Client 2 disconnected
+20:44:45,061 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:45,201 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:45,661 WARN  EbiEmulator: - ProcessData1 -> Send 140ms repeat on port: 10000
+20:44:45,802 WARN  EbiEmulator: - No telegrams from client1 : 10000
+20:44:45,940 WARN  EbiEmulator: -  ====================== Connection canceled port: 10000
+20:44:45,956 WARN  EbiEmulator: - ====================== Client 1 disconnected
+20:50:15,609 WARN  EbiEmulator: - [Start ebi emulator at:2017/05/13 20:50:15 port1:10000 port2:10001 config_file:.\emulator_config_localhost_10000.json]

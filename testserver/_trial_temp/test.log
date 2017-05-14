@@ -1,1 +1,41 @@
-2017-05-12 19:12:02+0500 [-] Log opened.
+2017-05-13 17:51:32+0500 [-] Log opened.
+2017-05-13 17:51:32+0500 [-] --> testserver.test_trial_twisted_client_exp.EhaTestCaseExp.test_trial_client_exp <--
+2017-05-13 17:51:32+0500 [-] EhaServerFactory starting on 10000
+2017-05-13 17:51:32+0500 [-] Starting factory <testserver.test_trial_twisted_client_exp.EhaServerFactory object at 0x03422790>
+2017-05-13 17:51:32+0500 [-] Starting factory <testserver.test_trial_twisted_client_exp.EhaClientFactory object at 0x03438470>
+2017-05-13 17:51:32+0500 [-] (TCP Port 10000 Closed)
+2017-05-13 17:51:32+0500 [-] Stopping factory <testserver.test_trial_twisted_client_exp.EhaServerFactory object at 0x03422790>
+2017-05-13 17:51:32+0500 [-] Main loop terminated.
+2017-05-13 17:51:32+0500 [EhaClientProtocol,client] Unhandled Error
+	Traceback (most recent call last):
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\trial\util.py", line 138, in _cleanPending
+	    reactor.iterate(0)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\trial\_asynctest.py", line 242, in _
+	    return self._reactorMethods[name](*a, **kw)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\internet\base.py", line 678, in iterate
+	    self.doIteration(delay)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\internet\selectreactor.py", line 143, in doSelect
+	    _logrun(selectable, _drdw, selectable, method)
+	--- <exception caught here> ---
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\python\log.py", line 103, in callWithLogger
+	    return callWithContext({"system": lp}, func, *args, **kw)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\python\log.py", line 86, in callWithContext
+	    return context.call({ILogContext: newCtx}, func, *args, **kw)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\python\context.py", line 122, in callWithContext
+	    return self.currentContext().callWithContext(ctx, func, *args, **kw)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\python\context.py", line 85, in callWithContext
+	    return func(*args,**kw)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\internet\selectreactor.py", line 154, in _doReadOrWrite
+	    self._disconnectSelectable(selectable, why, method=="doRead")
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\internet\posixbase.py", line 255, in _disconnectSelectable
+	    selectable.connectionLost(f)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\internet\tcp.py", line 478, in connectionLost
+	    self._commonConnection.connectionLost(self, reason)
+	  File "c:\users\елена\appdata\local\programs\python\python36-32\lib\site-packages\twisted\internet\tcp.py", line 292, in connectionLost
+	    protocol.connectionLost(reason)
+	  File ".\test_trial_twisted_client_exp.py", line 86, in connectionLost
+	    self.OrderReceived(self.buffers)
+	  File ".\test_trial_twisted_client_exp.py", line 89, in OrderReceived
+	    self.factory.order_finished(work_data)
+	builtins.AttributeError: 'EhaClientProtocol' object has no attribute 'factory'
+	
