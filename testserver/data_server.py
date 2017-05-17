@@ -1,5 +1,5 @@
 """ DATA FOR SERVER TEST"""
-
+server_host = "192.168.10.168"
 server_port1 = 10000
 server_port2 = 10001
 

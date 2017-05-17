@@ -8,7 +8,7 @@ import time
 
 logger_main = logging.getLogger("client_main")
 logger_main.setLevel(logging.DEBUG)
-handler_main = logging.FileHandler("eha.log")
+handler_main = logging.FileHandler("eha_new.log")
 handler_main.setLevel(logging.INFO)
 formatter_main = logging.Formatter("%(asctime)s %(levelname)s | %(message)s")
 handler_main.setFormatter(formatter_main)
