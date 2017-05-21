@@ -1,0 +1,64 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495121515144" stop="1495121515150">
+  <description> test EHA client </description>
+  <name>testserver.test_connect2</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495121515144" status="passed" stop="1495121515145">
+      <name>test_4</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="17796-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495121515145" status="passed" stop="1495121515145">
+          <name>test_4</name>
+          <title>test_4</title>
+          <attachments>
+            <attachment source="227fdc23-4b9e-4260-a313-d1b5c7e661c7-attachment.txt" title="Return True" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+      </steps>
+    </test-case>
+    <test-case start="1495121515146" status="passed" stop="1495121515147">
+      <name>test_5</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="17796-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495121515147" status="passed" stop="1495121515147">
+          <name>test_5</name>
+          <title>test_5</title>
+          <attachments>
+            <attachment source="b32f4faf-4e0b-42af-adac-fd78c6f2cec6-attachment.txt" title="Return True" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+      </steps>
+    </test-case>
+    <test-case start="1495121515148" status="passed" stop="1495121515150">
+      <name>test_6</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="17796-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495121515149" status="passed" stop="1495121515150">
+          <name>test_6</name>
+          <title>test_6</title>
+          <attachments>
+            <attachment source="961b5a8c-9145-4541-9b58-ca5b21c85867-attachment.txt" title="Return True" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>

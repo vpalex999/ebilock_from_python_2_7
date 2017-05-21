@@ -1,0 +1,1 @@
+statr check_connect with timeout 3sec: <bound method ServerEHAFactory.check_connect of <testserver.test_connect_eha_port1.ServerEHAFactory object at 0x0368B110>>

@@ -1,0 +1,200 @@
+{
+  "uid" : "ddcb141a82a2cdff",
+  "name" : "test_eha_port2",
+  "title" : "Test eha port 2",
+  "time" : {
+    "start" : 1495161808289,
+    "stop" : 1495161811290,
+    "duration" : 3001
+  },
+  "summary" : {
+    "attachments" : 11,
+    "steps" : 6
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "suite" : {
+    "uid" : "24708daa2b95aa3",
+    "name" : "testserver.test_connect_eha_port2",
+    "title" : "Test connect eha port 2"
+  },
+  "steps" : [ {
+    "name" : "class ServerEHAFactory(Factory)",
+    "title" : "class ServerEHAFactory(Factory)",
+    "time" : {
+      "start" : 1495161808290,
+      "stop" : 1495161808290,
+      "duration" : 0
+    },
+    "summary" : {
+      "attachments" : 1,
+      "steps" : 1
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ {
+      "name" : "Init factory",
+      "title" : "Init factory",
+      "time" : {
+        "start" : 1495161808290,
+        "stop" : 1495161808290,
+        "duration" : 0
+      },
+      "summary" : {
+        "attachments" : 1,
+        "steps" : 0
+      },
+      "status" : "PASSED",
+      "attachments" : [ {
+        "title" : "start reactor.callater",
+        "source" : "6cc1c786-030e-4d8b-821b-133a6c344d78-attachment.txt",
+        "type" : "text/plain",
+        "size" : 161,
+        "uid" : "9d2760d70d33c5ef"
+      } ],
+      "steps" : [ ]
+    } ]
+  }, {
+    "name" : "test_eha_port2",
+    "title" : "test_eha_port2",
+    "time" : {
+      "start" : 1495161808292,
+      "stop" : 1495161808292,
+      "duration" : 0
+    },
+    "summary" : {
+      "attachments" : 2,
+      "steps" : 1
+    },
+    "status" : "PASSED",
+    "attachments" : [ {
+      "title" : "defered d from port2",
+      "source" : "5462a2d1-371f-4310-a256-e3d9c8327964-attachment.txt",
+      "type" : "text/plain",
+      "size" : 44,
+      "uid" : "efa4a789b02465a5"
+    } ],
+    "steps" : [ {
+      "name" : "d.addCallbacks",
+      "title" : "d.addCallbacks",
+      "time" : {
+        "start" : 1495161808292,
+        "stop" : 1495161808292,
+        "duration" : 0
+      },
+      "summary" : {
+        "attachments" : 1,
+        "steps" : 0
+      },
+      "status" : "PASSED",
+      "attachments" : [ {
+        "title" : "Add callbacks function connected() and connected_err()",
+        "source" : "7d8ab658-095d-48f2-a968-e38124c70fb3-attachment.txt",
+        "type" : "text/plain",
+        "size" : 142,
+        "uid" : "82732056aa02a261"
+      } ],
+      "steps" : [ ]
+    } ]
+  }, {
+    "name" : "check_connect",
+    "title" : "check_connect",
+    "time" : {
+      "start" : 1495161811290,
+      "stop" : 1495161811291,
+      "duration" : 1
+    },
+    "summary" : {
+      "attachments" : 6,
+      "steps" : 1
+    },
+    "status" : "PASSED",
+    "attachments" : [ {
+      "title" : "In check_connect",
+      "source" : "8f622aaf-2b13-450a-a806-491b60a0cf80-attachment.txt",
+      "type" : "text/plain",
+      "size" : 71,
+      "uid" : "46f75c9b603d30a0"
+    }, {
+      "title" : "close connect",
+      "source" : "15d875bf-22c2-40d2-85b0-2acf17dd24bf-attachment.txt",
+      "type" : "text/plain",
+      "size" : 95,
+      "uid" : "a877a12a0babe909"
+    }, {
+      "title" : "Captured stdout setup",
+      "source" : "38cf3ca0-2aec-4628-9759-3fe97d024ecb-attachment.txt",
+      "type" : "text/plain",
+      "size" : 39,
+      "uid" : "ee0892738416c592"
+    }, {
+      "title" : "Captured stdout call",
+      "source" : "a3caed34-7a4b-4ae3-ac62-2d0f57596e64-attachment.txt",
+      "type" : "text/plain",
+      "size" : 114,
+      "uid" : "c1cdf4ad243d6d74"
+    }, {
+      "title" : "Status test server",
+      "source" : "1f8af306-c17f-4e66-91c5-29453b1c30f4-attachment.txt",
+      "type" : "text/plain",
+      "size" : 131,
+      "uid" : "69c21cb5b00bd2fb"
+    } ],
+    "steps" : [ {
+      "name" : "connected",
+      "title" : "connected",
+      "time" : {
+        "start" : 1495161811290,
+        "stop" : 1495161811290,
+        "duration" : 0
+      },
+      "summary" : {
+        "attachments" : 1,
+        "steps" : 0
+      },
+      "status" : "PASSED",
+      "attachments" : [ {
+        "title" : "Check connected client from test server",
+        "source" : "26a842e5-c637-47b1-9208-b7c9fc1d081e-attachment.txt",
+        "type" : "text/plain",
+        "size" : 113,
+        "uid" : "b50c48a2b47aafa6"
+      } ],
+      "steps" : [ ]
+    } ]
+  } ],
+  "attachments" : [ {
+    "title" : "Create_test_server2",
+    "source" : "d6a97122-e1d0-4a39-80fa-c2a1e87f79f0-attachment.txt",
+    "type" : "text/plain",
+    "size" : 42,
+    "uid" : "bd4d5faaab97c976"
+  }, {
+    "title" : "from_port2",
+    "source" : "604eaf43-2a17-40ac-b0f6-65357d5f6468-attachment.txt",
+    "type" : "text/plain",
+    "size" : 38,
+    "uid" : "44c643f64ef29c9d"
+  } ],
+  "issues" : [ ],
+  "testIds" : [ ],
+  "labels" : [ {
+    "name" : "thread",
+    "value" : "24548-MainThread"
+  }, {
+    "name" : "suite-name",
+    "value" : "testserver.test_connect_eha_port2"
+  }, {
+    "name" : "suite-title",
+    "value" : null
+  }, {
+    "name" : "severity",
+    "value" : "normal"
+  }, {
+    "name" : "host",
+    "value" : "Bubenshchikov"
+  } ],
+  "parameters" : [ ]
+}

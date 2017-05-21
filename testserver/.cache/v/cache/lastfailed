@@ -1,3 +1,3 @@
 {
-  "test_py2_trial_connect_for_client_port1.py::EhaTestCaseClient1::test_trial_connect_for_client_port1": true
+  "test_connect_eha_port1.py::test_1_eha_port1": true
 }

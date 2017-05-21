@@ -1,0 +1,2 @@
+from_test_eha_port1 ss: <Deferred at 0x3de1470>
+defered d from port1 defered d from port1 <Deferred at 0x3de1470>

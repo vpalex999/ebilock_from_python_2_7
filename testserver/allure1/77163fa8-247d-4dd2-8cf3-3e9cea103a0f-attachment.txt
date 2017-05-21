@@ -1,0 +1,2 @@
+Status connect from connector EHA:
+2017-05-19 16:43:06.418:192.168.101.3:50064

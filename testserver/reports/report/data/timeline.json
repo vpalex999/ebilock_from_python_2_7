@@ -1,0 +1,34 @@
+{
+  "hosts" : [ {
+    "title" : "Bubenshchikov",
+    "threads" : [ {
+      "title" : "17000-MainThread",
+      "testCases" : [ {
+        "uid" : "3be7ed59e81d4514",
+        "name" : "test_eha_port1",
+        "title" : "Test eha port 1",
+        "time" : {
+          "start" : 1495161796644,
+          "stop" : 1495161799645,
+          "duration" : 3001
+        },
+        "severity" : "NORMAL",
+        "status" : "PASSED"
+      } ]
+    }, {
+      "title" : "24548-MainThread",
+      "testCases" : [ {
+        "uid" : "e869359aa1778337",
+        "name" : "test_eha_port2",
+        "title" : "Test eha port 2",
+        "time" : {
+          "start" : 1495161808289,
+          "stop" : 1495161811290,
+          "duration" : 3001
+        },
+        "severity" : "NORMAL",
+        "status" : "PASSED"
+      } ]
+    } ]
+  } ]
+}

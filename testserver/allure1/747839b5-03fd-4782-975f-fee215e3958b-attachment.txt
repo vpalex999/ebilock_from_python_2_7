@@ -1,0 +1,1 @@
+2017-05-19 16:42:35.356 Start check_connect with timeout 180sec: <bound method ServerEHAFactory.check_connect of <testserver.conftest.ServerEHAFactory object at 0x03E255B0>>

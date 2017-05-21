@@ -1,0 +1,68 @@
+{
+  "time" : {
+    "start" : 1495161796644,
+    "stop" : 1495161811290,
+    "duration" : 14646
+  },
+  "testSuites" : [ {
+    "uid" : "ebc421cebfd0b112",
+    "name" : "testserver.test_connect_eha_port1",
+    "title" : "Test connect eha port 1",
+    "time" : {
+      "start" : 1495161796644,
+      "stop" : 1495161799645,
+      "duration" : 3001
+    },
+    "statistic" : {
+      "total" : 1,
+      "passed" : 1,
+      "pending" : 0,
+      "canceled" : 0,
+      "failed" : 0,
+      "broken" : 0
+    },
+    "description" : null,
+    "testCases" : [ {
+      "uid" : "c669712983cc4c70",
+      "name" : "test_eha_port1",
+      "title" : "Test eha port 1",
+      "time" : {
+        "start" : 1495161796644,
+        "stop" : 1495161799645,
+        "duration" : 3001
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    } ]
+  }, {
+    "uid" : "24708daa2b95aa3",
+    "name" : "testserver.test_connect_eha_port2",
+    "title" : "Test connect eha port 2",
+    "time" : {
+      "start" : 1495161808289,
+      "stop" : 1495161811290,
+      "duration" : 3001
+    },
+    "statistic" : {
+      "total" : 1,
+      "passed" : 1,
+      "pending" : 0,
+      "canceled" : 0,
+      "failed" : 0,
+      "broken" : 0
+    },
+    "description" : null,
+    "testCases" : [ {
+      "uid" : "ddcb141a82a2cdff",
+      "name" : "test_eha_port2",
+      "title" : "Test eha port 2",
+      "time" : {
+        "start" : 1495161808289,
+        "stop" : 1495161811290,
+        "duration" : 3001
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    } ]
+  } ]
+}

@@ -1,0 +1,48 @@
+{
+  "features" : [ {
+    "title" : "Without feature",
+    "statistic" : {
+      "total" : 2,
+      "passed" : 2,
+      "pending" : 0,
+      "canceled" : 0,
+      "failed" : 0,
+      "broken" : 0
+    },
+    "stories" : [ {
+      "uid" : "79e5a743e62783a0",
+      "title" : "Without story",
+      "statistic" : {
+        "total" : 2,
+        "passed" : 2,
+        "pending" : 0,
+        "canceled" : 0,
+        "failed" : 0,
+        "broken" : 0
+      },
+      "testCases" : [ {
+        "uid" : "3be7ed59e81d4514",
+        "name" : "test_eha_port1",
+        "title" : "Test eha port 1",
+        "time" : {
+          "start" : 1495161796644,
+          "stop" : 1495161799645,
+          "duration" : 3001
+        },
+        "severity" : "NORMAL",
+        "status" : "PASSED"
+      }, {
+        "uid" : "e869359aa1778337",
+        "name" : "test_eha_port2",
+        "title" : "Test eha port 2",
+        "time" : {
+          "start" : 1495161808289,
+          "stop" : 1495161811290,
+          "duration" : 3001
+        },
+        "severity" : "NORMAL",
+        "status" : "PASSED"
+      } ]
+    } ]
+  } ]
+}

@@ -1,0 +1,1 @@
+d.addcallback port1 <function test_1_eha_port1.<locals>.connected at 0x03E312B8>, <function test_1_eha_port1.<locals>.connected_err at 0x03E31348>

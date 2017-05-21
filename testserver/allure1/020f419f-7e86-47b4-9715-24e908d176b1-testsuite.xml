@@ -1,0 +1,87 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495194155355" stop="1495194335359">
+  <description>Test1 EHA client</description>
+  <name>testserver.test_connect_eha_port1</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495194155355" status="passed" stop="1495194335359">
+      <description>Test connect client EHA to test server for port1</description>
+      <name>test_1_eha_port1</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="22388-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495194155357" status="passed" stop="1495194155357">
+          <name>Create_test_server() from tearUp/tearDown</name>
+          <title>Create_test_server() from tearUp/tearDown</title>
+          <attachments>
+            <attachment source="60e0af6d-d4aa-4180-b4e0-0e2b983e99c8-attachment.txt" title="Create_test_server" type="text/plain"/>
+            <attachment source="c5c7c1ab-3879-4342-bfef-0d27e15e6dfb-attachment.txt" title="Defer from factory" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495194155357" status="passed" stop="1495194155357">
+              <name>class ServerEHAFactory(Factory)</name>
+              <title>class ServerEHAFactory(Factory)</title>
+              <attachments/>
+              <steps>
+                <step start="1495194155357" status="passed" stop="1495194155357">
+                  <name>Init factory</name>
+                  <title>Init factory</title>
+                  <attachments>
+                    <attachment source="747839b5-03fd-4782-975f-fee215e3958b-attachment.txt" title="Start reactor.callater" type="text/plain"/>
+                  </attachments>
+                  <steps/>
+                </step>
+              </steps>
+            </step>
+          </steps>
+        </step>
+        <step start="1495194155357" status="passed" stop="1495194155357">
+          <name>Test_EHA_port1</name>
+          <title>Test_EHA_port1</title>
+          <attachments/>
+          <steps>
+            <step start="1495194155357" status="passed" stop="1495194155357">
+              <name>Add: d.addCallbacks</name>
+              <title>Add: d.addCallbacks</title>
+              <attachments>
+                <attachment source="fbe28737-2564-47bb-8891-cc47515677f2-attachment.txt" title="Add callbacks function connected() and connected_err()" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+        <step start="1495194335357" status="passed" stop="1495194335360">
+          <name>Factory check_connect</name>
+          <title>Factory check_connect</title>
+          <attachments>
+            <attachment source="77163fa8-247d-4dd2-8cf3-3e9cea103a0f-attachment.txt" title="In check_connect" type="text/plain"/>
+            <attachment source="047b42cc-6300-45b2-b678-be74d69cc04c-attachment.txt" title="In count_connected" type="text/plain"/>
+            <attachment source="6902a078-801b-4c1d-825b-46aabbfbbe34-attachment.txt" title="Count connected client from test server" type="text/plain"/>
+            <attachment source="1b6e101b-7f8c-4528-8170-56d6f76ea858-attachment.txt" title="Close connect" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495194335357" status="passed" stop="1495194335358">
+              <name>Call connected</name>
+              <title>Call connected</title>
+              <attachments>
+                <attachment source="f1cccc6c-a263-4a80-bbb1-d3cd59738c26-attachment.txt" title="Check connected client from test server" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+            <step start="1495194335360" status="passed" stop="1495194335360">
+              <name>Stop test server</name>
+              <title>Stop test server</title>
+              <attachments>
+                <attachment source="4a32a16b-28ca-44e7-918e-7ab0f3e55f0b-attachment.txt" title="Stop test server" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>

@@ -1,0 +1,73 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495163305234" stop="1495163308237">
+  <description> test EHA client </description>
+  <name>testserver.test_connect_eha_port1</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495163305234" status="passed" stop="1495163308237">
+      <name>test_eha_port1</name>
+      <attachments>
+        <attachment source="e377bb2b-c705-4df1-a37d-0801149e8390-attachment.txt" title="Create_test_server1" type="text/plain"/>
+      </attachments>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="21832-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495163305235" status="passed" stop="1495163305235">
+          <name>class ServerEHAFactory(Factory)</name>
+          <title>class ServerEHAFactory(Factory)</title>
+          <attachments/>
+          <steps>
+            <step start="1495163305235" status="passed" stop="1495163305235">
+              <name>Init factory</name>
+              <title>Init factory</title>
+              <attachments>
+                <attachment source="c0e69ffe-d854-4056-87b3-99dd694a5918-attachment.txt" title="start reactor.callater" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+        <step start="1495163305236" status="passed" stop="1495163305236">
+          <name>test_eha_port1</name>
+          <title>test_eha_port1</title>
+          <attachments>
+            <attachment source="56ee1dd1-af70-4320-a724-4922f12db799-attachment.txt" title="defered d from port1" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495163305236" status="passed" stop="1495163305236">
+              <name>d.addCallbacks</name>
+              <title>d.addCallbacks</title>
+              <attachments>
+                <attachment source="e00df11e-e2f1-4a43-8084-c9c854934293-attachment.txt" title="Add callbacks function connected() and connected_err()" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+        <step start="1495163308235" status="passed" stop="1495163308238">
+          <name>check_connect</name>
+          <title>check_connect</title>
+          <attachments>
+            <attachment source="5bf52cbc-af98-4fd1-8479-b7824a02460a-attachment.txt" title="In check_connect" type="text/plain"/>
+            <attachment source="04955ffd-fabf-4f06-9f4c-d7437b94a556-attachment.txt" title="close connect" type="text/plain"/>
+            <attachment source="c85ced56-e7fe-4879-9394-6a58768a6e54-attachment.txt" title="Captured stdout setup" type="text/plain"/>
+            <attachment source="a19a618d-c362-4f8f-b7b4-f8294df03cce-attachment.txt" title="Captured stdout call" type="text/plain"/>
+            <attachment source="75fe5ac0-8c87-4bab-b8e1-b160802c8d52-attachment.txt" title="Status test server" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495163308235" status="passed" stop="1495163308236">
+              <name>connected</name>
+              <title>connected</title>
+              <attachments>
+                <attachment source="a9e43e26-e15b-4b59-9ad7-570411755b6e-attachment.txt" title="Check connected client from test server" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>

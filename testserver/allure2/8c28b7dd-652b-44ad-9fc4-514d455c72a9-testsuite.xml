@@ -1,0 +1,106 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495187388969" stop="1495187395015">
+  <description>Test2 EHA client</description>
+  <name>testserver.test_connect_eha_port2</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495187388969" status="failed" stop="1495187395015">
+      <description>Test connect client EHA to test server for port2</description>
+      <name>test_2_eha_port2</name>
+      <failure>
+        <message>AssertionError: Delay 6 seconds connection to local port \10001 from EHA
+assert False
+ +  where False = &lt;twisted.python.failure.Failure builtins.bool: False&gt;.value</message>
+        <stack-trace>reason = &lt;twisted.python.failure.Failure builtins.bool: False&gt;
+
+    @allure.step("Call connected_err")
+    def connected_err(reason):
+        allure.attach("Return Error from test server",\
+                      "Callback is return Error result connect for server\
+                           {}:{} from: {}".format(data["server_host"],\
+                                              data["server_port2"],\
+                                              reason))
+&gt;       assert reason.value, "Delay {} seconds connection to local port \{} from EHA"\
+                                      .format(data["timeout_connect"], data["server_port2"])
+E       AssertionError: Delay 6 seconds connection to local port \10001 from EHA
+E       assert False
+E        +  where False = &lt;twisted.python.failure.Failure builtins.bool: False&gt;.value
+
+test_connect_eha_port2.py:38: AssertionError</stack-trace>
+      </failure>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="16688-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495187388970" status="passed" stop="1495187388971">
+          <name>Create_test_server() from tearUp/tearDown</name>
+          <title>Create_test_server() from tearUp/tearDown</title>
+          <attachments>
+            <attachment source="3d82929c-a4b3-42a9-a162-6208db82a64e-attachment.txt" title="Create_test_server" type="text/plain"/>
+            <attachment source="5479ed3a-b8f0-44e9-9a1d-93474b82eff3-attachment.txt" title="Defer from factory" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495187388970" status="passed" stop="1495187388970">
+              <name>class ServerEHAFactory(Factory)</name>
+              <title>class ServerEHAFactory(Factory)</title>
+              <attachments/>
+              <steps>
+                <step start="1495187388970" status="passed" stop="1495187388970">
+                  <name>Init factory</name>
+                  <title>Init factory</title>
+                  <attachments>
+                    <attachment source="4608539c-affb-4d86-bad2-80198439c850-attachment.txt" title="Start reactor.callater" type="text/plain"/>
+                  </attachments>
+                  <steps/>
+                </step>
+              </steps>
+            </step>
+          </steps>
+        </step>
+        <step start="1495187388971" status="passed" stop="1495187388971">
+          <name>Test_EHA_port2</name>
+          <title>Test_EHA_port2</title>
+          <attachments/>
+          <steps>
+            <step start="1495187388971" status="passed" stop="1495187388971">
+              <name>Add: d.addCallbacks</name>
+              <title>Add: d.addCallbacks</title>
+              <attachments>
+                <attachment source="e80a4baa-ed88-41b7-8937-4dc090bb68e1-attachment.txt" title="Add callbacks function connected() and connected_err()" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+        <step start="1495187394971" status="passed" stop="1495187395016">
+          <name>Factory check_connect</name>
+          <title>Factory check_connect</title>
+          <attachments>
+            <attachment source="a9476121-8949-4b69-834e-1291167218c6-attachment.txt" title="In check_connect" type="text/plain"/>
+            <attachment source="0e3db7ca-2472-4893-8dc3-0f41028c39f1-attachment.txt" title="Out check_connect delay after 6 seconds" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495187394971" status="failed" stop="1495187394974">
+              <name>Call connected_err</name>
+              <title>Call connected_err</title>
+              <attachments>
+                <attachment source="f1356927-c979-4fbe-90e2-2d8d9f040bf0-attachment.txt" title="Return Error from test server" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+            <step start="1495187395015" status="passed" stop="1495187395016">
+              <name>Stop test server</name>
+              <title>Stop test server</title>
+              <attachments>
+                <attachment source="aa6a8852-b8b0-4bd7-a4b3-1cf016b72131-attachment.txt" title="Stop test server" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>

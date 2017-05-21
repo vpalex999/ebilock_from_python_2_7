@@ -1,7 +1,1 @@
-2017-05-16 10:06:46+0500 [-] Log opened.
-2017-05-16 10:06:46+0500 [-] --> test_py2_trial_connect_for_client_port2.EhaTestCaseClient1.test_trial_connect_for_client_port2 <--
-2017-05-16 10:06:46+0500 [-] ServerEHAFactory starting on 10001
-2017-05-16 10:06:46+0500 [-] Starting factory <test_py2_trial_connect_for_client_port2.ServerEHAFactory object at 0x042E69B0>
-2017-05-16 10:06:48+0500 [-] (TCP Port 10001 Closed)
-2017-05-16 10:06:48+0500 [-] Stopping factory <test_py2_trial_connect_for_client_port2.ServerEHAFactory object at 0x042E69B0>
-2017-05-16 10:06:48+0500 [-] Main loop terminated.
+2017-05-17 14:45:42+0500 [-] Log opened.

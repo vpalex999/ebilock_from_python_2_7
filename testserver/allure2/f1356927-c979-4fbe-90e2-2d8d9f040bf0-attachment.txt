@@ -1,0 +1,2 @@
+Callback is return Error result connect for server                       192.168.10.168:10001 from: [Failure instance: Traceback (failure with no frames): <class 'bool'>: False
+]
