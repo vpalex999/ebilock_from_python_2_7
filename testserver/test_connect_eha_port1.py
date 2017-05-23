@@ -52,13 +52,13 @@ def test_1_eha_port1(from_port_1):
                 else:
                     other_ip +=1
 
-        assert reconnect >= 2 and not other_ip, "Detection Reconnect to local port {} from client EHA: {}."\
+        assert reconnect <= 1 and other_ip == 0, "Detection Reconnect to local port {} from client EHA: {}."\
             .format(data["server_port1"], count_connect)
 
-        assert reconnect >= 2 and other_ip, "Detection Reconnect  and Connection from Other IP to local port {} from client EHA: {}."\
+        assert reconnect <= 1 and other_ip <= 1, "Detection Reconnect  and Connection from Other IP to local port {} from client EHA: {}."\
             .format(data["server_port1"], count_connect)
 
-        assert reconnect < 2 and other_ip, "Detection Connection from Other IP to local port {} from client EHA: {}."\
+        assert not reconnect and other_ip <= 1, "Detection Connection from Other IP to local port {} from client EHA: {}."\
             .format(data["server_port1"], count_connect)
 
     with pytest.allure.step("Add: d.addCallbacks"):

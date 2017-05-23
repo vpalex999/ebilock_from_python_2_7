@@ -1,0 +1,1 @@
+Stop test server:<<class 'twisted.internet.tcp.Port'> of <class 'testserver.conftest.ServerServiceFactory_3'> on 10001>

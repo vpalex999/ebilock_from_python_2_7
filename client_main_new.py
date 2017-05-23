@@ -41,7 +41,6 @@ def client_main():
             reactor.connectTCP(self.host, self.port2, self.factory1)
             reactor.connectTCP(self.host, self.port1, self.factory2)
 
-
         def print_callback(self):
             logger_main.debug("callback1: {}, time: {:0.3f}".format(self.connector1["hdlc_receive"], self.connector1["time_delta"]))
             logger_main.debug("callback2: {}, time: {:0.3f}".format(self.connector2["hdlc_receive"], self.connector1["time_delta"]))
