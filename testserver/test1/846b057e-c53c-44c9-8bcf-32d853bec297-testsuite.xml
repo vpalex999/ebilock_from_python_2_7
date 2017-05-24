@@ -1,0 +1,74 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495600106944" stop="1495600107723">
+  <description>Test Service EHA client</description>
+  <name>testserver.test_1_con1</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495600106944" status="passed" stop="1495600107723">
+      <description>Test Service connect client EHA to test server for port1</description>
+      <name>test_1_con1</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="19692-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495600106945" status="passed" stop="1495600106945">
+          <name>Test configuration data</name>
+          <title>Test configuration data</title>
+          <attachments>
+            <attachment source="d76a1772-9c02-4fdb-b3f4-e08731635582-attachment.txt" title="Stend configuration data" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+        <step start="1495600106945" status="passed" stop="1495600106946">
+          <name>Create test_server3() from tearUp/tearDown</name>
+          <title>Create test_server3() from tearUp/tearDown</title>
+          <attachments>
+            <attachment source="de2a8ad8-195c-4dc5-9487-0361248d9fde-attachment.txt" title="Create_test_server" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+        <step start="1495600106946" status="passed" stop="1495600106946">
+          <name>Test connect_from EHA_port1</name>
+          <title>Test connect_from EHA_port1</title>
+          <attachments/>
+          <steps/>
+        </step>
+        <step start="1495600107719" status="passed" stop="1495600107724">
+          <name>connectionMade</name>
+          <title>connectionMade</title>
+          <attachments>
+            <attachment source="84159968-a2ab-4296-afcf-f8501505a6fa-attachment.txt" title="In Connect" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495600107721" status="passed" stop="1495600107724">
+              <name>Start chk()</name>
+              <title>Start chk()</title>
+              <attachments/>
+              <steps>
+                <step start="1495600107721" status="passed" stop="1495600107724">
+                  <name>Call check_timeout_connected()</name>
+                  <title>Call check_timeout_connected()</title>
+                  <attachments>
+                    <attachment source="75edaef1-b40b-4a06-8a90-601d079ad1dc-attachment.txt" title="Check connected client from test server" type="text/plain"/>
+                  </attachments>
+                  <steps>
+                    <step start="1495600107723" status="passed" stop="1495600107724">
+                      <name>Stop test server</name>
+                      <title>Stop test server</title>
+                      <attachments>
+                        <attachment source="14d243d5-96b9-4781-91bb-eb40d2b4da4f-attachment.txt" title="Stop test server" type="text/plain"/>
+                      </attachments>
+                      <steps/>
+                    </step>
+                  </steps>
+                </step>
+              </steps>
+            </step>
+          </steps>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>

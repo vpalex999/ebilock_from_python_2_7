@@ -1,8 +1,9 @@
 import pytest
 import allure
 import re
+from pprint import pprint
 
-# from allure.constants import AttachmentType
+from allure.constants import AttachmentType
 from datetime import datetime
 
 from twisted.internet.protocol import Protocol
@@ -152,8 +153,18 @@ def data_maket_mea1209_1211():
         "client_eha_side_2": "192.168.101.4",
         "client_eha_float": "192.168.101.5",
         "timeout_connect": 5,
+        "timeout_disconnect": 60,
         "double": True,
         }
+
+    def print_data(data):
+        return ''.join(["\n{}: {}".format(item[0], item[1]) for item in data.items()])
+
+    stend_data = print_data(data)
+    print(stend_data)
+    with pytest.allure.step("Test configuration data"):
+        allure.attach("Stend configuration data", print_data(data))
+
     return data
 
 
@@ -176,34 +187,34 @@ def from_port_2(test_server, data_maket_mea1209_1211):
 # FUXTURE 2
 
 
-class service_1(object):
-
-    def __init__(self, data, server_port):
-        self.data = data
-        self.server_port = server_port
-
-    def check_timeout_connected(self, status):
-        print("servicestatus1: {}".format((status)))
-        allure.attach("Check connected client from test server",\
-                      "Callback is return result connect for server {}:{} from: {}"\
-                      .format(self.data["server_host"], self.server_port, status))
-
-        if self.data["double"]:
-            pass
-            # assert re.search(self.data["client_eha_side_1"], status) or re.search(self.data["client_eha_side_2"], status),\
-            #        "Detection connection to local port {} from an unexpected ip address: {}.\n\
-            #        The system waits for connection from the addreses: {} or {}\n"\
-            #        .format(self.server_port, status, self.data["client_eha_side_1"], self.data["client_eha_side_2"])
-            
-            print("End re double")
-
-        else:
-            assert re.search(self.data["client_eha_float"], status),\
-                   "Detection connection to local port {} from an unexpected ip address: {}.\n\
-                   The system waits for connection from the addreses: {} or {}\n"\
-                   .format(self.server_port, status, self.data["client_eha_float"])
-        print("End re double2")
-        # return "return service"
+# class service_1(object):
+# 
+#     def __init__(self, data, server_port):
+#         self.data = data
+#         self.server_port = server_port
+# 
+#     def check_timeout_connected(self, status):
+#         print("servicestatus1: {}".format((status)))
+#         allure.attach("Check connected client from test server",\
+#                       "Callback is return result connect for server {}:{} from: {}"\
+#                       .format(self.data["server_host"], self.server_port, status))
+# 
+#         if self.data["double"]:
+#             pass
+#             # assert re.search(self.data["client_eha_side_1"], status) or re.search(self.data["client_eha_side_2"], status),\
+#             #        "Detection connection to local port {} from an unexpected ip address: {}.\n\
+#             #        The system waits for connection from the addreses: {} or {}\n"\
+#             #        .format(self.server_port, status, self.data["client_eha_side_1"], self.data["client_eha_side_2"])
+#             
+#             print("End re double")
+# 
+#         else:
+#             assert re.search(self.data["client_eha_float"], status),\
+#                    "Detection connection to local port {} from an unexpected ip address: {}.\n\
+#                    The system waits for connection from the addreses: {} or {}\n"\
+#                    .format(self.server_port, status, self.data["client_eha_float"])
+#         print("End re double2")
+#         # return "return service"
 
 
 class ServerServiceProtocol_2(Protocol):
@@ -277,12 +288,12 @@ class ServerServiceProtocol_3(Protocol):
 class ServerServiceFactory_3(Factory):
     protocol = ServerServiceProtocol_3
 
-    def __init__(self, server, deferred, timeout):
+    def __init__(self, server, deferred, data):
         self.server = server
         self.deferred = deferred
         # self.service = service
         self.status_connect = False
-        self.timeout_connect = timeout
+        self.timeout_connect = data["timeout_connect"]
         print("\nInitial factory deferred: {}, time_out: {}"\
               .format(self.deferred, self.timeout_connect))
         from twisted.internet import reactor
@@ -302,6 +313,102 @@ class ServerServiceFactory_3(Factory):
     def print_result(self):
         print("print_result!!!:")
         return
+
+# ############################################################################
+
+
+class ServerServiceProtocol_3_1(Protocol):
+
+    def prnt(self, status):
+        print("prnt: {}".format(status))
+
+    @allure.step("connectionMade")
+    def connectionMade(self):
+        print("\n{} Conn Made...{}".format(date_time(), self.transport.getPeer()))
+        print("\nStatus_connect before: {}".format(self.factory.status_connect))
+        self.factory.count_connect.append(self.transport.getPeer())
+        if not self.factory.status_connect:
+            self.factory.status_connect = "{}:{}:{}"\
+                .format(date_time(),\
+                        self.transport.getPeer().host,\
+                        self.transport.getPeer().port)
+            allure.attach("In Connect",\
+                          "source address: {}".format(self.factory.status_connect))
+            print("\nStatus_connect after: {}".format(self.factory.status_connect))
+        else:
+            if self.factory.status_connect:
+                print("\n{} Conn Close...{}".format(date_time(), self.transport.getPeer()))
+                self.transport.loseConnection()
+
+    def connectionLost(self, reason):
+        print("\nConnection lost {}\n{}".format(reason, self.transport.getPeer()))
+        if re.search("Connection was closed cleanly", str(reason)):
+            succeed(self.factory.server.check_discon_after_connected(reason))
+
+
+class ServerServiceFactory_3_1(Factory):
+    protocol = ServerServiceProtocol_3_1
+
+    def __init__(self, server, deferred, data):
+        self.server = server
+        self.deferred = deferred
+        # self.service = service
+        self.status_connect = False
+        self.timeout_disconnect = data["timeout_disconnect"]
+        self.count_connect = []
+        print("\nInitial factory deferred: {}, time_out: {}"\
+              .format(self.deferred, self.timeout_disconnect))
+        from twisted.internet import reactor
+        reactor.callLater(self.timeout_disconnect, self.chk_timeout_disconnect)
+
+    def chk(self):
+        print("{} In chk()".format(date_time()))
+        succeed(self.server.check_timeout_connected(self.status_connect))
+
+    def chk_timeout_disconnect(self):
+        print("{} In chk_timeout_disconnect()".format(date_time()))
+        succeed(self.server.check_discon_after_connected(self.status_connect))
+
+    def return_result(self, status):
+        print("return_result_ok: {}".format(status))
+        if self.deferred is not None:
+            d, self.deferred = self.deferred, None
+        # if status:
+        d.callback(status)
+
+    def print_result(self):
+        print("print_result!!!:")
+        return
+
+
+# tearUp/tearDown
+@pytest.yield_fixture()
+def test_server_3_1():
+    endpoint = None
+
+    @allure.step("Create test_server3() from tearUp/tearDown")
+    # def server(host, port, timeout_connect, data):
+    def server(data, port):
+        d = Deferred()
+        host = data["server_host"]
+        timeout_connect = data["timeout_connect"]
+        # allure.attach("Defer from factory", "Create deferred for Factory: {} ".format(d))
+        # service = service_1(data, port)
+        allure.attach("Create_test_server", "Create_test_server: {}:{}\n Test configuration data: {}".format(host, port, data))
+        nonlocal endpoint
+        assert endpoint is None
+        ss = Server_Test3.from_test_3(host, port, timeout_connect, data, d)
+        from twisted.internet import reactor
+        endpoint = reactor.listenTCP(port, ss.factory, interface=host)
+        return d
+    yield server
+    with allure.step("Stop test server"):
+        if endpoint is not None:
+            allure.attach("Stop test server", "Stop test server:{}".format(endpoint))
+            endpoint.stopListening()
+
+
+# ############################################################################
 
 # tearUp/tearDown
 # @pytest.yield_fixture()
@@ -336,9 +443,6 @@ def maket_test1_port1(test_server_2, data_maket_mea1209_1211):
     return server
 
 
-
-
-
 # tearUp/tearDown
 @pytest.yield_fixture()
 def test_server_3():
@@ -366,29 +470,23 @@ def test_server_3():
             endpoint.stopListening()
 
 
-@pytest.fixture()
-def maket3_test1_port1(test_server_3, data_maket_mea1209_1211):
-    ss = test_server_3(data_maket_mea1209_1211, data_maket_mea1209_1211["server_port1"])
-    return  ss
-
-
-@pytest.fixture()
-def maket3_test1_port2(test_server_3, data_maket_mea1209_1211):
-    ss = test_server_3(data_maket_mea1209_1211, data_maket_mea1209_1211["server_port2"])
-    return ss 
-
-
 class Server_Test3(object):
 
-    def __init__(self, host, port, timeout_connect, data, d):
+    def __init__(self, host, port, timeout_connect, data, d, test=None):
         self.d = d
         self.host = host
         self.port = port
         self.timeout_connect = timeout_connect
+        self.timeout_disconnect = data["timeout_disconnect"]
         self.data = data
-        self.factory = ServerServiceFactory_3(self, self.d, self.timeout_connect)
-        # from twisted.internet import reactor
-        # self.endpoint = reactor.listenTCP(self.port, self.factory1, interface=self.host)
+        if test == "test_3":
+            self.factory = ServerServiceFactory_3_1(self, self.d, self.data)
+        else:
+            self.factory = ServerServiceFactory_3(self, self.d, self.data)
+
+    @classmethod
+    def from_test_3(cls, host, port, timeout_connect, data, d):
+        return cls(host, port, timeout_connect, data, d, "test_3")
 
     @allure.step("Call check_timeout_connected()")
     def check_timeout_connected(self, status):
@@ -397,9 +495,26 @@ class Server_Test3(object):
                       "Callback is return result connect for server {}:{} from: {}"\
                       .format(self.data["server_host"], self.port, status))
 
-        if self.data["double"]:
-            if not status:
-                self.factory.return_result((status, "Delay {} seconds connection to local port {} from EHA"\
-                                           .format(self.timeout_connect, self.port)))
-            else:
-                return self.factory.return_result((status, "Connect OK"))
+        if not status:
+            self.factory.return_result((status, "Delay {} seconds connection to local port {} from EHA"\
+                                       .format(self.timeout_connect, self.port)))
+        else:
+            return self.factory.return_result((status, "Connect OK"))
+
+    @allure.step("Call check_discon_after_connected()")
+    def check_discon_after_connected(self, status):
+        print("{} Check_timeout_disconnect: {}".format(date_time(), (status)))
+        allure.attach("Check check_timeout_disconnect to server",\
+                      "Callback is return result timeout disconnect for server {}:{} from: {}"\
+                      .format(date_time(), self.data["server_host"], self.port, status))
+
+        if not status:
+            self.factory.return_result((status, "Delay {} seconds connection to local port {} from EHA"\
+                                       .format(self.timeout_disconnect, self.port)))
+
+        elif re.search("Connection was closed cleanly", str(status)):
+            print("\nConnection was closed cleanly {}".format(status))
+            return self.factory.return_result((False, "\n{} Connection was closed cleanly {}".format(date_time(), status)))
+        else:
+            return self.factory.return_result((True, status))
+
