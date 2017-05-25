@@ -1,0 +1,1 @@
+Callback is return result connect for server 2017-05-25 14:13:39.758:192.168.10.168 from: 10000

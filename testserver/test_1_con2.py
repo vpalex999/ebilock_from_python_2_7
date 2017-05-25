@@ -4,8 +4,8 @@ import allure
 
 
 @pytest.fixture()
-def maket3_test_1_con2(test_server_3, data_maket_mea1209_1211):
-    return test_server_3(data_maket_mea1209_1211, data_maket_mea1209_1211["server_port2"])
+def maket3_test_1_con2(test_server_3_1, data_maket_mea1209_1211):
+    return test_server_3_1(data_maket_mea1209_1211, data_maket_mea1209_1211["server_port2"])
 
 
 @allure.step("Test connect_from EHA_port2")

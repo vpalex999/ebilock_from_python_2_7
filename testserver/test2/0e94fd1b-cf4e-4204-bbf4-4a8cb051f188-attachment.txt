@@ -1,0 +1,6 @@
+-rw-rw-rw- 1 neadmin users       29 May 25 10:43 /opt/jboss-as/standalone/deployments/eha-server-0.4.3-SNAPSHOT.war.undeployed
+-rw-r--r-- 1 neadmin users 14230642 May 25 10:47 /opt/jboss-as/standalone/deployments/eha-server-0.4.4.1-SNAPSHOT.war
+-rw-rw-rw- 1 neadmin users       31 May 25 10:47 /opt/jboss-as/standalone/deployments/eha-server-0.4.4.1-SNAPSHOT.war.deployed
+
+ 14:13:37 up 21 min,  0 users,  load average: 1.39, 1.71, 1.97
+

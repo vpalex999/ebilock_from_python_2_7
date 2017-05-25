@@ -1,0 +1,77 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495703617492" stop="1495703619760">
+  <description>Test Service EHA client - test_2_con1 -</description>
+  <name>testserver.test_2_con1</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495703617492" status="passed" stop="1495703619760">
+      <description>Checking connecting from another address from port1</description>
+      <name>test_3_con1</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="27588-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495703617493" status="passed" stop="1495703617493">
+          <name>Stend configuration data</name>
+          <title>Stend configuration data</title>
+          <attachments>
+            <attachment source="4738d893-fc8f-45e6-869e-53426c2e4c00-attachment.txt" title="Stend data" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+        <step start="1495703617493" status="passed" stop="1495703619029">
+          <name>Create test_server3() from tearUp/tearDown</name>
+          <title>Create test_server3() from tearUp/tearDown</title>
+          <attachments>
+            <attachment source="7527f68c-fd0b-4ac6-822f-4489837526c8-attachment.txt" title="Create_test_server" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495703617494" status="passed" stop="1495703618297">
+              <name>Get data from EHA</name>
+              <title>Get data from EHA</title>
+              <attachments>
+                <attachment source="0e94fd1b-cf4e-4204-bbf4-4a8cb051f188-attachment.txt" title="Get version EHA" type="text/plain"/>
+                <attachment source="7ce55991-5136-4aaa-8355-79d0cf22600d-attachment.txt" title="Get ha status EHA" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+        <step start="1495703619030" status="passed" stop="1495703619030">
+          <name>Test Checking connecting from another address from port1</name>
+          <title>Test Checking connecting from another address from port1</title>
+          <attachments/>
+          <steps/>
+        </step>
+        <step start="1495703619758" status="passed" stop="1495703619761">
+          <name>connectionMade</name>
+          <title>connectionMade</title>
+          <attachments>
+            <attachment source="a97730e6-2b20-43b4-b1e8-45f1c83d45c6-attachment.txt" title="In Connect" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495703619759" status="passed" stop="1495703619761">
+              <name>Call Checking connecting from another address()</name>
+              <title>Call Checking connecting from another address()</title>
+              <attachments>
+                <attachment source="11ea758a-7130-4673-9c62-ab1539e3e379-attachment.txt" title="Checking connecting from another address to server" type="text/plain"/>
+              </attachments>
+              <steps>
+                <step start="1495703619761" status="passed" stop="1495703619761">
+                  <name>Stop test server</name>
+                  <title>Stop test server</title>
+                  <attachments>
+                    <attachment source="15ef946a-d6a8-4428-93b7-b785f2a2cad8-attachment.txt" title="Stop test server" type="text/plain"/>
+                  </attachments>
+                  <steps/>
+                </step>
+              </steps>
+            </step>
+          </steps>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>

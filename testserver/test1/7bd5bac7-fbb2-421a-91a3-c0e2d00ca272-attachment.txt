@@ -1,0 +1,14 @@
+
+server_port1: 10000
+server_port2: 10001
+server_host: 192.168.10.168
+server_localhost: 127.0.0.1
+client_eha_side_1: 192.168.101.3
+client_eha_side_2: 192.168.101.4
+client_eha_float: 192.168.101.5
+double: True
+active_side: None
+timeout_connect: 5
+timeout_disconnect: 60
+user: root
+secret: iskratel

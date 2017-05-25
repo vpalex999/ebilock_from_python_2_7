@@ -6,7 +6,7 @@ import allure
 @pytest.fixture()
 def maket3_test_3_con2(test_server_3_1, data_maket_mea1209_1211):
     # print("maket3_test_3_con2")
-    return test_server_3_1(data_maket_mea1209_1211, data_maket_mea1209_1211["server_port2"])
+    return test_server_3_1(data_maket_mea1209_1211, data_maket_mea1209_1211["server_port2"], "test_3")
 
 
 @allure.step("Test Checking the disconnection after connection from port2")

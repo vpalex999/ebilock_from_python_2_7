@@ -2,6 +2,7 @@ import pytest
 import allure
 import re
 from pprint import pprint
+import paramiko
 
 from allure.constants import AttachmentType
 from datetime import datetime
@@ -152,9 +153,12 @@ def data_maket_mea1209_1211():
         "client_eha_side_1": "192.168.101.3",
         "client_eha_side_2": "192.168.101.4",
         "client_eha_float": "192.168.101.5",
-        "timeout_connect": 5,
-        "timeout_disconnect": 60,
         "double": True,
+        "active_side": None,
+        "timeout_connect": 3,
+        "timeout_disconnect": 60,
+        "user": 'root',
+        "secret": 'iskratel',
         }
 
     def print_data(data):
@@ -162,8 +166,8 @@ def data_maket_mea1209_1211():
 
     stend_data = print_data(data)
     print(stend_data)
-    with pytest.allure.step("Test configuration data"):
-        allure.attach("Stend configuration data", print_data(data))
+    with pytest.allure.step("Stend configuration data"):
+        allure.attach("Stend data", print_data(data))
 
     return data
 
@@ -314,8 +318,74 @@ class ServerServiceFactory_3(Factory):
         print("print_result!!!:")
         return
 
-# ############################################################################
 
+# ############################### TEST 2 ######################################
+
+class ServerServiceProtocol_2_1(Protocol):
+
+    @allure.step("connectionMade")
+    def connectionMade(self):
+        print("\n{} Conn Made...{}".format(date_time(), self.transport.getPeer()))
+        print("\nStatus_connect before: {}".format(self.factory.status_connect))
+        self.factory.count_connect.append(self.transport.getPeer())
+        if not self.factory.status_connect:
+            self.factory.status_connect = "{}:{}:{}"\
+                .format(date_time(),\
+                        self.transport.getPeer().host,\
+                        self.transport.getPeer().port)
+            allure.attach("In Connect",\
+                          "source address: {}".format(self.factory.status_connect))
+            print("\nStatus_connect after: {}".format(self.factory.status_connect))
+            succeed(self.factory.server.checking_connecting_from_another_address(self.factory.status_connect))
+        else:
+            if self.factory.status_connect:
+                print("\n{} Conn Close...{}".format(date_time(), self.transport.getPeer()))
+                self.transport.loseConnection()
+
+    def connectionLost(self, reason):
+        print("\nConnection lost {}\n{}".format(reason, self.transport.getPeer()))
+        if re.search("Connection was closed cleanly", str(reason)):
+            succeed(self.factory.server.check_discon_after_connected(reason))
+
+
+class ServerServiceFactory_2_1(Factory):
+    protocol = ServerServiceProtocol_2_1
+
+    def __init__(self, server, deferred, data):
+        self.server = server
+        self.deferred = deferred
+        # self.service = service
+        self.status_connect = False
+        self.timeout_connect = data["timeout_connect"]
+        self.timeout_disconnect = data["timeout_disconnect"]
+        self.count_connect = []
+        print("\nInitial factory deferred: {}, time_out: {}"\
+              .format(self.deferred, self.timeout_connect))
+        from twisted.internet import reactor
+        reactor.callLater(self.timeout_connect, self.chk)
+
+    def chk(self):
+        print("{} In chk()".format(date_time()))
+        succeed(self.server.check_timeout_connected(self.status_connect))
+
+    def chk_timeout_disconnect(self):
+        print("{} In chk_timeout_disconnect()".format(date_time()))
+        succeed(self.server.check_discon_after_connected(self.status_connect))
+
+    def return_result(self, status):
+        print("return_result_ok: {}".format(status))
+        if self.deferred is not None:
+            d, self.deferred = self.deferred, None
+        # if status:
+        d.callback(status)
+
+    def get_eha_data(self):
+        with pytest.allure.step("Get config data from EHA"):
+            allure.attach("Get config data from EHA", self.server.get_eha_data())
+        # print(self.server.get_eha_data())
+
+
+# ############################### TEST 3 #############################################
 
 class ServerServiceProtocol_3_1(Protocol):
 
@@ -360,6 +430,7 @@ class ServerServiceFactory_3_1(Factory):
               .format(self.deferred, self.timeout_disconnect))
         from twisted.internet import reactor
         reactor.callLater(self.timeout_disconnect, self.chk_timeout_disconnect)
+        # reactor.callLater(0, self.get_eha_data)
 
     def chk(self):
         print("{} In chk()".format(date_time()))
@@ -376,28 +447,39 @@ class ServerServiceFactory_3_1(Factory):
         # if status:
         d.callback(status)
 
-    def print_result(self):
-        print("print_result!!!:")
-        return
+    def get_eha_data(self):
+        with pytest.allure.step("Get config data from EHA"):
+            allure.attach("Get config data from EHA", self.server.get_eha_data())
+        # print(self.server.get_eha_data())
 
 
 # tearUp/tearDown
 @pytest.yield_fixture()
 def test_server_3_1():
     endpoint = None
+    ss = None
 
     @allure.step("Create test_server3() from tearUp/tearDown")
     # def server(host, port, timeout_connect, data):
-    def server(data, port):
+    def server(data, port, test=None):
         d = Deferred()
         host = data["server_host"]
         timeout_connect = data["timeout_connect"]
         # allure.attach("Defer from factory", "Create deferred for Factory: {} ".format(d))
         # service = service_1(data, port)
-        allure.attach("Create_test_server", "Create_test_server: {}:{}\n Test configuration data: {}".format(host, port, data))
+        allure.attach("Create_test_server", "Create_test_server: {}:{}".format(host, port))
         nonlocal endpoint
         assert endpoint is None
-        ss = Server_Test3.from_test_3(host, port, timeout_connect, data, d)
+        nonlocal ss
+        assert ss is None
+        if test is None:
+            ss = Server_Test3(host, port, timeout_connect, data, d)
+        elif re.search("test_2", test):
+            ss = Server_Test3.from_test_2(host, port, timeout_connect, data, d)
+        elif re.search("test_3", test):
+            ss = Server_Test3.from_test_3(host, port, timeout_connect, data, d)
+        ss.chk_eha_config()
+
         from twisted.internet import reactor
         endpoint = reactor.listenTCP(port, ss.factory, interface=host)
         return d
@@ -479,7 +561,9 @@ class Server_Test3(object):
         self.timeout_connect = timeout_connect
         self.timeout_disconnect = data["timeout_disconnect"]
         self.data = data
-        if test == "test_3":
+        if test == "test_2":
+            self.factory = ServerServiceFactory_2_1(self, self.d, self.data)
+        elif test == "test_3":
             self.factory = ServerServiceFactory_3_1(self, self.d, self.data)
         else:
             self.factory = ServerServiceFactory_3(self, self.d, self.data)
@@ -487,6 +571,10 @@ class Server_Test3(object):
     @classmethod
     def from_test_3(cls, host, port, timeout_connect, data, d):
         return cls(host, port, timeout_connect, data, d, "test_3")
+
+    @classmethod
+    def from_test_2(cls, host, port, timeout_connect, data, d):
+        return cls(host, port, timeout_connect, data, d, "test_2")
 
     @allure.step("Call check_timeout_connected()")
     def check_timeout_connected(self, status):
@@ -518,3 +606,109 @@ class Server_Test3(object):
         else:
             return self.factory.return_result((True, status))
 
+    @allure.step("Call Checking connecting from another address()")
+    def checking_connecting_from_another_address(self, status):
+    
+        print("{} Checking connecting from another address: {}".format(date_time(), (status)))
+        allure.attach("Checking connecting from another address to server",\
+                      "Callback is return result connect for server {}:{} from: {}"\
+                      .format(date_time(), self.data["server_host"], self.port, status))
+
+        
+        # act_side = self.chk_active_side_eha()
+        print("act side: {}".format(self.data["active_side"]))
+                  
+        if not status:
+            self.factory.return_result((status, "Delay {} seconds connection to local port {} from EHA"\
+                                       .format(self.timeout_disconnect, self.port)))
+
+        elif re.search(self.data["active_side"], str(status)):
+            print("\nChecking active side succes {}".format(status))
+            return self.factory.return_result((True, "Checking connect EHA client from active side succes {}".format(status)))
+        else:
+            return self.factory.return_result((False, "Connecting from another address to server: {}".format(status)))
+
+
+
+    def chk_active_side_eha(self):
+
+        def chk_side(ipside, user, passwd):
+            try:
+                client = paramiko.SSHClient()
+                client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                client.connect(ipside, username=user, password=passwd)
+                stdin, stdout, stderr = client.exec_command('cat /proc/drbd')
+                data = stdout.read() + stderr.read()
+                data_eha = data.decode('utf-8').splitlines()
+                for active in data_eha:
+                    if re.search("Secondary/Primary", active):
+                        return False
+                        break
+                    if re.search("Primary/Secondary", active):
+                        return True
+                        break
+                    if re.search("No such file or directory", active):
+                        return False
+
+                client.close()
+            except paramiko.ssh_exception.AuthenticationException:
+                return("Authentication failed.")
+            except TimeoutError:
+                return("TimeoutError")
+
+        if self.data["double"]:
+            print("config EHA is double side!!!")
+            if chk_side(self.data["client_eha_side_1"], self.data["user"], self.data["secret"]):
+                self.data["active_side"] = self.data["client_eha_side_1"]
+            elif chk_side(self.data["client_eha_side_2"], self.data["user"], self.data["secret"]):
+                    self.data["active_side"] = self.data["client_eha_side_2"]
+        else:
+            print("config EHA is standalone side!!!")
+            if not ifchk_side(self.data["client_eha_side_1"], self.data["user"], self.data["secret"]):
+                self.data["active_side"] = self.data["client_eha_side_1"]
+
+        print("Active side: {}".format(self.data["active_side"]))
+        return self.data["active_side"]
+
+
+            
+
+
+
+
+    def chk_eha_config(self):
+        with pytest.allure.step("Get data from EHA"):
+            allure.attach("Get version EHA", self.get_eha_version())
+            self.chk_active_side_eha()
+            allure.attach("Get ha status EHA", self.data["active_side"])
+        print(self.get_eha_version())
+        print("act_side: {}".format(self.chk_active_side_eha()))
+
+    def get_eha_version(self):
+        return_data = []
+        try:
+            client = paramiko.SSHClient()
+            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            client.connect(self.data["client_eha_side_1"],\
+                           username=self.data["user"],\
+                           password=self.data["secret"])
+            stdin, stdout, stderr = client.exec_command('uptime')
+            data = stdout.read() + stderr.read()
+            uptime = data.decode('utf-8').splitlines()
+            return_data.append(''.join(["{}\n".format(x) for x in uptime]))
+            
+            stdin, stdout, stderr = client.exec_command('ls -l /opt/jboss-as/standalone/deployments/eha*')
+            data = stdout.read() + stderr.read()
+            data_eha = data.decode('utf-8').splitlines()
+            return_data.append(''.join(["{}\n".format(x) for x in data_eha]))
+
+
+            client.close()
+            return ''.join(["{}\n".format(x) for x in return_data])
+
+        except paramiko.ssh_exception.AuthenticationException:
+            return("Authentication failed.")
+        except TimeoutError:
+            return("TimeoutError")
+        except:
+            raise("Uncknoun failed.")

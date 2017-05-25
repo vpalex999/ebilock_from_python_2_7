@@ -1,0 +1,84 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1495699823713" stop="1495699826088">
+  <description>Test Service EHA client</description>
+  <name>testserver.test_1_con1</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1495699823713" status="passed" stop="1495699826088">
+      <description>Test Service connect client EHA to test server for port1</description>
+      <name>test_1_con1</name>
+      <attachments/>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="21960-MainThread"/>
+        <label name="host" value="Bubenshchikov"/>
+      </labels>
+      <steps>
+        <step start="1495699823715" status="passed" stop="1495699823715">
+          <name>Stend configuration data</name>
+          <title>Stend configuration data</title>
+          <attachments>
+            <attachment source="7bd5bac7-fbb2-421a-91a3-c0e2d00ca272-attachment.txt" title="Stend data" type="text/plain"/>
+          </attachments>
+          <steps/>
+        </step>
+        <step start="1495699823715" status="passed" stop="1495699824754">
+          <name>Create test_server3() from tearUp/tearDown</name>
+          <title>Create test_server3() from tearUp/tearDown</title>
+          <attachments>
+            <attachment source="9ed1c493-fa2e-4ecf-b45b-b9959d6085e9-attachment.txt" title="Create_test_server" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495699823715" status="passed" stop="1495699824275">
+              <name>Get data from EHA</name>
+              <title>Get data from EHA</title>
+              <attachments>
+                <attachment source="e6049c22-44bc-4201-b9e1-cf4f346b35cb-attachment.txt" title="Get version EHA" type="text/plain"/>
+                <attachment source="0d1dc89d-50af-4802-8d4d-e7176e1dab8e-attachment.txt" title="Get ha status EHA" type="text/plain"/>
+              </attachments>
+              <steps/>
+            </step>
+          </steps>
+        </step>
+        <step start="1495699824755" status="passed" stop="1495699824755">
+          <name>Test connect_from EHA_port1</name>
+          <title>Test connect_from EHA_port1</title>
+          <attachments/>
+          <steps/>
+        </step>
+        <step start="1495699826085" status="passed" stop="1495699826089">
+          <name>connectionMade</name>
+          <title>connectionMade</title>
+          <attachments>
+            <attachment source="dca3f0a2-aaa5-4da7-a2c4-8be43400b7c6-attachment.txt" title="In Connect" type="text/plain"/>
+          </attachments>
+          <steps>
+            <step start="1495699826086" status="passed" stop="1495699826089">
+              <name>Start chk()</name>
+              <title>Start chk()</title>
+              <attachments/>
+              <steps>
+                <step start="1495699826087" status="passed" stop="1495699826089">
+                  <name>Call check_timeout_connected()</name>
+                  <title>Call check_timeout_connected()</title>
+                  <attachments>
+                    <attachment source="c31e33c5-ae33-4b92-bcab-2f8e8b5b9164-attachment.txt" title="Check connected client from test server" type="text/plain"/>
+                  </attachments>
+                  <steps>
+                    <step start="1495699826089" status="passed" stop="1495699826089">
+                      <name>Stop test server</name>
+                      <title>Stop test server</title>
+                      <attachments>
+                        <attachment source="83ec363a-d002-41e8-82ef-2c2e62245dcc-attachment.txt" title="Stop test server" type="text/plain"/>
+                      </attachments>
+                      <steps/>
+                    </step>
+                  </steps>
+                </step>
+              </steps>
+            </step>
+          </steps>
+        </step>
+      </steps>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>
